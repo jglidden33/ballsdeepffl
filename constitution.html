@@ -1,0 +1,596 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>BDFL — Constitution</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Barlow+Condensed:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bd-black:#0e0c09;
+  --bd-panel:#18150f;
+  --bd-panel-2:#211c14;
+  --bd-line:#332b1c;
+  --bd-gold:#d4af37;
+  --bd-gold-bright:#f2cc4d;
+  --bd-gold-dim:#8a7228;
+  --bd-white:#f3ede0;
+  --bd-muted:#9c9384;
+  --bd-green:#5aa876;
+  --bd-red:#c1596a;
+  --bd-silver:#b9bcc3;
+  --bd-bronze:#c08a4f;
+  --font-display:'Archivo Black', sans-serif;
+  --font-cond:'Barlow Condensed', sans-serif;
+}
+*{box-sizing:border-box;}
+html,body{margin:0;padding:0;}
+body{
+  background:var(--bd-black);
+  background-image:
+    radial-gradient(circle at 15% 0%, rgba(212,175,55,0.07), transparent 40%),
+    radial-gradient(circle at 85% 20%, rgba(212,175,55,0.05), transparent 35%);
+  color:var(--bd-white);
+  font-family:var(--font-cond);
+  min-height:100vh;
+}
+a{color:inherit;}
+.wrap{max-width:1100px;margin:0 auto;padding:0 20px;}
+
+/* ---------- NAV ---------- */
+.topnav{
+  border-bottom:1px solid var(--bd-line);
+  background:rgba(14,12,9,0.92);
+  position:sticky; top:0; z-index:40;
+  backdrop-filter:blur(6px);
+}
+.topnav-inner{
+  max-width:1100px;margin:0 auto;padding:14px 20px;
+  display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;
+}
+.brand{display:flex;align-items:center;gap:10px;text-decoration:none;}
+.brand-mark{
+  width:34px;height:34px;border-radius:50%;
+  background:linear-gradient(150deg,var(--bd-gold-bright),var(--bd-gold-dim));
+  display:flex;align-items:center;justify-content:center;
+  font-family:var(--font-display);color:var(--bd-black);font-size:15px;
+}
+.brand-name{font-family:var(--font-display);font-size:15px;letter-spacing:.5px;color:var(--bd-gold-bright);}
+.navlinks{display:flex;gap:22px;flex-wrap:wrap;}
+.navlinks a{
+  font-size:15px;text-transform:uppercase;letter-spacing:.08em;font-weight:600;
+  text-decoration:none;color:var(--bd-muted);border-bottom:2px solid transparent;padding-bottom:3px;
+  transition:color .15s, border-color .15s;
+}
+.navlinks a:hover, .navlinks a.active{color:var(--bd-gold-bright);border-color:var(--bd-gold-bright);}
+
+/* ---------- HERO ---------- */
+.hero{padding:52px 0 30px;}
+.hero-eyebrow{font-size:14px;color:var(--bd-gold-bright);letter-spacing:.14em;text-transform:uppercase;font-weight:700;margin-bottom:10px;}
+.hero-name{
+  font-family:var(--font-display);
+  font-size:clamp(38px,7vw,68px);
+  color:var(--bd-white);
+  line-height:.95;
+  margin:0;
+}
+.hero-name span{color:var(--bd-gold-bright);}
+.hero-sub{color:var(--bd-muted);font-size:18px;margin-top:14px;max-width:680px;line-height:1.45;}
+
+/* ---------- NOTICE ---------- */
+.notice{
+  margin:26px 0 0;
+  background:var(--bd-panel);border:1px solid var(--bd-gold-dim);border-radius:10px;
+  padding:16px 20px;font-size:14px;color:var(--bd-muted);line-height:1.6;
+}
+.notice strong{color:var(--bd-gold-bright);}
+
+/* ---------- LAYOUT ---------- */
+.doc-layout{display:grid;grid-template-columns:250px 1fr;gap:44px;margin:40px 0 80px;align-items:start;}
+.toc{
+  position:sticky;top:86px;
+  background:var(--bd-panel);border:1px solid var(--bd-line);border-radius:10px;
+  padding:20px 18px;max-height:calc(100vh - 110px);overflow-y:auto;
+}
+.toc-title{font-family:var(--font-display);font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--bd-gold-bright);margin-bottom:12px;}
+.toc a{display:block;font-size:14px;color:var(--bd-muted);text-decoration:none;padding:5px 0;border-left:2px solid transparent;padding-left:10px;margin-left:-11px;}
+.toc a:hover{color:var(--bd-white);}
+.toc a.toc-h{font-weight:700;color:var(--bd-white);text-transform:uppercase;letter-spacing:.03em;font-size:13px;margin-top:10px;}
+.toc a.toc-h:first-child{margin-top:0;}
+.toc a.toc-sub{padding-left:22px;font-size:13px;}
+.toc a.active{color:var(--bd-gold-bright);border-left-color:var(--bd-gold-bright);}
+
+.content{min-width:0;}
+.doc-section{margin-bottom:52px;scroll-margin-top:90px;}
+.doc-section h2{
+  font-family:var(--font-display);font-size:clamp(20px,3vw,26px);color:var(--bd-gold-bright);
+  text-transform:uppercase;letter-spacing:.02em;margin:0 0 18px;padding-bottom:12px;
+  border-bottom:1px solid var(--bd-line);display:flex;align-items:baseline;gap:10px;
+}
+.doc-section h2 .num{color:var(--bd-gold-dim);}
+.doc-sub{margin-top:26px;scroll-margin-top:90px;}
+.doc-sub:first-of-type{margin-top:0;}
+.doc-sub h3{font-family:var(--font-cond);font-size:18px;font-weight:700;color:var(--bd-white);margin:0 0 10px;}
+.doc-sub h4{font-family:var(--font-cond);font-size:15px;font-weight:700;color:var(--bd-gold-bright);margin:14px 0 6px;}
+.doc-section p, .doc-section li{font-size:15px;color:var(--bd-muted);line-height:1.6;margin:0 0 12px;}
+.doc-section ul, .doc-section ol{padding-left:22px;margin:0 0 12px;}
+.doc-section b, .doc-section strong{color:var(--bd-white);font-weight:700;}
+.doc-section em{color:var(--bd-white);}
+
+/* ---------- GOVERNING BODY CARDS ---------- */
+.gov-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin:14px 0 20px;}
+.gov-card{background:var(--bd-panel);border:1px solid var(--bd-line);border-radius:10px;padding:16px 18px;}
+.gov-card .role{font-size:12px;text-transform:uppercase;letter-spacing:.08em;color:var(--bd-gold-bright);font-weight:700;margin-bottom:6px;}
+.gov-card .who{font-family:var(--font-display);font-size:17px;color:var(--bd-white);}
+.gov-card .mail{font-size:13px;color:var(--bd-muted);margin-top:4px;word-break:break-all;}
+
+/* ---------- PAYOUT LIST ---------- */
+.payout-list{display:flex;flex-direction:column;gap:1px;background:var(--bd-line);border:1px solid var(--bd-line);border-radius:10px;overflow:hidden;margin:14px 0 8px;}
+.payout-row{background:var(--bd-panel);padding:13px 18px;display:flex;justify-content:space-between;align-items:center;gap:12px;}
+.payout-row .pn{font-size:15px;color:var(--bd-white);}
+.payout-row .pv{font-family:var(--font-display);font-size:17px;color:var(--bd-gold-bright);white-space:nowrap;}
+.payout-total{font-size:13px;color:var(--bd-gold-dim);margin-top:10px;}
+
+/* ---------- TABLES ---------- */
+.table-wrap{overflow-x:auto;border:1px solid var(--bd-line);border-radius:10px;margin:14px 0 20px;}
+table.doctable{width:100%;border-collapse:collapse;min-width:340px;}
+table.doctable th{
+  background:var(--bd-panel-2);color:var(--bd-gold-bright);
+  font-size:12px;text-transform:uppercase;letter-spacing:.05em;
+  text-align:left;padding:10px 14px;font-weight:700;border-bottom:1px solid var(--bd-line);white-space:nowrap;
+}
+table.doctable td{padding:9px 14px;border-bottom:1px solid var(--bd-line);font-size:14px;color:var(--bd-muted);}
+table.doctable tr:last-child td{border-bottom:none;}
+table.doctable td:first-child{color:var(--bd-white);}
+table.doctable td.num{font-family:var(--font-cond);font-weight:700;text-align:right;color:var(--bd-gold-bright);white-space:nowrap;}
+.table-pair{display:grid;grid-template-columns:1fr 1fr;gap:20px;}
+.table-pair-stack{display:flex;flex-direction:column;gap:20px;}
+@media (max-width:700px){.table-pair{grid-template-columns:1fr;}}
+
+/* ---------- CALLOUT ---------- */
+.callout{background:var(--bd-panel);border-left:3px solid var(--bd-gold);border-radius:0 10px 10px 0;padding:14px 18px;margin:14px 0 20px;font-size:14px;color:var(--bd-muted);line-height:1.6;}
+.callout b{color:var(--bd-gold-bright);}
+
+footer{padding:34px 0 60px;text-align:center;color:var(--bd-muted);font-size:13px;}
+
+/* ---------- RESPONSIVE ---------- */
+@media (max-width:900px){
+  .doc-layout{grid-template-columns:1fr;}
+  .toc{position:static;max-height:none;}
+  .gov-grid{grid-template-columns:1fr;}
+}
+
+/* ===================== SHARED SITE LAYOUT (SIDEBAR) ===================== */
+.app{display:flex;min-height:100vh;}
+.sidebar{
+  width:230px;flex:none;
+  background:linear-gradient(180deg, var(--bd-panel) 0%, var(--bd-black) 100%);
+  border-right:1px solid var(--bd-line);
+  display:flex;flex-direction:column;
+  position:sticky;top:0;height:100vh;overflow-y:auto;
+}
+.sidebar-brand{padding:26px 22px 22px;border-bottom:1px solid var(--bd-line);}
+.sidebar-brand .word1{font-family:var(--font-display);font-size:19px;color:var(--bd-white);letter-spacing:0.02em;line-height:1.1;}
+.sidebar-brand .word2{font-family:var(--font-display);font-size:19px;color:var(--bd-gold-bright);letter-spacing:0.02em;line-height:1.1;}
+.sidebar-brand .tag{margin-top:6px;font-family:var(--font-cond);font-size:10.5px;letter-spacing:0.24em;text-transform:uppercase;color:var(--bd-muted);}
+.sidebar-nav{display:flex;flex-direction:column;padding:10px 0;}
+.sidebar-nav a{
+  display:flex;align-items:center;justify-content:space-between;padding:11px 22px;
+  font-family:var(--font-cond);font-weight:600;font-size:13px;letter-spacing:0.08em;text-transform:uppercase;
+  color:var(--bd-muted);text-decoration:none;border-left:3px solid transparent;
+  transition:background .12s ease, color .12s ease;
+}
+.sidebar-nav a:hover{background:rgba(255,255,255,0.03);color:var(--bd-white);}
+.sidebar-nav a.active{background:rgba(212,175,55,0.12);color:var(--bd-gold-bright);border-left-color:var(--bd-gold-bright);}
+.main{flex:1;min-width:0;display:flex;flex-direction:column;}
+.topbar{
+  height:56px;flex:none;display:flex;align-items:center;justify-content:space-between;
+  padding:0 28px;border-bottom:1px solid var(--bd-line);background:var(--bd-black);
+  position:sticky;top:0;z-index:10;
+}
+.topbar-title{font-family:var(--font-cond);font-weight:700;font-size:14px;letter-spacing:0.18em;text-transform:uppercase;color:var(--bd-gold-bright);}
+.topbar-meta{font-family:var(--font-cond);font-size:11.5px;letter-spacing:0.05em;color:var(--bd-muted);}
+.content{flex:1;}
+@media (max-width:860px){
+  .sidebar{position:fixed;left:0;top:0;bottom:0;transform:translateX(-100%);z-index:50;transition:transform .2s ease;box-shadow:20px 0 40px rgba(0,0,0,0.4);}
+  .sidebar.open{transform:translateX(0);}
+  .topbar-menu-btn{display:inline-flex;}
+}
+@media (min-width:861px){.topbar-menu-btn{display:none;}}
+.topbar-menu-btn{background:none;border:1px solid var(--bd-line);color:var(--bd-white);border-radius:6px;padding:6px 10px;cursor:pointer;font-size:14px;}
+
+</style>
+</head>
+<body>
+
+<div class="app">
+
+  <nav class="sidebar" id="sidebar">
+    <div class="sidebar-brand">
+      <div class="word1">BALLS</div>
+      <div class="word2">DEEP FFL</div>
+      <div class="tag">Est. 2012</div>
+    </div>
+    <div class="sidebar-nav">
+      <a href="index.html">Dashboard</a>
+      <a href="our-story.html">Our Story</a>
+      <a href="season-recaps.html">Season Recaps</a>
+      <a href="regular-season.html">Regular Season</a>
+      <a href="postseason.html">Postseason</a>
+      <a href="awards.html">Awards</a>
+      <a href="records.html">Records</a>
+      <a href="milestones.html">Milestones</a>
+      <a href="survivor-tourney.html">Survivor Tourney</a>
+      <a href="draft.html">Draft</a>
+      <a href="managers.html">Managers</a>
+      <a href="hall-of-fame.html">Hall of Fame</a>
+      <a href="constitution.html" class="active">Constitution</a>
+    </div>
+  </nav>
+
+  <div class="main">
+    <header class="topbar">
+      <button class="topbar-menu-btn" onclick="document.getElementById('sidebar').classList.toggle('open')">&#9776;</button>
+      <div class="topbar-title">Constitution</div>
+      <div class="topbar-meta">Balls Deep FFL &middot; through 2025 season</div>
+    </header>
+
+    <div class="content">
+
+<div class="wrap">
+
+  <section class="hero">
+    <div class="hero-eyebrow">The rules, in writing &middot; Est. 2012</div>
+    <h1 class="hero-name">League <span>Constitution</span></h1>
+    <p class="hero-sub">Welcome to the Balls Deep Football League (BDFL), a 12-team league formed in 2012. We play for trophies and money, so make sure to pay your league dues before the draft kicks off. Our league is all about fun competition and some good-natured trash talk. The rules below serve as guidelines for league play, and the commissioner will handle any disputes.</p>
+    <div class="notice"><strong>A living document:</strong> changes can happen between seasons and take effect immediately unless stated otherwise. Have suggestions? Submit them to the commissioner.</div>
+  </section>
+
+  <div class="doc-layout">
+    <aside class="toc">
+      <div class="toc-title">Table of Contents</div>
+      <a class="toc-h" href="#s1">1. League Overview</a>
+      <a class="toc-sub" href="#s1-1">1.1 Governing Body</a>
+      <a class="toc-sub" href="#s1-2">1.2 Commish Style</a>
+      <a class="toc-sub" href="#s1-3">1.3 Living Constitution</a>
+      <a class="toc-sub" href="#s1-4">1.4 League Dues / Payouts</a>
+      <a class="toc-sub" href="#s1-5">1.5 League Prizes</a>
+      <a class="toc-h" href="#s2">2. League Setup &amp; Competition</a>
+      <a class="toc-sub" href="#s2-1">2.1 Keeper Format</a>
+      <a class="toc-sub" href="#s2-2">2.2 Schedule</a>
+      <a class="toc-sub" href="#s2-3">2.3 Playoffs</a>
+      <a class="toc-sub" href="#s2-4">2.4 Points Totals &amp; Scoring</a>
+      <a class="toc-sub" href="#s2-5">2.5 Tiebreakers</a>
+      <a class="toc-sub" href="#s2-6">2.6 Active Ownership</a>
+      <a class="toc-h" href="#s3">3. Roster Breakdown / Lineups</a>
+      <a class="toc-sub" href="#s3-1">3.1 Positional Breakdown</a>
+      <a class="toc-sub" href="#s3-2">3.2 Position Designation</a>
+      <a class="toc-sub" href="#s3-3">3.3 Draft</a>
+      <a class="toc-sub" href="#s3-4">3.4 Draft Order</a>
+      <a class="toc-sub" href="#s3-5">3.5 Trades</a>
+      <a class="toc-sub" href="#s3-6">3.6 Waiver Claims</a>
+      <a class="toc-h" href="#s4">4. Miscellaneous</a>
+      <a class="toc-sub" href="#s4-1">4.1 Unforeseen Problems</a>
+      <a class="toc-sub" href="#s4-2">4.2 Conduct / Participation</a>
+      <a class="toc-sub" href="#s4-3">4.3 Removing / Replacing an Owner</a>
+      <a class="toc-sub" href="#s4-4">4.4 Collusion / Dumping / Borrowing</a>
+      <a class="toc-h" href="#s5">5. Editing the Constitution</a>
+      <a class="toc-sub" href="#s5-1">5.1 Access &amp; Agreement</a>
+      <a class="toc-sub" href="#s5-2">5.2 Constitution Changes</a>
+    </aside>
+
+    <main class="content">
+
+      <div class="doc-section" id="s1">
+        <h2><span class="num">1.</span> League Overview</h2>
+
+        <div class="doc-sub" id="s1-1">
+          <h3>1.1 Governing Body</h3>
+          <p>During the season, the commissioner, or Commish, is in charge of the day-to-day operations of the Balls Deep FFL and will interpret the rules as needed.</p>
+          <p>The league Governing Body consists of:</p>
+          <div class="gov-grid">
+            <div class="gov-card">
+              <div class="role">Commissioner</div>
+              <div class="who">Ben Geisinger</div>
+              <div class="mail">clown_boy1979@yahoo.com</div>
+            </div>
+            <div class="gov-card">
+              <div class="role">Co-Commissioner</div>
+              <div class="who">Jason Glidden</div>
+              <div class="mail">gliddenjason83@gmail.com</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="doc-sub" id="s1-2">
+          <h3>1.2 Commish Style</h3>
+          <p>We know you can't please everyone all the time with rules changes. If a proposed change involves lineups or scoring, we'll usually have a vote. If a rule change could significantly impact your team, we'll vote. While rules can affect team strategies, any changes made will not give or seek to gain an unfair advantage.</p>
+          <p><em>Disclaimer:</em> The Commissioner reserves the right to call to vote and/or make decisions on any actions that could disrupt the league's balance or are blatantly immoral.</p>
+          <p><em>Best Interest Clause:</em> If issues arise that aren't covered in the rules, the commissioner can take whatever actions are necessary for the league's best interest. He may consult other owners or hold a vote.</p>
+        </div>
+
+        <div class="doc-sub" id="s1-3">
+          <h3>1.3 Living Constitution</h3>
+          <p>This is the official Constitution for the Balls Deep Football League, and is a living document that will evolve. Changes can happen between seasons and will take effect immediately unless stated otherwise. Have suggestions? Submit them to the commissioner!</p>
+        </div>
+
+        <div class="doc-sub" id="s1-4">
+          <h3>1.4 League Dues / Payouts</h3>
+          <p>Each owner must pay $75 before the BDFL Draft. These funds go towards payouts at the end of the season. Any money won from the previous season can go towards the current year's dues.</p>
+        </div>
+
+        <div class="doc-sub" id="s1-5">
+          <h3>1.5 League Prizes</h3>
+          <h4>1.5.1 Payout Structure</h4>
+          <div class="payout-list">
+            <div class="payout-row"><span class="pn">1. BDFL Champion</span><span class="pv">$425</span></div>
+            <div class="payout-row"><span class="pn">2. BDFL Runner-up</span><span class="pv">$175</span></div>
+            <div class="payout-row"><span class="pn">3. BDFL 3rd Place</span><span class="pv">$75</span></div>
+            <div class="payout-row"><span class="pn">4. BDFL Toilet Bowl Champion</span><span class="pv">$50</span></div>
+          </div>
+          <p><b>Additional payouts:</b></p>
+          <ul>
+            <li>$5 per week goes to the highest scoring team each week (14 weeks &times; $5 = $70)</li>
+            <li>11 awards at the end of the season (11 &times; $5 = $55)</li>
+            <li>In-Season Tournament &mdash; $50 to the winner</li>
+          </ul>
+          <p class="payout-total">Total payouts add up to the $900 collected in dues ($425 + $175 + $75 + $50 + $70 + $55 + $50 = $900).</p>
+
+          <h4>1.5.2 Trophies</h4>
+          <p>Winning the Balls Deep Fantasy Football League earns you cash, bragging rights, and temporary possession of the trophy. The trophy belongs to the league and will be used every year, so it must be returned at the next year's draft. The champion will keep it until then. No alterations, modifications, or damage to the trophy, please.</p>
+        </div>
+      </div>
+
+      <div class="doc-section" id="s2">
+        <h2><span class="num">2.</span> League Setup and Competition</h2>
+        <p>The Balls Deep Fantasy Football League is a 12-team keeper league hosted on Sleeper.</p>
+
+        <div class="doc-sub" id="s2-1">
+          <h3>2.1 Keeper Format</h3>
+          <p>Teams can keep 2 to 5 players from the previous year's roster. Keepers are to be announced in the week leading up to the draft, allowing teams time to prepare their draft boards. Keeper lists will be posted on our Facebook page.</p>
+          <p>A player drafted the previous year will cost 1 draft pick, valued 1 round higher than the previous year's draft position. For example, if Team A drafted Aaron Rodgers in the 5th round last year and wants to keep him, they forfeit their 4th round pick this year.</p>
+          <p>You can keep a player for multiple years. Each year, the cost is last year's keeper cost plus one round. For instance, if Team A kept Aaron Rodgers last year and forfeited a 5th-round pick, they would forfeit a 4th-round pick this year. Keeping him again the following year would cost a 3rd round pick.</p>
+          <p>No team can forfeit more than one 1st round pick for a player, meaning a first-round draft pick can't be kept the following season. If a player was a first-round keeper the previous year, they can't be kept this year.</p>
+          <p>If you want to keep two players with the same keeper cost, you can forfeit a draft pick one round higher than the initial cost for one of them. For example, if both Aaron Rodgers and DK Metcalf cost a 5th-round pick, you could give a 5th-round pick for one and a 4th-round pick for the other. You decide which player gets which pick.</p>
+        </div>
+
+        <div class="doc-sub" id="s2-2">
+          <h3>2.2 Schedule</h3>
+          <p>The league schedule will consist of a 14-week head-to-head regular season, followed by three playoff weeks to determine the Balls Deep Champion.</p>
+          <p>In Weeks 1 through 11, each team plays every other team. Weeks 12&ndash;14 are bracketed based on last year's standings. The teams that finished 1st&ndash;4th last year will play each other again, with the 5th&ndash;8th place teams and 9th&ndash;12th place teams playing each other.</p>
+        </div>
+
+        <div class="doc-sub" id="s2-3">
+          <h3>2.3 Playoffs</h3>
+          <p>The Balls Deep Playoffs start in Week 15 of the NFL season and end with the Championship game in Week 17. The top 6 teams enter the playoff bracket to compete for the championship, while the remaining 6 teams enter the Toilet Bowl bracket. In the event of a tie in records, tiebreakers go to the team with the best head-to-head record, followed by the highest point total.</p>
+          <p>Teams are seeded based on regular season records and tiebreakers. The 1st and 2nd seeds in the Playoffs get a first-round bye, while the 3rd seed plays the 6th seed, and the 4th seed plays the 5th seed in the first round. Afterward, the 1st seed plays the lowest remaining seed, and the 2nd seed plays the other remaining seed.</p>
+          <p>For the Toilet Bowl bracket, the 7th and 8th seeds receive byes, with the 9th seed playing the 12th seed and the 10th seed playing the 11th seed in the first round. The 7th seed gets the lowest remaining seed in the second round.</p>
+        </div>
+
+        <div class="doc-sub" id="s2-4">
+          <h3>2.4 Points Totals and Scoring</h3>
+          <p>We use a Half-PPR scoring format, with points calculated to two decimal places. This ensures points are awarded or deducted for every yard, reducing the chance of ties. Players earn fantasy points each week they are in your starting lineup.</p>
+
+          <div class="table-pair">
+            <div class="table-wrap">
+              <table class="doctable">
+                <thead><tr><th>Offense</th><th>League Value</th></tr></thead>
+                <tbody>
+                  <tr><td>Passing Yards</td><td class="num">20 yds/pt</td></tr>
+                  <tr><td>Passing Touchdowns</td><td class="num">4</td></tr>
+                  <tr><td>Rushing Yards</td><td class="num">10 yds/pt</td></tr>
+                  <tr><td>Rushing Touchdowns</td><td class="num">6</td></tr>
+                  <tr><td>Receptions</td><td class="num">0.5</td></tr>
+                  <tr><td>Receiving Yards</td><td class="num">10 yds/pt</td></tr>
+                  <tr><td>Receiving Touchdowns</td><td class="num">6</td></tr>
+                  <tr><td>2-Point Conversions</td><td class="num">2</td></tr>
+                  <tr><td>Fumbles Lost</td><td class="num">-2</td></tr>
+                </tbody>
+              </table>
+            </div>
+
+            <div class="table-pair-stack">
+              <div class="table-wrap">
+                <table class="doctable">
+                  <thead><tr><th>Defense / Special Teams</th><th>Value</th></tr></thead>
+                  <tbody>
+                    <tr><td>Sack</td><td class="num">1</td></tr>
+                    <tr><td>Interception</td><td class="num">2</td></tr>
+                    <tr><td>Fumble Recovery</td><td class="num">2</td></tr>
+                    <tr><td>Touchdown</td><td class="num">6</td></tr>
+                    <tr><td>Safety</td><td class="num">2</td></tr>
+                    <tr><td>Points Allowed 0</td><td class="num">10</td></tr>
+                    <tr><td>Points Allowed 1&ndash;6</td><td class="num">8</td></tr>
+                    <tr><td>Points Allowed 7&ndash;13</td><td class="num">6</td></tr>
+                    <tr><td>Points Allowed 14&ndash;20</td><td class="num">2</td></tr>
+                    <tr><td>Points Allowed 21&ndash;27</td><td class="num">0</td></tr>
+                    <tr><td>Points Allowed 28&ndash;34</td><td class="num">-2</td></tr>
+                    <tr><td>Points Allowed 35+</td><td class="num">-4</td></tr>
+                  </tbody>
+                </table>
+              </div>
+
+              <div class="table-wrap">
+                <table class="doctable">
+                  <thead><tr><th>Kickers</th><th>Value</th></tr></thead>
+                  <tbody>
+                    <tr><td>Field Goals</td><td class="num">3</td></tr>
+                    <tr><td>FG Missed 0&ndash;29 Yds</td><td class="num">-1</td></tr>
+                    <tr><td>PAT Made</td><td class="num">1</td></tr>
+                    <tr><td>PAT Missed</td><td class="num">-1</td></tr>
+                    <tr><td>FG Total Yards</td><td class="num">50 yds/pt</td></tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+
+          <p>Fantasy games are finalized at the start of the next week's games. However, outcomes can change due to the NFL's weekly stat updates, usually published Thursday mornings. Sleeper applies these updates at around 4 PM on Thursdays, and any affected outcomes are final.</p>
+        </div>
+
+        <div class="doc-sub" id="s2-5">
+          <h3>2.5 Tiebreakers</h3>
+          <p>If there's a tie for playoff seeding and qualification, we'll break it using these rules:</p>
+          <ol>
+            <li>Head-to-head record</li>
+            <li>Total Points Scored</li>
+            <li>Total Points Against</li>
+            <li>Duel to the Death</li>
+          </ol>
+        </div>
+
+        <div class="doc-sub" id="s2-6">
+          <h3>2.6 Active Ownership Requirements</h3>
+          <p>All owners must actively manage their teams each week, even if out of playoff contention. Keep the league's competitive spirit alive, even if your team is struggling!</p>
+        </div>
+      </div>
+
+      <div class="doc-section" id="s3">
+        <h2><span class="num">3.</span> Roster Breakdown / Lineups</h2>
+
+        <div class="doc-sub" id="s3-1">
+          <h3>3.1 Positional Breakdown</h3>
+          <p><b>16 Total Players</b></p>
+          <p><em>Starters</em></p>
+          <ul>
+            <li>QB</li>
+            <li>RB</li>
+            <li>RB</li>
+            <li>WR</li>
+            <li>WR</li>
+            <li>TE</li>
+            <li>FLEX (RB/WR/TE)</li>
+            <li>K</li>
+            <li>D/ST</li>
+          </ul>
+          <p><b>7 Bench Spots</b></p>
+          <p><b>2 IR Spots</b> (player must be labeled as IR in the Sleeper App &mdash; players listed as Out do not qualify)</p>
+          <p>No Position Maximums</p>
+          <p>Owners should set their starting lineups before the start of each player's game. If you encounter issues accessing the Sleeper app or league homepage to set your lineup, contact the commissioner with enough time to assist. Expect to field the most competitive lineup each week.</p>
+          <div class="callout"><b>Special Note:</b> It's not the commissioner's responsibility to notify or correct an owner's invalid lineup. If technical issues arise, the commissioner can make a simple lineup change for an owner before game time, like substituting a reasonable WR alternative from the bench for a starter on a bye week. However, the commissioner can't pick up or drop players on behalf of an owner to correct an invalid lineup.</div>
+        </div>
+
+        <div class="doc-sub" id="s3-2">
+          <h3>3.2 Position Designation (AKA The Taysom Hill Rule)</h3>
+          <p>Sometimes, the NFL changes a player's position designation, or players line up in multiple positions during games. For example, a wide receiver might switch to tight end. In BDFL, we'll follow the position designations from our hosting site.</p>
+        </div>
+
+        <div class="doc-sub" id="s3-3">
+          <h3>3.3 Draft</h3>
+          <p>The BDFL Draft follows a snake draft format. The order is reversed each round: Round 1 goes 1&ndash;12, Round 2 goes 12&ndash;1, and so on for all 16 rounds.</p>
+          <p>Drafts are in-person events, and everyone is expected to participate. If you can't make it, arrange one of the following:</p>
+          <ul>
+            <li>Find someone to draft for you.</li>
+            <li>If you can't attend but have Messenger access during the draft, picks will be listed on the site.</li>
+          </ul>
+          <p>The commissioner sets the draft date and location, usually in late August or early September. This announce happens in the summer so everyone can plan accordingly. Notify the commissioner immediately if you foresee any conflicts so we can find a solution.</p>
+        </div>
+
+        <div class="doc-sub" id="s3-4">
+          <h3>3.4 Draft Order</h3>
+          <p>The draft order is no longer based on last year's standings. Instead, two events determine the order:</p>
+          <ul>
+            <li>March Madness Bracket Challenge (counts for 1/3)</li>
+            <li>A summer group event (counts for 2/3)</li>
+          </ul>
+          <p>Submit your bracket before the March Madness tournament begins. Links are released after the Tuesday "First Four" games and lock once games start.</p>
+          <p>Each summer, we'll vote on a group event, with the vote happening at least a month beforehand so everyone can plan. If you know you can't make it in advance, please contact the Commissioner and see if arrangements can be made to still have a score from the event. Once the event ends, the scores will be tabulated and the order will be announced. From that point, you can choose which draft pick you want when it is your turn in the order.</p>
+        </div>
+
+        <div class="doc-sub" id="s3-5">
+          <h3>3.5 Trades</h3>
+          <p>Trading is encouraged, and all trades will be approved and executed by the league Commissioner. There will be no league "veto" option and the commissioner will not veto any trades unless there is suspicion of collusion.</p>
+          <p>Trading future draft picks is allowed, just make sure the same number of draft picks are included in the trade.</p>
+          <p>The trade deadline will be set after Week 10.</p>
+        </div>
+
+        <div class="doc-sub" id="s3-6">
+          <h3>3.6 Waiver Claims</h3>
+          <p>Our league uses Sleeper's rolling waiver system for picking up players. This means waiver priority is based on the standings from last place to first. Once a player is claimed, that owner moves to the end of the waiver order. Waivers are processed early Wednesday morning. Any player not claimed during waivers becomes a free agent and can be picked up on a first-come, first-served basis. If a player is dropped, they are locked for 2 days before becoming available for pickup. Waiver priority is reset each week according to the standings.</p>
+        </div>
+      </div>
+
+      <div class="doc-section" id="s4">
+        <h2><span class="num">4.</span> Miscellaneous</h2>
+        <p>Each owner can only manage one team unless there are extreme circumstances. If you plan to leave the league, please inform the commissioner promptly to ensure a smooth transition.</p>
+
+        <div class="doc-sub" id="s4-1">
+          <h3>4.1 Unforeseen Problems</h3>
+          <p>We understand that things come up unexpectedly. If you can't submit a lineup for any reason, please message the commissioner or post in the group chat. This will provide a time-stamped record to verify any lineup changes.</p>
+        </div>
+
+        <div class="doc-sub" id="s4-2">
+          <h3>4.2 Conduct / Participation</h3>
+          <p>Everyone in the league is expected to behave like an adult. Trash talk and bragging are part of the fun, but keep it respectful and avoid personal attacks. Use common sense when posting on the message board.</p>
+          <p>Active participation is the heart of our league &mdash; more important than free agents, rivalries, or even stats. Without a sense of community, trade talk, and football banter, there's no league, and certainly no fun. So get involved and engage with fellow owners, not just for your enjoyment but for the good of the league. Stay active throughout the year!</p>
+        </div>
+
+        <div class="doc-sub" id="s4-3">
+          <h3>4.3 Removing / Replacing an Owner</h3>
+          <p>It is in the best interest of the league to never make this a practice. However, there may be rare occasions where it is unavoidable. These include, but are not limited to:</p>
+          <ul>
+            <li>Collusion and/or cheating</li>
+            <li>Refusal to pay league dues and fees</li>
+            <li>Prolonged owner inactivity</li>
+            <li>Rude and/or abusive owner</li>
+          </ul>
+          <p>In the event that a team's owner decides to exit the league and no longer participate, the following guidelines will detail the exit process whether it occurs midseason or during the off-season. It is the goal of the league to fill the ownership as soon as possible to maintain normal league activities as best as possible during the time the team is ownerless. In the event that the exit or removal happens mid-season, the commissioner will run the team by inserting players at each position with the highest projected total until the vacancy is filled.</p>
+        </div>
+
+        <div class="doc-sub" id="s4-4">
+          <h3>4.4 Collusion / Dumping / Borrowing</h3>
+          <p>Serious breaches of sportsmanship may require the commissioner to act to protect the integrity of the league. Collusion, player dumping, and any form of borrowing a player between fantasy owners are prohibited. In the event of collusion, the commissioner may remove the player from the league and the player will forfeit his entire fee and/or prize money. Trades or other actions where the sole intent is to help another team with no benefit to your own are also collusion. "Loaning" and "trade back" of players to help another owner is also a form of collusion.</p>
+        </div>
+      </div>
+
+      <div class="doc-section" id="s5">
+        <h2><span class="num">5.</span> Editing of the Constitution</h2>
+
+        <div class="doc-sub" id="s5-1">
+          <h3>5.1 Access and Agreement</h3>
+          <p>This league belongs to all of us. We're always looking for ways to make it better and rely on everyone's input. These rules are reviewed and agreed upon by everyone.</p>
+        </div>
+
+        <div class="doc-sub" id="s5-2">
+          <h3>5.2 Constitution Changes</h3>
+          <p>Any amendments, or changes to the constitution will happen in the off-season. To propose a change, bring it to the commissioner, who may create a poll for owners to vote. A simple majority decides the outcome. The commissioner won't vote, ensuring a majority is reached. Minor changes can be made by the commissioner as needed.</p>
+          <p>All rules aim to ensure no owner gains an unfair advantage or disadvantage. The commissioner can edit any of the following without a league vote: language clean-up that does not change the interpretation or enforcement of a rule, or any rules that are affected by changes in the league host format.</p>
+          <div class="callout"><b>Special Note:</b> Any changes to starting rosters or scoring will take effect one full season after being approved, giving everyone time to adjust. Other changes will apply the following season.</div>
+        </div>
+      </div>
+
+    </main>
+  </div>
+
+  <footer>Balls Deep Fantasy Football League &middot; Est. 2012 &middot; Constitution last transcribed from the league document</footer>
+
+</div>
+
+<script>
+// Highlight active TOC entry on scroll
+const sections = Array.from(document.querySelectorAll('.doc-section, .doc-sub')).filter(el => el.id);
+const links = Array.from(document.querySelectorAll('.toc a'));
+
+function onScroll(){
+  let currentId = sections[0] && sections[0].id;
+  const scrollPos = window.scrollY + 100;
+  for(const sec of sections){
+    if(sec.offsetTop <= scrollPos){
+      currentId = sec.id;
+    }
+  }
+  links.forEach(l => {
+    l.classList.toggle('active', l.getAttribute('href') === '#' + currentId);
+  });
+}
+window.addEventListener('scroll', onScroll, {passive:true});
+onScroll();
+</script>
+
+    </div>
+  </div>
+</div>
+
+</body>
+</html>

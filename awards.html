@@ -1,0 +1,1017 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Awards — Balls Deep FFL</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Barlow+Condensed:wght@500;600;700&family=Barlow:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+
+  :root{
+    --ink:#12161c;
+    --panel:#181d26;
+    --panel-2:#1f2530;
+    --line: rgba(255,255,255,0.08);
+    --gold:#d4af37;
+    --gold-soft: rgba(212,175,55,0.22);
+    --paper:#eef0f3;
+    --dim:#8b93a1;
+    --t1:#5c6472;
+    --t2:#8b93a1;
+    --t3:#d4af37;
+  }
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;background:var(--ink);color:var(--paper);font-family:'Barlow',sans-serif;}
+
+  /* ===================== SHARED SITE LAYOUT ===================== */
+  /* This block (sidebar + topbar + .app/.main/.content shell) is the
+     reusable chrome for every page on the site. Copy the .app wrapper,
+     the <nav class="sidebar">, and the <header class="topbar"> markup
+     as-is into new pages; only the "active" nav item and the topbar
+     title need to change per page. Page-specific content goes inside
+     <div class="content">…</div>. */
+
+  .app{display:flex;min-height:100vh;}
+
+  .sidebar{
+    width:230px;
+    flex:none;
+    background:linear-gradient(180deg, #14181f 0%, #0e1116 100%);
+    border-right:1px solid var(--line);
+    display:flex;
+    flex-direction:column;
+    position:sticky;
+    top:0;
+    height:100vh;
+    overflow-y:auto;
+  }
+  .sidebar-brand{
+    padding:26px 22px 22px;
+    border-bottom:1px solid var(--line);
+  }
+  .sidebar-brand .word1{
+    font-family:'Archivo Black',sans-serif;
+    font-size:19px;
+    color:var(--paper);
+    letter-spacing:0.02em;
+    line-height:1.1;
+  }
+  .sidebar-brand .word2{
+    font-family:'Archivo Black',sans-serif;
+    font-size:19px;
+    color:var(--gold);
+    letter-spacing:0.02em;
+    line-height:1.1;
+  }
+  .sidebar-brand .tag{
+    margin-top:6px;
+    font-family:'Barlow Condensed',sans-serif;
+    font-size:10.5px;
+    letter-spacing:0.24em;
+    text-transform:uppercase;
+    color:var(--dim);
+  }
+  .sidebar-nav{
+    display:flex;
+    flex-direction:column;
+    padding:10px 0;
+  }
+  .sidebar-nav a{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    padding:11px 22px;
+    font-family:'Barlow Condensed',sans-serif;
+    font-weight:600;
+    font-size:13px;
+    letter-spacing:0.08em;
+    text-transform:uppercase;
+    color:var(--dim);
+    text-decoration:none;
+    border-left:3px solid transparent;
+    transition:background .12s ease, color .12s ease;
+  }
+  .sidebar-nav a:hover{
+    background:rgba(255,255,255,0.03);
+    color:var(--paper);
+  }
+  .sidebar-nav a.active{
+    background:var(--gold-soft);
+    color:var(--gold);
+    border-left-color:var(--gold);
+  }
+  .sidebar-nav a .ic{
+    font-size:12px;
+    opacity:0.7;
+  }
+
+  .main{flex:1;min-width:0;display:flex;flex-direction:column;}
+
+  .topbar{
+    height:56px;
+    flex:none;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    padding:0 28px;
+    border-bottom:1px solid var(--line);
+    background:#10141b;
+    position:sticky;
+    top:0;
+    z-index:10;
+  }
+  .topbar-title{
+    font-family:'Barlow Condensed',sans-serif;
+    font-weight:700;
+    font-size:14px;
+    letter-spacing:0.18em;
+    text-transform:uppercase;
+    color:var(--gold);
+  }
+  .topbar-meta{
+    font-family:'Barlow Condensed',sans-serif;
+    font-size:11.5px;
+    letter-spacing:0.05em;
+    color:var(--dim);
+  }
+
+  .content{flex:1;}
+
+  @media (max-width:860px){
+    .sidebar{
+      position:fixed;
+      left:0; top:0; bottom:0;
+      transform:translateX(-100%);
+      z-index:50;
+      transition:transform .2s ease;
+      box-shadow:20px 0 40px rgba(0,0,0,0.4);
+    }
+    .sidebar.open{transform:translateX(0);}
+    .topbar-menu-btn{display:inline-flex;}
+  }
+  @media (min-width:861px){
+    .topbar-menu-btn{display:none;}
+  }
+  .topbar-menu-btn{
+    background:none;border:1px solid var(--line);color:var(--paper);
+    border-radius:6px;padding:6px 10px;cursor:pointer;font-size:14px;
+  }
+  /* ===================== /SHARED SITE LAYOUT ===================== */
+
+
+  .wrap{max-width:1080px;margin:0 auto;padding:0 24px 80px;}
+
+  header.hero{
+    padding:64px 24px 40px;
+    background:
+      radial-gradient(1200px 400px at 20% -10%, rgba(212,175,55,0.10), transparent 60%),
+      linear-gradient(180deg, #10141b 0%, var(--ink) 100%);
+    border-bottom:1px solid var(--line);
+    text-align:left;
+  }
+  .hero-inner{max-width:1080px;margin:0 auto;}
+  .eyebrow{
+    font-family:'Barlow Condensed',sans-serif;
+    letter-spacing:0.32em;
+    text-transform:uppercase;
+    font-size:12.5px;
+    color:var(--gold);
+    font-weight:600;
+    margin:0 0 14px;
+  }
+  h1{
+    font-family:'Archivo Black',sans-serif;
+    font-size:clamp(38px,6vw,64px);
+    line-height:0.98;
+    margin:0 0 14px;
+    letter-spacing:-0.01em;
+  }
+  .hero p{
+    color:var(--dim);
+    font-size:16px;
+    max-width:560px;
+    line-height:1.55;
+    margin:0;
+  }
+
+  .tabbar{
+    display:flex;
+    gap:8px;
+    margin-top:34px;
+    flex-wrap:wrap;
+  }
+  .tabbtn{
+    font-family:'Barlow Condensed',sans-serif;
+    font-weight:700;
+    font-size:13.5px;
+    letter-spacing:0.1em;
+    text-transform:uppercase;
+    padding:10px 20px;
+    border-radius:8px;
+    border:1px solid var(--line);
+    background:var(--panel-2);
+    color:var(--dim);
+    cursor:pointer;
+    transition:background .15s ease, color .15s ease, border-color .15s ease;
+  }
+  .tabbtn:hover{color:var(--paper);}
+  .tabbtn.active{
+    background:linear-gradient(180deg,#2a2110,#1c1608);
+    border-color:var(--gold-soft);
+    color:var(--gold);
+  }
+  .tabbtn[disabled]{
+    cursor:not-allowed;
+    opacity:0.4;
+  }
+  .tabbtn[disabled]:hover{color:var(--dim);}
+
+  .tabpanel{display:none;}
+  .tabpanel.active{display:block;}
+
+  .coming-soon{
+    padding:60px 24px;
+    text-align:center;
+    color:var(--dim);
+    font-family:'Barlow Condensed',sans-serif;
+    letter-spacing:0.06em;
+  }
+  .coming-soon strong{color:var(--gold);display:block;font-size:18px;margin-bottom:8px;letter-spacing:0.14em;text-transform:uppercase;}
+
+  .data-note{
+    margin-top:18px;
+    padding:14px 18px;
+    border:1px dashed var(--line);
+    border-radius:10px;
+    color:var(--dim);
+    font-size:13px;
+    line-height:1.55;
+  }
+  .data-note b{color:var(--gold);}
+
+  /* Alerts tab */
+  .alert-list{display:flex;flex-direction:column;gap:0;}
+  .alert-card{
+    position:relative;
+    display:flex;
+    align-items:center;
+    gap:16px;
+    padding:14px 20px 14px 18px;
+    background:var(--panel);
+    border-bottom:1px solid var(--line);
+  }
+  .alert-card:first-child{border-top-left-radius:14px;border-top-right-radius:14px;}
+  .alert-card:last-child{border-bottom:none;border-bottom-left-radius:14px;border-bottom-right-radius:14px;}
+  .alert-card::before{
+    content:'';
+    position:absolute;
+    left:0;top:8px;bottom:8px;
+    width:4px;
+    border-radius:3px;
+    background:var(--bar-a, var(--gold));
+  }
+  .alert-badge{
+    flex:none;
+    font-family:'Barlow Condensed',sans-serif;
+    font-weight:700;
+    font-size:10.5px;
+    letter-spacing:0.08em;
+    text-transform:uppercase;
+    padding:5px 10px;
+    border-radius:6px;
+    color:#0d1015;
+    white-space:nowrap;
+  }
+  .alert-badge.recent{background:#3fbf6b;color:#0d1015;}
+  .alert-badge.first{background:#8f6bff;color:#fff;}
+  .alert-badge.firstrecent{background:linear-gradient(90deg,#8f6bff,#3fbf6b);color:#fff;}
+  .alert-body{flex:1;min-width:0;}
+  .alert-title{
+    font-size:14.5px;
+    color:var(--paper);
+    line-height:1.35;
+  }
+  .alert-title b{color:var(--paper);font-weight:700;}
+  .alert-sub{
+    margin-top:3px;
+    font-family:'Barlow Condensed',sans-serif;
+    font-size:12px;
+    letter-spacing:0.03em;
+    color:var(--dim);
+  }
+  .alert-rank{
+    flex:none;
+    font-family:'Barlow Condensed',sans-serif;
+    font-weight:700;
+    font-size:11.5px;
+    letter-spacing:0.06em;
+    padding:5px 11px;
+    border-radius:6px;
+    background:var(--panel-2);
+    border:1px solid var(--line);
+    color:var(--dim);
+  }
+  @media (max-width:560px){
+    .alert-card{padding:12px 14px 12px 16px;gap:10px;}
+    .alert-title{font-size:13.5px;}
+    .alert-badge{font-size:9.5px;padding:4px 8px;}
+    .alert-rank{font-size:10px;padding:4px 8px;}
+  }
+
+  /* Scorigami tab */
+  .scori-intro{
+    padding:16px 24px;
+    color:var(--dim);
+    font-size:13.5px;
+    line-height:1.5;
+    border-bottom:1px solid var(--line);
+  }
+  .scori-legend{
+    display:flex;
+    gap:22px;
+    flex-wrap:wrap;
+    padding:14px 24px;
+    border-bottom:1px solid var(--line);
+    font-family:'Barlow Condensed',sans-serif;
+    font-size:12.5px;
+    letter-spacing:0.04em;
+    color:var(--dim);
+  }
+  .scori-legend span{display:inline-flex;align-items:center;gap:7px;}
+  .scori-swatch{width:13px;height:13px;border-radius:3px;display:inline-block;border:1px solid var(--line);}
+  .sw-never{background:repeating-linear-gradient(45deg, #1a1e26, #1a1e26 3px, #23272f 3px, #23272f 6px);}
+  .sw-1x{background:#2c4a63;}
+  .sw-2x{background:#2f6fa0;}
+  .sw-3x{background:#3a9bd6;}
+  .sw-4x{background:#d4af37;}
+
+  .scori-hint{
+    padding:10px 24px;
+    font-size:12.5px;
+    color:var(--dim);
+    font-style:italic;
+    border-bottom:1px solid var(--line);
+  }
+  .scori-hint.active{
+    color:var(--paper);
+    font-style:normal;
+    background:var(--panel-2);
+  }
+  .scori-hint b{color:var(--gold);}
+  .scori-hint .match-item{display:block;padding:2px 0;}
+
+  .grid-scroll{
+    max-height:520px;
+    overflow:auto;
+    padding:0 24px 24px;
+  }
+  table.scori-grid{
+    border-collapse:collapse;
+    font-family:'Barlow Condensed',sans-serif;
+    font-size:11px;
+  }
+  table.scori-grid th, table.scori-grid td{
+    width:20px;height:20px;
+    text-align:center;
+    padding:0;
+  }
+  table.scori-grid thead th{
+    position:sticky;top:0;
+    background:var(--panel);
+    color:var(--dim);
+    z-index:3;
+    font-weight:600;
+  }
+  table.scori-grid thead th.corner{
+    position:sticky; top:0; left:0; z-index:4;
+    background:var(--panel);
+  }
+  table.scori-grid tbody th{
+    position:sticky; left:0; z-index:2;
+    background:var(--panel);
+    color:var(--dim);
+    font-weight:600;
+  }
+  td.cell{
+    cursor:pointer;
+    border:1px solid rgba(0,0,0,0.35);
+  }
+  td.cell.invalid{
+    cursor:default;
+    background:repeating-linear-gradient(45deg, #171a20, #171a20 3px, #1d212a 3px, #1d212a 6px);
+  }
+  td.cell.c0{background:#12161c;}
+  td.cell.c1{background:#2c4a63;}
+  td.cell.c2{background:#2f6fa0;}
+  td.cell.c3{background:#3a9bd6;}
+  td.cell.c4{background:#d4af37;}
+  td.cell:hover{outline:2px solid #fff;outline-offset:-1px;}
+  td.cell.selected{outline:2px solid var(--gold);outline-offset:-1px;}
+
+  /* Data tables (outliers + scorigamis) */
+  .dt-block{padding:20px 24px 26px;}
+  .dt-heading{font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:16px;color:var(--paper);margin-bottom:2px;}
+  .dt-sub{color:var(--dim);font-size:12.5px;margin-bottom:14px;}
+  .dt-controls{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    flex-wrap:wrap;
+    gap:10px;
+    margin-bottom:10px;
+    font-family:'Barlow Condensed',sans-serif;
+    font-size:13px;
+    color:var(--dim);
+  }
+  .dt-controls select, .dt-controls input{
+    background:var(--panel-2);
+    border:1px solid var(--line);
+    color:var(--paper);
+    border-radius:6px;
+    padding:5px 8px;
+    font-family:'Barlow Condensed',sans-serif;
+    font-size:13px;
+  }
+  table.dt{
+    width:100%;
+    border-collapse:collapse;
+    font-size:13.5px;
+  }
+  table.dt thead th{
+    text-align:left;
+    padding:8px 10px;
+    background:var(--panel-2);
+    color:var(--dim);
+    font-family:'Barlow Condensed',sans-serif;
+    font-weight:700;
+    font-size:11.5px;
+    letter-spacing:0.06em;
+    text-transform:uppercase;
+    cursor:pointer;
+    user-select:none;
+    border-bottom:1px solid var(--line);
+    white-space:nowrap;
+  }
+  table.dt thead th .arrow{color:var(--dim);font-size:9px;margin-left:4px;}
+  table.dt thead th.sorted .arrow{color:var(--gold);}
+  table.dt tbody td{
+    padding:9px 10px;
+    border-bottom:1px solid var(--line);
+    color:var(--paper);
+  }
+  table.dt tbody tr:hover{background:rgba(255,255,255,0.03);}
+  table.dt tbody td.matchup{color:#5cc9ff;}
+  table.dt tbody td.num{text-align:right;font-variant-numeric:tabular-nums;}
+  .dt-footer{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    flex-wrap:wrap;
+    gap:10px;
+    margin-top:12px;
+    font-family:'Barlow Condensed',sans-serif;
+    font-size:12.5px;
+    color:var(--dim);
+  }
+  .dt-pager{display:flex;gap:4px;}
+  .dt-pager button{
+    background:var(--panel-2);
+    border:1px solid var(--line);
+    color:var(--dim);
+    padding:5px 10px;
+    border-radius:6px;
+    font-family:'Barlow Condensed',sans-serif;
+    font-size:12.5px;
+    cursor:pointer;
+  }
+  .dt-pager button.active{background:var(--gold-soft);color:var(--gold);border-color:var(--gold-soft);}
+  .dt-pager button:disabled{opacity:0.35;cursor:not-allowed;}
+
+  .legend{
+    display:flex;
+    flex-wrap:wrap;
+    gap:8px;
+    margin:34px 0 0;
+  }
+  .chip{
+    display:inline-flex;
+    align-items:center;
+    gap:7px;
+    padding:6px 14px 6px 10px;
+    border-radius:999px;
+    font-family:'Barlow Condensed',sans-serif;
+    font-weight:600;
+    font-size:13.5px;
+    letter-spacing:0.02em;
+    background:var(--panel-2);
+    border:1px solid var(--line);
+    color:var(--paper);
+  }
+  .dot{width:9px;height:9px;border-radius:50%;flex:none;}
+
+  .board{
+    margin-top:44px;
+    background:var(--panel);
+    border:1px solid var(--line);
+    border-radius:14px;
+    overflow:hidden;
+  }
+  .board + .board{margin-top:22px;}
+
+  .board-head{
+    display:flex;
+    align-items:baseline;
+    justify-content:space-between;
+    gap:16px;
+    padding:18px 24px;
+    background:linear-gradient(90deg, #21140a, #241c0a 55%, var(--panel));
+    border-bottom:1px solid var(--line);
+  }
+  .board-title{
+    font-family:'Barlow Condensed',sans-serif;
+    text-transform:uppercase;
+    letter-spacing:0.14em;
+    font-weight:700;
+    font-size:15px;
+    color:var(--gold);
+  }
+  .tier-key{
+    display:flex;
+    gap:16px;
+    flex-wrap:wrap;
+    font-family:'Barlow Condensed',sans-serif;
+    font-size:12px;
+    letter-spacing:0.05em;
+    color:var(--dim);
+  }
+  .tier-key span{display:inline-flex;align-items:center;gap:6px;}
+  .tier-key i{width:8px;height:8px;border-radius:2px;display:inline-block;}
+  .tier-key .t1 i{background:var(--t1);}
+  .tier-key .t2 i{background:var(--t2);}
+  .tier-key .t3 i{background:var(--t3);}
+
+  .chart{padding:20px 24px 26px;}
+
+  .row{
+    display:grid;
+    grid-template-columns:96px 1fr 84px;
+    align-items:center;
+    gap:14px;
+    padding:8px 0;
+  }
+  .row .name{
+    font-family:'Barlow Condensed',sans-serif;
+    font-weight:600;
+    font-size:15px;
+    color:var(--paper);
+    white-space:nowrap;
+    overflow:hidden;
+    text-overflow:ellipsis;
+  }
+  .track{
+    position:relative;
+    height:22px;
+    background:#0f1319;
+    border-radius:5px;
+    overflow:visible;
+    border:1px solid var(--line);
+  }
+  .fill{
+    position:absolute;
+    inset:0;
+    width:0%;
+    border-radius:4px 0 0 4px;
+    background:linear-gradient(90deg, var(--bar-a), var(--bar-b));
+    transition:width 1.1s cubic-bezier(.2,.8,.2,1);
+  }
+  .marker{
+    position:absolute;
+    top:-5px;
+    bottom:-5px;
+    width:1px;
+    background:rgba(255,255,255,0.28);
+  }
+  .marker.gold{background:var(--gold);}
+  .marker .mlabel{
+    position:absolute;
+    top:-19px;
+    left:50%;
+    transform:translateX(-50%);
+    font-family:'Barlow Condensed',sans-serif;
+    font-size:10px;
+    letter-spacing:0.06em;
+    color:var(--dim);
+    white-space:nowrap;
+  }
+  .marker.gold .mlabel{color:var(--gold);}
+  .value{
+    font-family:'Barlow Condensed',sans-serif;
+    font-weight:700;
+    font-size:15px;
+    text-align:right;
+    color:var(--paper);
+    font-variant-numeric:tabular-nums;
+  }
+  .value small{
+    display:block;
+    font-family:'Barlow Condensed',sans-serif;
+    font-weight:500;
+    font-size:10.5px;
+    color:var(--gold);
+    letter-spacing:0.08em;
+    text-transform:uppercase;
+  }
+
+  .axis{
+    display:grid;
+    grid-template-columns:96px 1fr 84px;
+    gap:14px;
+    padding-top:6px;
+    font-family:'Barlow Condensed',sans-serif;
+    font-size:11px;
+    color:var(--dim);
+  }
+  .axis .scale{display:flex;justify-content:space-between;}
+
+  footer{
+    text-align:center;
+    padding:40px 0 10px;
+    color:var(--dim);
+    font-family:'Barlow Condensed',sans-serif;
+    font-size:12px;
+    letter-spacing:0.08em;
+  }
+
+  .row{position:relative;}
+  .row .name{cursor:default;}
+
+  .tooltip{
+    position:absolute;
+    z-index:20;
+    left:96px;
+    top:100%;
+    margin-top:6px;
+    min-width:230px;
+    background:#0d1015;
+    border:1px solid var(--gold-soft);
+    border-radius:10px;
+    box-shadow:0 12px 30px rgba(0,0,0,0.55);
+    padding:12px 14px;
+    opacity:0;
+    transform:translateY(-4px);
+    pointer-events:none;
+    transition:opacity .15s ease, transform .15s ease;
+  }
+  .row.active .tooltip{opacity:1;transform:translateY(0);}
+  .tooltip-line{
+    display:flex;
+    align-items:baseline;
+    gap:8px;
+    font-family:'Barlow Condensed',sans-serif;
+    font-size:13px;
+    color:var(--paper);
+    padding:3px 0;
+    white-space:nowrap;
+  }
+  .tooltip-line + .tooltip-line{border-top:1px solid var(--line);}
+  .tooltip-sq{
+    width:9px;height:9px;border-radius:2px;flex:none;
+    display:inline-block;
+  }
+  .tooltip-label{color:var(--dim);letter-spacing:0.04em;text-transform:uppercase;font-size:10.5px;font-weight:600;}
+  .tooltip-val{font-weight:700;color:var(--paper);margin-left:auto;}
+  .tooltip-val.gold{color:var(--gold);}
+
+  @media (max-width:560px){
+    .tooltip{left:74px;min-width:200px;}
+  }
+
+  @media (max-width:560px){
+    .row{grid-template-columns:74px 1fr 66px;}
+    .axis{grid-template-columns:74px 1fr 66px;}
+    h1{font-size:34px;}
+  }
+
+
+
+  .hero{
+    padding:36px 28px 26px;
+    background:
+      radial-gradient(1200px 400px at 20% -10%, rgba(212,175,55,0.10), transparent 60%),
+      linear-gradient(180deg, #10141b 0%, var(--ink) 100%);
+    border-bottom:1px solid var(--line);
+  }
+  .eyebrow{
+    font-family:'Barlow Condensed',sans-serif;
+    letter-spacing:0.32em;
+    text-transform:uppercase;
+    font-size:12px;
+    color:var(--gold);
+    font-weight:600;
+    margin:0 0 12px;
+  }
+  h1{
+    font-family:'Archivo Black',sans-serif;
+    font-size:clamp(30px,5vw,44px);
+    line-height:0.98;
+    margin:0 0 12px;
+    letter-spacing:-0.01em;
+  }
+  .hero p{color:var(--dim);font-size:14.5px;max-width:600px;line-height:1.55;margin:0;}
+
+  .filter-panel{
+    margin-top:22px;
+    display:flex;
+    gap:10px;
+    flex-wrap:wrap;
+    align-items:flex-end;
+    background:var(--panel);
+    border:1px solid var(--line);
+    border-radius:12px;
+    padding:16px 18px;
+    max-width:560px;
+  }
+  .filter-field{display:flex;flex-direction:column;gap:5px;}
+  .filter-field label{
+    font-family:'Barlow Condensed',sans-serif;
+    font-size:10.5px;
+    letter-spacing:0.1em;
+    text-transform:uppercase;
+    color:var(--dim);
+  }
+  .filter-field select, .filter-field input{
+    background:var(--panel-2);
+    border:1px solid var(--line);
+    color:var(--paper);
+    border-radius:7px;
+    padding:8px 10px;
+    font-family:'Barlow Condensed',sans-serif;
+    font-size:13.5px;
+    min-width:170px;
+  }
+  .filter-go{
+    font-family:'Barlow Condensed',sans-serif;
+    font-weight:700;
+    font-size:13px;
+    letter-spacing:0.08em;
+    text-transform:uppercase;
+    padding:9px 20px;
+    border-radius:7px;
+    border:none;
+    background:linear-gradient(180deg,#e6c65c,var(--gold));
+    color:#1a1508;
+    cursor:pointer;
+  }
+  .filter-clear{
+    font-family:'Barlow Condensed',sans-serif;
+    font-size:12.5px;
+    color:var(--dim);
+    background:none;
+    border:none;
+    text-decoration:underline;
+    cursor:pointer;
+    padding:9px 4px;
+  }
+
+  .wrap{max-width:1080px;padding:28px;}
+
+  .mgr-board{margin-bottom:22px;}
+  .mgr-head{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:14px;
+    padding:16px 22px;
+    background:linear-gradient(90deg, #21140a, #241c0a 55%, var(--panel));
+    border-bottom:1px solid var(--line);
+    border-radius:14px 14px 0 0;
+    cursor:pointer;
+    user-select:none;
+  }
+  .mgr-name{
+    font-family:'Barlow Condensed',sans-serif;
+    text-transform:uppercase;
+    letter-spacing:0.1em;
+    font-weight:700;
+    font-size:18px;
+    color:var(--gold);
+  }
+  .mgr-count{
+    font-family:'Barlow Condensed',sans-serif;
+    font-weight:700;
+    font-size:11.5px;
+    letter-spacing:0.06em;
+    text-transform:uppercase;
+    padding:6px 14px;
+    border-radius:999px;
+    background:var(--gold-soft);
+    color:var(--gold);
+  }
+  .mgr-chevron{
+    color:var(--dim);
+    font-size:12px;
+    transition:transform .15s ease;
+  }
+  .mgr-board.collapsed .mgr-chevron{transform:rotate(-90deg);}
+  .mgr-board.collapsed .tile-grid{display:none;}
+
+  .tile-grid{
+    display:grid;
+    grid-template-columns:repeat(3, 1fr);
+    gap:10px;
+    padding:16px;
+    background:var(--panel);
+    border-radius:0 0 14px 14px;
+  }
+  .tile{
+    border-radius:10px;
+    padding:12px 14px;
+    background:rgba(63,191,107,0.10);
+    border:1px solid rgba(63,191,107,0.25);
+  }
+  .tile.bad{
+    background:rgba(230,90,110,0.10);
+    border:1px solid rgba(230,90,110,0.28);
+  }
+  .tile-value{
+    font-family:'Barlow Condensed',sans-serif;
+    font-weight:700;
+    font-size:19px;
+    color:var(--paper);
+  }
+  .tile-label{
+    margin-top:3px;
+    font-size:12px;
+    color:var(--dim);
+    line-height:1.3;
+  }
+  .tile-sub{
+    margin-top:2px;
+    font-size:11px;
+    color:var(--dim);
+    opacity:0.8;
+  }
+  .tile.hide{display:none;}
+
+  @media (max-width:700px){
+    .tile-grid{grid-template-columns:repeat(2,1fr);}
+  }
+  @media (max-width:460px){
+    .tile-grid{grid-template-columns:1fr;}
+  }
+
+</style>
+</head>
+<body>
+
+<div class="app">
+
+  <nav class="sidebar" id="sidebar">
+    <div class="sidebar-brand">
+      <div class="word1">BALLS</div>
+      <div class="word2">DEEP FFL</div>
+      <div class="tag">Est. 2012</div>
+    </div>
+    <div class="sidebar-nav">
+      <a href="index.html">Dashboard</a>
+      <a href="our-story.html">Our Story</a>
+      <a href="season-recaps.html">Season Recaps</a>
+      <a href="regular-season.html">Regular Season</a>
+      <a href="postseason.html">Postseason</a>
+      <a href="awards.html" class="active">Awards</a>
+      <a href="records.html">Records</a>
+      <a href="milestones.html">Milestones</a>
+      <a href="survivor-tourney.html">Survivor Tourney</a>
+      <a href="draft.html">Draft</a>
+      <a href="managers.html">Managers</a>
+      <a href="hall-of-fame.html">Hall of Fame</a>
+      <a href="constitution.html">Constitution</a>
+    </div>
+  </nav>
+
+  <div class="main">
+    <header class="topbar">
+      <button class="topbar-menu-btn" onclick="document.getElementById('sidebar').classList.toggle('open')">&#9776;</button>
+      <div class="topbar-title">Awards</div>
+      <div class="topbar-meta">Balls Deep FFL &middot; through 2025 season</div>
+    </header>
+
+    <div class="content">
+      <header class="hero">
+        <p class="eyebrow">Balls Deep FFL &middot; Est. 2012</p>
+        <h1>AWARDS</h1>
+        <p>Every league record this manager holds — leading records in green, trailing records in pink — computed straight from the game archive.</p>
+
+        <div class="filter-panel">
+          <div class="filter-field">
+            <label>Select Owner</label>
+            <select id="owner-select">
+              <option value="">All Owners</option>
+              <option value="Ben F.">Ben F.</option>
+<option value="Ben G.">Ben G.</option>
+<option value="Bradley F.">Bradley F.</option>
+<option value="Brian O.">Brian O.</option>
+<option value="Cordel G.">Cordel G.</option>
+<option value="Corey R.">Corey R.</option>
+<option value="Derrick T.">Derrick T.</option>
+<option value="JC P.">JC P.</option>
+<option value="Jacob C.">Jacob C.</option>
+<option value="Jason G.">Jason G.</option>
+<option value="Luke S.">Luke S.</option>
+<option value="Travis J.">Travis J.</option>
+            </select>
+          </div>
+          <div class="filter-field">
+            <label>Search</label>
+            <input type="text" id="award-search" placeholder="Search a record&hellip;">
+          </div>
+          <button class="filter-go" id="filter-go">Go</button>
+          <button class="filter-clear" id="filter-clear">Clear</button>
+        </div>
+      </header>
+
+      <div class="wrap" id="award-sections"></div>
+    </div>
+  </div>
+</div>
+
+<script>
+const MGR_AWARDS = {"Ben F.": [{"category": "Fewest Pts For (Season)", "value": 983.6, "sub": "2017", "kind": "bad", "section": "All-Time PF/PA"}, {"category": "Most Pts Against (Week)", "value": 199.58, "sub": "2024 Wk 14.0", "kind": "good", "section": "All-Time PF/PA"}, {"category": "Most Losses (All-Time)", "value": "103", "sub": null, "kind": "bad", "section": "All-Time PF/PA"}, {"category": "Largest Margin of Defeat", "value": 131.98, "sub": "2024 Wk 14.0", "kind": "bad", "section": "Margins"}, {"category": "Most Wins vs Single Opponent", "value": "14", "sub": "vs Bradley F.", "kind": "good", "section": "Head-to-Head"}, {"category": "Most Losses vs Single Opponent", "value": "14", "sub": "vs Bradley F.", "kind": "bad", "section": "Head-to-Head"}, {"category": "Fewest Wins vs Single Opponent (min 3 games)", "value": "0", "sub": "vs Jacob C.", "kind": "bad", "section": "Head-to-Head"}, {"category": "Fewest Bench Pts (Season)", "value": 270.7, "sub": "2019", "kind": "bad", "section": "Position Points"}, {"category": "Most WRs Drafted in First Round", "value": "9", "sub": null, "kind": "good", "section": "Draft Stats"}, {"category": "Worst Current Postseason Appearance Streak", "value": 0.0, "sub": null, "kind": "bad", "section": "Postseason"}, {"category": "Smallest Championship Margin of Defeat", "value": 2.3, "sub": "2014", "kind": "good", "section": "Postseason"}, {"category": "Most Weeks as Bottom Scorer", "value": 32.0, "sub": null, "kind": "bad", "section": "League Trends"}], "Ben G.": [{"category": "Most Total Yards", "value": 10692.0, "sub": null, "kind": "good", "section": "Current Season Awards"}, {"category": "Most Total TDs", "value": 79.0, "sub": null, "kind": "good", "section": "Current Season Awards"}, {"category": "Most Pts Against (All-Time)", "value": 18862.3, "sub": null, "kind": "good", "section": "All-Time PF/PA"}, {"category": "Most Pts For (Season)", "value": 1706.2, "sub": "2025", "kind": "good", "section": "All-Time PF/PA"}, {"category": "Longest Winning Streak", "value": 11.0, "sub": null, "kind": "good", "section": "Streaks"}, {"category": "Longest Losing Streak to Start Season", "value": 10.0, "sub": "2012", "kind": "bad", "section": "Streaks"}, {"category": "Most RB Pts (All-Time)", "value": 5896.1, "sub": null, "kind": "good", "section": "Position Points"}, {"category": "Most WR Pts (Season)", "value": 615.0, "sub": "2012", "kind": "good", "section": "Position Points"}, {"category": "Most TE Pts (All-Time)", "value": 1548.5, "sub": null, "kind": "good", "section": "Position Points"}, {"category": "Most DEF Pts (All-Time)", "value": 1762.0, "sub": null, "kind": "good", "section": "Position Points"}, {"category": "Most K Pts (Week)", "value": 24.9, "sub": "2024 Wk 1.0", "kind": "good", "section": "Position Points"}, {"category": "Most Bench Pts (All-Time)", "value": 8959.1, "sub": null, "kind": "good", "section": "Position Points"}, {"category": "Most Bench Pts (Best Single Season, All-Time)", "value": 954.0, "sub": "2012", "kind": "good", "section": "Position Points"}, {"category": "Most #1 Ranked Wkly RB (All-Time)", "value": "21", "sub": null, "kind": "good", "section": "#1 Ranked Weekly Players"}, {"category": "Most #1 Ranked Wkly DEF (All-Time)", "value": "19", "sub": null, "kind": "good", "section": "#1 Ranked Weekly Players"}, {"category": "Most #1 Ranked Weekly Position Players (All-Time)", "value": "106", "sub": null, "kind": "good", "section": "#1 Ranked Weekly Players"}, {"category": "Most #1 Ranked Wkly K (Best Single Season)", "value": 6.0, "sub": "2021", "kind": "good", "section": "#1 Ranked Weekly Players"}, {"category": "Most RBs Drafted in First Round", "value": "13", "sub": null, "kind": "good", "section": "Draft Stats"}, {"category": "Most Postseason Points For (Season)", "value": 397.7, "sub": "2025", "kind": "good", "section": "Postseason"}, {"category": "Most Postseason Points For (Week)", "value": 176.6, "sub": "2025 Wk 15.0", "kind": "good", "section": "Postseason"}, {"category": "Most Top-Seed Losses (Semifinal)", "value": 2.0, "sub": null, "kind": "bad", "section": "Postseason"}, {"category": "Most Weeks Spent in Last Place", "value": 25.0, "sub": null, "kind": "bad", "section": "League Trends"}], "Bradley F.": [{"category": "Smallest Margin of Victory", "value": 0.0400000000000063, "sub": "2024 Wk 8.0", "kind": "bad", "section": "Margins"}, {"category": "Fewest Losses vs Single Opponent (min 3 games)", "value": "0", "sub": "vs Daniel H.", "kind": "bad", "section": "Head-to-Head"}, {"category": "Most Pts vs Single Opponent (All-Time)", "value": 2701.4, "sub": "vs Ben F.", "kind": "good", "section": "Head-to-Head"}, {"category": "Most Top-Seed Losses (Total, All Rounds)", "value": "7", "sub": null, "kind": "bad", "section": "Postseason"}, {"category": "Most Top-Seed Losses (Quarterfinal)", "value": 3.0, "sub": null, "kind": "bad", "section": "Postseason"}], "Brian O.": [{"category": "Smallest Margin of Defeat", "value": 0.100000000000009, "sub": "Wk 2.0", "kind": "good", "section": "Current Season Awards"}, {"category": "Fewest Pts For (All-Time, active owners)", "value": 2547.1, "sub": null, "kind": "bad", "section": "All-Time PF/PA"}, {"category": "Most Losses (Season)", "value": "12", "sub": "2024", "kind": "bad", "section": "All-Time PF/PA"}, {"category": "Longest Losing Streak", "value": 17.0, "sub": null, "kind": "bad", "section": "Streaks"}, {"category": "Highest Average Draft Position (earliest picks)", "value": 114.38, "sub": null, "kind": "good", "section": "Draft Stats"}, {"category": "Fewest Average Points (All-Time, active owners)", "value": 90.97, "sub": null, "kind": "bad", "section": "League Trends"}], "Cordel G.": [{"category": "Most Wins (Season)", "value": "12", "sub": "2024", "kind": "good", "section": "All-Time PF/PA"}, {"category": "Most #1 Ranked Wkly QB (All-Time)", "value": "20", "sub": null, "kind": "good", "section": "#1 Ranked Weekly Players"}, {"category": "Most #1 Ranked Wkly TE (All-Time)", "value": "21", "sub": null, "kind": "good", "section": "#1 Ranked Weekly Players"}, {"category": "Smallest Championship Margin of Victory", "value": 2.3, "sub": "2014", "kind": "good", "section": "Postseason"}], "Corey R.": [{"category": "Fewest Pts in Week", "value": 58.79, "sub": "Wk 11.0", "kind": "bad", "section": "Current Season Awards"}, {"category": "Most QB Pts (All-Time)", "value": 4071.4, "sub": null, "kind": "good", "section": "Position Points"}, {"category": "Most DEF Pts (Season)", "value": 226.0, "sub": "2019", "kind": "good", "section": "Position Points"}, {"category": "Most DEF Pts (Week)", "value": 37.0, "sub": "2019 Wk 2.0", "kind": "good", "section": "Position Points"}, {"category": "Most #1 Ranked Wkly DEF (Best Single Season)", "value": 7.0, "sub": "2019", "kind": "good", "section": "#1 Ranked Weekly Players"}, {"category": "Best Current or All-Time Postseason Appearance Streak", "value": 4.0, "sub": null, "kind": "good", "section": "Postseason"}, {"category": "Most Quarterfinal Wins", "value": "6", "sub": null, "kind": "good", "section": "Postseason"}, {"category": "Most Underdog Wins (Total, All Rounds)", "value": "8", "sub": null, "kind": "good", "section": "Postseason"}, {"category": "Most Underdog Wins (Quarterfinal)", "value": 3.0, "sub": null, "kind": "good", "section": "Postseason"}, {"category": "Most Underdog Wins (Semifinal)", "value": 3.0, "sub": null, "kind": "good", "section": "Postseason"}, {"category": "Most Top-Seed Losses (Final)", "value": 2.0, "sub": null, "kind": "bad", "section": "Postseason"}], "Derrick T.": [{"category": "Largest Margin of Defeat", "value": 109.06, "sub": "Wk 6.0", "kind": "bad", "section": "Current Season Awards"}, {"category": "Most #1 Ranked Wkly TE (2025 Season)", "value": "4", "sub": null, "kind": "good", "section": "#1 Ranked Weekly Players"}, {"category": "Most #1 Ranked Wkly K (2025 Season)", "value": "3", "sub": null, "kind": "good", "section": "#1 Ranked Weekly Players"}, {"category": "Worst Postseason Win %", "value": 0.167, "sub": null, "kind": "bad", "section": "Postseason"}], "JC P.": [{"category": "Most Bench Pts", "value": 746.2, "sub": null, "kind": "good", "section": "Current Season Awards"}, {"category": "Most Pts in Week", "value": 182.61, "sub": "Wk 6.0", "kind": "good", "section": "Current Season Awards"}, {"category": "Largest Margin of Victory", "value": 109.06, "sub": "Wk 6.0", "kind": "good", "section": "Current Season Awards"}, {"category": "Longest Winning Streak to Start Season", "value": 11.0, "sub": "2025", "kind": "good", "section": "Streaks"}, {"category": "Most RB Pts (Season)", "value": 753.1, "sub": "2025", "kind": "good", "section": "Position Points"}, {"category": "Most #1 Ranked Wkly RB (2025 Season)", "value": "7", "sub": null, "kind": "good", "section": "#1 Ranked Weekly Players"}, {"category": "Most #1 Ranked Wkly DEF (2025 Season)", "value": "2", "sub": null, "kind": "good", "section": "#1 Ranked Weekly Players"}, {"category": "Most #1 Ranked Weekly Position Players (2025 Season)", "value": 13.0, "sub": null, "kind": "good", "section": "#1 Ranked Weekly Players"}, {"category": "Most #1 Ranked Wkly RB (Best Single Season)", "value": 7.0, "sub": "2025", "kind": "good", "section": "#1 Ranked Weekly Players"}, {"category": "Most #1 Overall Picks", "value": "9", "sub": null, "kind": "good", "section": "Draft Stats"}, {"category": "Best Current Postseason Appearance Streak", "value": 3.0, "sub": null, "kind": "good", "section": "Postseason"}, {"category": "Largest Championship Margin of Defeat", "value": 44.3, "sub": "2020", "kind": "good", "section": "Postseason"}], "Jacob C.": [{"category": "Smallest Margin of Victory", "value": 0.100000000000009, "sub": "Wk 2.0", "kind": "bad", "section": "Current Season Awards"}, {"category": "Fewest Pts Against (All-Time, active owners)", "value": 2796.7, "sub": null, "kind": "bad", "section": "All-Time PF/PA"}, {"category": "Most Pts For (Week)", "value": 199.58, "sub": "2024 Wk 14.0", "kind": "good", "section": "All-Time PF/PA"}, {"category": "Largest Margin of Victory", "value": 131.98, "sub": "2024 Wk 14.0", "kind": "good", "section": "Margins"}, {"category": "Most QB Pts (Week)", "value": 55.3, "sub": "2024 Wk 14.0", "kind": "good", "section": "Position Points"}, {"category": "Most WR Pts (Week)", "value": 81.0, "sub": "2024 Wk 14.0", "kind": "good", "section": "Position Points"}, {"category": "Most #1 Ranked Wkly QB (2025 Season)", "value": "3", "sub": null, "kind": "good", "section": "#1 Ranked Weekly Players"}, {"category": "Fewest Postseason Appearances (active owners)", "value": "2", "sub": null, "kind": "bad", "section": "Postseason"}, {"category": "Most Average Points (All-Time)", "value": 114.95, "sub": null, "kind": "good", "section": "League Trends"}], "Jason G.": [{"category": "Most IR Players", "value": 3.0, "sub": null, "kind": "good", "section": "Current Season Awards"}, {"category": "Most Pts For (All-Time)", "value": 19603.2, "sub": null, "kind": "good", "section": "All-Time PF/PA"}, {"category": "Fewest Pts Against (Week)", "value": 27.65, "sub": "2018 Wk 11.0", "kind": "bad", "section": "All-Time PF/PA"}, {"category": "Most Wins (All-Time)", "value": "111", "sub": null, "kind": "good", "section": "All-Time PF/PA"}, {"category": "Most WR Pts (All-Time)", "value": 5513.0, "sub": null, "kind": "good", "section": "Position Points"}, {"category": "Most K Pts (All-Time)", "value": 1609.8, "sub": null, "kind": "good", "section": "Position Points"}, {"category": "Most K Pts (Season)", "value": 153.9, "sub": "2025", "kind": "good", "section": "Position Points"}, {"category": "Most #1 Ranked Wkly WR (All-Time)", "value": "24", "sub": null, "kind": "good", "section": "#1 Ranked Weekly Players"}, {"category": "Most #1 Ranked Wkly WR (2025 Season)", "value": "3", "sub": null, "kind": "good", "section": "#1 Ranked Weekly Players"}, {"category": "Most #1 Ranked Wkly K (All-Time)", "value": "22", "sub": null, "kind": "good", "section": "#1 Ranked Weekly Players"}, {"category": "Most Postseason Appearances", "value": "9", "sub": null, "kind": "good", "section": "Postseason"}, {"category": "Most Postseason Wins", "value": "16", "sub": null, "kind": "good", "section": "Postseason"}, {"category": "Best Postseason Win %", "value": 0.762, "sub": null, "kind": "good", "section": "Postseason"}, {"category": "Most Semifinal Wins", "value": "7", "sub": null, "kind": "good", "section": "Postseason"}, {"category": "Most Championships", "value": "5", "sub": null, "kind": "good", "section": "Postseason"}, {"category": "Most Postseason Points For (All-Time)", "value": 2363.5, "sub": null, "kind": "good", "section": "Postseason"}, {"category": "Smallest Postseason Margin of Victory", "value": 0.0, "sub": "2012 Quarterfinals", "kind": "good", "section": "Postseason"}, {"category": "Largest Championship Margin of Victory", "value": 44.3, "sub": "2020", "kind": "good", "section": "Postseason"}, {"category": "Most Weeks as Top Scorer", "value": 23.0, "sub": null, "kind": "good", "section": "League Trends"}, {"category": "Most Weeks Spent in First Place", "value": 43.0, "sub": null, "kind": "good", "section": "League Trends"}], "Luke S.": [{"category": "Smallest Margin of Defeat", "value": 0.0400000000000063, "sub": "2024 Wk 8.0", "kind": "good", "section": "Margins"}], "Travis J.": [{"category": "Fewest Total Yards", "value": 7945.0, "sub": null, "kind": "bad", "section": "Current Season Awards"}, {"category": "Fewest Total TDs", "value": 52.0, "sub": null, "kind": "bad", "section": "Current Season Awards"}, {"category": "Most Pts in a Loss", "value": 153.28, "sub": "2022 Wk 4.0", "kind": "bad", "section": "All-Time PF/PA"}, {"category": "Most RB Pts (Week)", "value": 86.8, "sub": "2022 Wk 9.0", "kind": "good", "section": "Position Points"}, {"category": "Most Bench Pts (Week)", "value": 132.8, "sub": "2021 Wk 14.0", "kind": "good", "section": "Position Points"}]};
+const ORDER = ["Ben F.", "Ben G.", "Bradley F.", "Brian O.", "Cordel G.", "Corey R.", "Derrick T.", "JC P.", "Jacob C.", "Jason G.", "Luke S.", "Travis J."];
+
+const container = document.getElementById('award-sections');
+
+function fmtVal(val){
+  if (typeof val === 'number'){
+    return Number.isInteger(val) ? val.toLocaleString() : val.toLocaleString(undefined,{maximumFractionDigits:3});
+  }
+  return val;
+}
+
+const sortedMgrs = ORDER.slice().sort();
+
+sortedMgrs.forEach(mgr=>{
+  const rows = MGR_AWARDS[mgr] || [];
+  if (!rows.length) return;
+
+  const board = document.createElement('div');
+  board.className = 'mgr-board board';
+  board.dataset.manager = mgr;
+
+  const head = document.createElement('div');
+  head.className = 'mgr-head';
+  head.innerHTML = `<div class="mgr-name">${mgr}</div><div class="mgr-count">${rows.length} Award${rows.length!==1?'s':''}</div><div class="mgr-chevron">&#9660;</div>`;
+  head.addEventListener('click', ()=> board.classList.toggle('collapsed'));
+  board.appendChild(head);
+
+  const grid = document.createElement('div');
+  grid.className = 'tile-grid';
+
+  rows.forEach(r=>{
+    const tile = document.createElement('div');
+    tile.className = 'tile ' + (r.kind==='bad' ? 'bad' : 'good');
+    tile.dataset.search = (r.category + ' ' + (r.sub||'') + ' ' + fmtVal(r.value)).toLowerCase();
+    tile.innerHTML = `
+      <div class="tile-value">${fmtVal(r.value)}</div>
+      <div class="tile-label">${r.category}</div>
+      ${r.sub ? `<div class="tile-sub">${r.sub}</div>` : ''}
+    `;
+    grid.appendChild(tile);
+  });
+
+  board.appendChild(grid);
+  container.appendChild(board);
+});
+
+function applyFilters(){
+  const owner = document.getElementById('owner-select').value;
+  const q = document.getElementById('award-search').value.toLowerCase().trim();
+
+  document.querySelectorAll('.mgr-board').forEach(board=>{
+    const mgr = board.dataset.manager;
+    const ownerMatch = !owner || owner === mgr;
+    let anyVisible = false;
+    board.querySelectorAll('.tile').forEach(tile=>{
+      const searchMatch = !q || tile.dataset.search.includes(q);
+      const show = ownerMatch && searchMatch;
+      tile.classList.toggle('hide', !show);
+      if (show) anyVisible = true;
+    });
+    board.style.display = anyVisible ? '' : 'none';
+    if (owner) board.classList.remove('collapsed');
+  });
+}
+
+document.getElementById('filter-go').addEventListener('click', applyFilters);
+document.getElementById('award-search').addEventListener('input', applyFilters);
+document.getElementById('owner-select').addEventListener('change', applyFilters);
+document.getElementById('filter-clear').addEventListener('click', ()=>{
+  document.getElementById('owner-select').value = '';
+  document.getElementById('award-search').value = '';
+  applyFilters();
+});
+</script>
+
+</body>
+</html>
