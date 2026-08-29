@@ -9,23 +9,26 @@
 <style>
 
   :root{
-    --ink:#12161c;
-    --panel:#181d26;
-    --panel-2:#1f2530;
-    --line: rgba(255,255,255,0.08);
-    --gold:#d4af37;
-    --gold-soft: rgba(212,175,55,0.22);
-    --paper:#eef0f3;
-    --dim:#8b93a1;
-    --t1:#5c6472;
-    --t2:#8b93a1;
-    --t3:#d4af37;
-    --green:#3fae66;
-    --green-soft: rgba(63,174,102,0.18);
-    --red:#c85a5a;
-  }
+  --bd-black:#0e0c09;
+  --bd-panel:#18150f;
+  --bd-panel-2:#211c14;
+  --bd-line:#332b1c;
+  --bd-gold:#d4af37;
+  --bd-gold-bright:#f2cc4d;
+  --bd-gold-dim:#8a7228;
+  --bd-gold-soft: rgba(212,175,55,0.22);
+  --bd-white:#f3ede0;
+  --bd-muted:#9c9384;
+  --bd-green:#5aa876;
+  --bd-green-soft: rgba(90,168,118,0.18);
+  --bd-red:#c1596a;
+  --bd-silver:#b9bcc3;
+  --bd-bronze:#c08a4f;
+  --font-display:'Archivo Black', sans-serif;
+  --font-cond:'Barlow Condensed', sans-serif;
+}
   *{box-sizing:border-box;}
-  html,body{margin:0;padding:0;background:var(--ink);color:var(--paper);font-family:'Barlow',sans-serif;}
+  html,body{margin:0;padding:0;background:var(--bd-black);color:var(--bd-white);font-family:'Barlow Condensed',sans-serif;}
 
   /* ===================== SHARED SITE LAYOUT ===================== */
   .app{display:flex;min-height:100vh;}
@@ -34,7 +37,7 @@
     width:230px;
     flex:none;
     background:linear-gradient(180deg, #14181f 0%, #0e1116 100%);
-    border-right:1px solid var(--line);
+    border-right:1px solid var(--bd-line);
     display:flex;
     flex-direction:column;
     position:sticky;
@@ -44,19 +47,19 @@
   }
   .sidebar-brand{
     padding:26px 22px 22px;
-    border-bottom:1px solid var(--line);
+    border-bottom:1px solid var(--bd-line);
   }
   .sidebar-brand .word1{
     font-family:'Archivo Black',sans-serif;
     font-size:19px;
-    color:var(--paper);
+    color:var(--bd-white);
     letter-spacing:0.02em;
     line-height:1.1;
   }
   .sidebar-brand .word2{
     font-family:'Archivo Black',sans-serif;
     font-size:19px;
-    color:var(--gold);
+    color:var(--bd-gold);
     letter-spacing:0.02em;
     line-height:1.1;
   }
@@ -66,7 +69,7 @@
     font-size:10.5px;
     letter-spacing:0.24em;
     text-transform:uppercase;
-    color:var(--dim);
+    color:var(--bd-muted);
   }
   .sidebar-nav{
     display:flex;
@@ -83,19 +86,19 @@
     font-size:13px;
     letter-spacing:0.08em;
     text-transform:uppercase;
-    color:var(--dim);
+    color:var(--bd-muted);
     text-decoration:none;
     border-left:3px solid transparent;
     transition:background .12s ease, color .12s ease;
   }
   .sidebar-nav a:hover{
     background:rgba(255,255,255,0.03);
-    color:var(--paper);
+    color:var(--bd-white);
   }
   .sidebar-nav a.active{
-    background:var(--gold-soft);
-    color:var(--gold);
-    border-left-color:var(--gold);
+    background:var(--bd-gold-soft);
+    color:var(--bd-gold);
+    border-left-color:var(--bd-gold);
   }
   .sidebar-nav a .ic{
     font-size:12px;
@@ -111,7 +114,7 @@
     align-items:center;
     justify-content:space-between;
     padding:0 28px;
-    border-bottom:1px solid var(--line);
+    border-bottom:1px solid var(--bd-line);
     background:#10141b;
     position:sticky;
     top:0;
@@ -123,13 +126,13 @@
     font-size:14px;
     letter-spacing:0.18em;
     text-transform:uppercase;
-    color:var(--gold);
+    color:var(--bd-gold);
   }
   .topbar-meta{
     font-family:'Barlow Condensed',sans-serif;
     font-size:11.5px;
     letter-spacing:0.05em;
-    color:var(--dim);
+    color:var(--bd-muted);
   }
 
   .content{flex:1;}
@@ -150,7 +153,7 @@
     .topbar-menu-btn{display:none;}
   }
   .topbar-menu-btn{
-    background:none;border:1px solid var(--line);color:var(--paper);
+    background:none;border:1px solid var(--bd-line);color:var(--bd-white);
     border-radius:6px;padding:6px 10px;cursor:pointer;font-size:14px;
   }
 
@@ -163,7 +166,7 @@
     background:
       radial-gradient(ellipse at 50% 0%, rgba(212,175,55,0.14), transparent 60%),
       linear-gradient(180deg, #171b23 0%, #0e1116 100%);
-    border:1px solid var(--line);
+    border:1px solid var(--bd-line);
     border-radius:14px;
     padding:44px 30px 38px;
     text-align:center;
@@ -183,7 +186,7 @@
     letter-spacing:0.3em;
     text-transform:uppercase;
     font-size:11.5px;
-    color:var(--dim);
+    color:var(--bd-muted);
     margin:0 0 10px;
   }
   .hero-banner h1{
@@ -191,12 +194,12 @@
     font-size:44px;
     letter-spacing:0.01em;
     margin:0;
-    color:var(--paper);
+    color:var(--bd-white);
   }
-  .hero-banner h1 span{color:var(--gold);}
+  .hero-banner h1 span{color:var(--bd-gold);}
   .hero-banner p.sub{
-    font-family:'Barlow',sans-serif;
-    color:var(--t2);
+    font-family:'Barlow Condensed',sans-serif;
+    color:var(--bd-muted);
     font-size:14.5px;
     margin:10px 0 0;
   }
@@ -209,8 +212,8 @@
     margin-bottom:22px;
   }
   .stat-card{
-    background:var(--panel);
-    border:1px solid var(--line);
+    background:var(--bd-panel);
+    border:1px solid var(--bd-line);
     border-radius:12px;
     padding:18px 20px;
     display:flex;
@@ -223,27 +226,27 @@
     font-size:11px;
     letter-spacing:0.16em;
     text-transform:uppercase;
-    color:var(--dim);
+    color:var(--bd-muted);
     margin:0 0 6px;
   }
   .stat-card .value{
     font-family:'Archivo Black',sans-serif;
     font-size:24px;
-    color:var(--paper);
+    color:var(--bd-white);
   }
   .stat-card .icon{
     width:42px;height:42px;flex:none;
     border-radius:10px;
-    background:var(--gold-soft);
-    color:var(--gold);
+    background:var(--bd-gold-soft);
+    color:var(--bd-gold);
     display:flex;align-items:center;justify-content:center;
     font-size:19px;
   }
 
   /* Section panel shell */
   .panel{
-    background:var(--panel);
-    border:1px solid var(--line);
+    background:var(--bd-panel);
+    border:1px solid var(--bd-line);
     border-radius:12px;
     margin-bottom:20px;
     overflow:hidden;
@@ -254,7 +257,7 @@
     justify-content:space-between;
     padding:13px 20px;
     background:linear-gradient(90deg, rgba(212,175,55,0.14), rgba(212,175,55,0.02));
-    border-bottom:1px solid var(--line);
+    border-bottom:1px solid var(--bd-line);
   }
   .panel-head h2{
     font-family:'Barlow Condensed',sans-serif;
@@ -262,7 +265,7 @@
     font-size:13px;
     letter-spacing:0.18em;
     text-transform:uppercase;
-    color:var(--gold);
+    color:var(--bd-gold);
     margin:0;
   }
   .panel-body{padding:20px;}
@@ -274,26 +277,26 @@
     gap:12px;
   }
   .trophy-card{
-    background:var(--panel-2);
-    border:1px solid var(--line);
+    background:var(--bd-panel-2);
+    border:1px solid var(--bd-line);
     border-radius:10px;
     padding:14px 16px;
     text-align:center;
     transition:border-color .12s ease, transform .12s ease;
   }
-  .trophy-card:hover{border-color:var(--gold-soft); transform:translateY(-1px);}
+  .trophy-card:hover{border-color:var(--bd-gold-soft); transform:translateY(-1px);}
   .trophy-card .yr{
     font-family:'Barlow Condensed',sans-serif;
     font-size:10.5px;
     letter-spacing:0.14em;
     text-transform:uppercase;
-    color:var(--dim);
+    color:var(--bd-muted);
     margin:0 0 6px;
   }
   .trophy-card .who{
     font-family:'Archivo Black',sans-serif;
     font-size:17px;
-    color:var(--gold);
+    color:var(--bd-gold);
   }
 
   /* Two-column layout: postseason chart + regular season table */
@@ -314,14 +317,14 @@
     font-size:11.5px;
     letter-spacing:0.06em;
     text-transform:uppercase;
-    color:var(--t2);
+    color:var(--bd-muted);
   }
   .chart-legend .sw{
     display:inline-block;width:11px;height:11px;border-radius:2px;margin-right:6px;vertical-align:-1px;
   }
   .sw.blue{background:#5a8fd6;}
   .sw.gray{background:#5c6472;}
-  .sw.green{background:var(--green);}
+  .sw.green{background:var(--bd-green);}
 
   .bar-row{
     display:grid;
@@ -334,7 +337,7 @@
     font-family:'Barlow Condensed',sans-serif;
     font-size:13px;
     font-weight:600;
-    color:var(--paper);
+    color:var(--bd-white);
     text-align:right;
   }
   .bar-track{
@@ -360,7 +363,7 @@
   .bar-count{
     font-family:'Barlow Condensed',sans-serif;
     font-size:10.5px;
-    color:var(--dim);
+    color:var(--bd-muted);
     margin-left:6px;
   }
   .bar-seg:hover{filter:brightness(1.25);}
@@ -376,7 +379,7 @@
     transform:translateX(-50%);
     font-family:'Barlow Condensed',sans-serif;
     font-size:10px;
-    color:var(--t1);
+    color:var(--bd-muted);
   }
   .chart-axis span:first-child{transform:translateX(0);}
 
@@ -385,19 +388,19 @@
     pointer-events:none;
     z-index:200;
     background:#0e1116;
-    border:1px solid var(--gold-soft);
+    border:1px solid var(--bd-gold-soft);
     border-radius:8px;
     padding:8px 12px;
     font-family:'Barlow Condensed',sans-serif;
     font-size:12px;
-    color:var(--paper);
+    color:var(--bd-white);
     box-shadow:0 8px 24px rgba(0,0,0,0.5);
     opacity:0;
     transition:opacity .1s ease;
     white-space:nowrap;
   }
   #chart-tooltip .tt-mgr{
-    color:var(--gold);
+    color:var(--bd-gold);
     font-weight:700;
     letter-spacing:0.06em;
     text-transform:uppercase;
@@ -411,7 +414,7 @@
   table.dtable{
     width:100%;
     border-collapse:collapse;
-    font-family:'Barlow',sans-serif;
+    font-family:'Barlow Condensed',sans-serif;
     font-size:13px;
   }
   table.dtable thead th{
@@ -420,9 +423,9 @@
     font-size:10.5px;
     letter-spacing:0.1em;
     text-transform:uppercase;
-    color:var(--dim);
+    color:var(--bd-muted);
     padding:8px 10px;
-    border-bottom:1px solid var(--line);
+    border-bottom:1px solid var(--bd-line);
     white-space:nowrap;
   }
   table.dtable thead th.num, table.dtable td.num{text-align:right;}
@@ -431,7 +434,7 @@
     user-select:none;
     transition:color .12s ease;
   }
-  table.dtable thead th.sortable:hover{color:var(--paper);}
+  table.dtable thead th.sortable:hover{color:var(--bd-white);}
   table.dtable thead th.sortable::after{
     content:"\2195";
     display:inline-block;
@@ -439,18 +442,18 @@
     opacity:0.35;
     font-size:10px;
   }
-  table.dtable thead th.sortable.sort-desc::after{content:"\2193"; opacity:1; color:var(--gold);}
-  table.dtable thead th.sortable.sort-asc::after{content:"\2191"; opacity:1; color:var(--gold);}
+  table.dtable thead th.sortable.sort-desc::after{content:"\2193"; opacity:1; color:var(--bd-gold);}
+  table.dtable thead th.sortable.sort-asc::after{content:"\2191"; opacity:1; color:var(--bd-gold);}
   table.dtable tbody td{
     padding:8px 10px;
     border-bottom:1px solid rgba(255,255,255,0.04);
-    color:var(--paper);
+    color:var(--bd-white);
     white-space:nowrap;
   }
   table.dtable tbody tr:hover{background:rgba(255,255,255,0.025);}
-  table.dtable tbody td.mgr{color:var(--gold); font-weight:600;}
-  .pos{color:var(--green);}
-  .neg{color:var(--red);}
+  table.dtable tbody td.mgr{color:var(--bd-gold); font-weight:600;}
+  .pos{color:var(--bd-green);}
+  .neg{color:var(--bd-red);}
   .table-scroll{overflow-x:auto;}
 
   /* Three-column stats row */
@@ -464,21 +467,21 @@
     padding:10px 20px 16px;
     font-family:'Barlow Condensed',sans-serif;
     font-size:11px;
-    color:var(--t1);
-    border-top:1px solid var(--line);
+    color:var(--bd-muted);
+    border-top:1px solid var(--bd-line);
   }
 
   /* Stat view selector */
   .stat-select-row{
     padding:12px 20px;
-    border-bottom:1px solid var(--line);
+    border-bottom:1px solid var(--bd-line);
     background:rgba(255,255,255,0.015);
   }
   select.stat-select{
     width:100%;
-    background:var(--panel-2);
-    color:var(--paper);
-    border:1px solid var(--line);
+    background:var(--bd-panel-2);
+    color:var(--bd-white);
+    border:1px solid var(--bd-line);
     border-radius:7px;
     padding:8px 32px 8px 12px;
     font-family:'Barlow Condensed',sans-serif;
@@ -493,9 +496,9 @@
     background-repeat:no-repeat;
     background-position:right 12px center;
   }
-  select.stat-select:focus{outline:1px solid var(--gold-soft);}
-  select.stat-select option{background:var(--panel-2); color:var(--paper);}
-  select.stat-select option:disabled{color:var(--t1);}
+  select.stat-select:focus{outline:1px solid var(--bd-gold-soft);}
+  select.stat-select option{background:var(--bd-panel-2); color:var(--bd-white);}
+  select.stat-select option:disabled{color:var(--bd-muted);}
 
   /* Row-count control */
   .table-controls{
@@ -510,12 +513,12 @@
     font-size:11px;
     letter-spacing:0.08em;
     text-transform:uppercase;
-    color:var(--dim);
+    color:var(--bd-muted);
   }
   select.rows-select{
-    background:var(--panel-2);
-    color:var(--paper);
-    border:1px solid var(--line);
+    background:var(--bd-panel-2);
+    color:var(--bd-white);
+    border:1px solid var(--bd-line);
     border-radius:6px;
     padding:4px 24px 4px 9px;
     font-family:'Barlow Condensed',sans-serif;
@@ -528,7 +531,7 @@
     background-repeat:no-repeat;
     background-position:right 9px center;
   }
-  select.rows-select option{background:var(--panel-2); color:var(--paper);}
+  select.rows-select option{background:var(--bd-panel-2); color:var(--bd-white);}
 
   /* Pagination */
   .pagination{
@@ -544,28 +547,28 @@
     min-width:28px;
     height:28px;
     padding:0 8px;
-    background:var(--panel-2);
-    border:1px solid var(--line);
+    background:var(--bd-panel-2);
+    border:1px solid var(--bd-line);
     border-radius:6px;
-    color:var(--t2);
+    color:var(--bd-muted);
     font-family:'Barlow Condensed',sans-serif;
     font-weight:600;
     font-size:12px;
     cursor:pointer;
     transition:all .12s ease;
   }
-  .pagination button:hover{border-color:var(--gold-soft); color:var(--paper);}
+  .pagination button:hover{border-color:var(--bd-gold-soft); color:var(--bd-white);}
   .pagination button.active{
-    background:var(--gold-soft);
-    border-color:var(--gold);
-    color:var(--gold);
+    background:var(--bd-gold-soft);
+    border-color:var(--bd-gold);
+    color:var(--bd-gold);
   }
   .pagination button:disabled{
     opacity:0.35;
     cursor:default;
   }
-  .pagination button:disabled:hover{border-color:var(--line); color:var(--t2);}
-  .pagination .ellipsis{color:var(--t1); padding:0 2px; font-family:'Barlow Condensed',sans-serif; font-size:12px;}
+  .pagination button:disabled:hover{border-color:var(--bd-line); color:var(--bd-muted);}
+  .pagination .ellipsis{color:var(--bd-muted); padding:0 2px; font-family:'Barlow Condensed',sans-serif; font-size:12px;}
 
   .rank-badge{
     display:inline-flex;
@@ -574,7 +577,7 @@
     width:20px;height:20px;
     border-radius:50%;
     background:rgba(212,175,55,0.14);
-    color:var(--gold);
+    color:var(--bd-gold);
     font-family:'Barlow Condensed',sans-serif;
     font-size:11px;
     font-weight:700;
@@ -587,12 +590,10 @@
     font-family:'Barlow Condensed',sans-serif;
     font-size:11px;
     letter-spacing:0.08em;
-    color:var(--t1);
-    border-top:1px solid var(--line);
+    color:var(--bd-muted);
+    border-top:1px solid var(--bd-line);
   }
 
-
-.sidebar-brand .brand-logo{display:block;width:100%;max-width:186px;height:auto;}
 </style>
 </head>
 <body>
@@ -601,24 +602,32 @@
 
   <nav class="sidebar" id="sidebar">
     <div class="sidebar-brand">
-      <img src="logo.jpg" alt="Balls Deep FFL" class="brand-logo">
+      <div class="word1">BALLS</div>
+      <div class="word2">DEEP FFL</div>
       <div class="tag">Est. 2012</div>
     </div>
-    <div class="sidebar-nav">
+        <div class="sidebar-nav">
       <a href="index.html" class="active">Dashboard</a>
       <a href="our-story.html">Our Story</a>
       <a href="season-recaps.html">Season Recaps</a>
       <a href="regular-season.html">Regular Season</a>
       <a href="postseason.html">Postseason</a>
+      <a href="toilet-bowl.html">Toilet Bowl Championships</a>
+      <a href="charts.html">Charts</a>
       <a href="awards.html">Awards</a>
       <a href="records.html">Records</a>
       <a href="milestones.html">Milestones</a>
       <a href="survivor-tourney.html">Survivor Tourney</a>
+      <a href="what-if.html">What If</a>
       <a href="draft.html">Draft</a>
       <a href="rosters.html">Rosters</a>
+      <a href="players.html">Players</a>
       <a href="managers.html">Managers</a>
       <a href="hall-of-fame.html">Hall of Fame</a>
       <a href="constitution.html">Constitution</a>
+      <a href="schedule.html">Schedule</a>
+      <a href="current-season.html">Current Season</a>
+      <a href="newsletter.html">Newsletter</a>
     </div>
   </nav>
 
@@ -921,7 +930,7 @@
   const POSTSEASON_SEGS = [
     { key:'apps',      label:'Playoff Appearances',             color:'#5a8fd6' },
     { key:'champApps', label:'Championship Game Appearances',   color:'#5c6472' },
-    { key:'champs',    label:'Championship Wins',               color:'var(--green)' }
+    { key:'champs',    label:'Championship Wins',               color:'var(--bd-green)' }
   ];
 
   postseasonChart.forEach(r=>{
