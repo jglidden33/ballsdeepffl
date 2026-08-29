@@ -1,0 +1,540 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>BDFL — Hall of Fame</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Barlow+Condensed:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bd-black:#0e0c09;
+  --bd-panel:#18150f;
+  --bd-panel-2:#211c14;
+  --bd-line:#332b1c;
+  --bd-gold:#d4af37;
+  --bd-gold-bright:#f2cc4d;
+  --bd-gold-dim:#8a7228;
+  --bd-white:#f3ede0;
+  --bd-muted:#9c9384;
+  --bd-green:#5aa876;
+  --bd-red:#c1596a;
+  --bd-silver:#b9bcc3;
+  --bd-bronze:#c08a4f;
+  --font-display:'Archivo Black', sans-serif;
+  --font-cond:'Barlow Condensed', sans-serif;
+}
+*{box-sizing:border-box;}
+html,body{margin:0;padding:0;}
+body{
+  background:var(--bd-black);
+  background-image:
+    radial-gradient(circle at 15% 0%, rgba(212,175,55,0.07), transparent 40%),
+    radial-gradient(circle at 85% 20%, rgba(212,175,55,0.05), transparent 35%);
+  color:var(--bd-white);
+  font-family:var(--font-cond);
+  min-height:100vh;
+}
+a{color:inherit;}
+.wrap{max-width:1100px;margin:0 auto;padding:0 20px;}
+
+/* ---------- NAV ---------- */
+.topnav{
+  border-bottom:1px solid var(--bd-line);
+  background:rgba(14,12,9,0.92);
+  position:sticky; top:0; z-index:40;
+  backdrop-filter:blur(6px);
+}
+.topnav-inner{
+  max-width:1100px;margin:0 auto;padding:14px 20px;
+  display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;
+}
+.brand{display:flex;align-items:center;gap:10px;text-decoration:none;}
+.brand-mark{
+  width:34px;height:34px;border-radius:50%;
+  background:linear-gradient(150deg,var(--bd-gold-bright),var(--bd-gold-dim));
+  display:flex;align-items:center;justify-content:center;
+  font-family:var(--font-display);color:var(--bd-black);font-size:15px;
+}
+.brand-name{font-family:var(--font-display);font-size:15px;letter-spacing:.5px;color:var(--bd-gold-bright);}
+.navlinks{display:flex;gap:22px;flex-wrap:wrap;}
+.navlinks a{
+  font-size:15px;text-transform:uppercase;letter-spacing:.08em;font-weight:600;
+  text-decoration:none;color:var(--bd-muted);border-bottom:2px solid transparent;padding-bottom:3px;
+  transition:color .15s, border-color .15s;
+}
+.navlinks a:hover, .navlinks a.active{color:var(--bd-gold-bright);border-color:var(--bd-gold-bright);}
+
+/* ---------- HERO ---------- */
+.hero{padding:52px 0 30px;}
+.hero-top{display:flex;align-items:flex-end;justify-content:space-between;gap:24px;flex-wrap:wrap;margin-bottom:10px;}
+.hero-eyebrow{font-size:14px;color:var(--bd-gold-bright);letter-spacing:.14em;text-transform:uppercase;font-weight:700;margin-bottom:10px;}
+.hero-name{
+  font-family:var(--font-display);
+  font-size:clamp(38px,7vw,72px);
+  color:var(--bd-white);
+  line-height:.95;
+  margin:0;
+}
+.hero-name span{color:var(--bd-gold-bright);}
+.hero-sub{color:var(--bd-muted);font-size:18px;margin-top:14px;max-width:620px;line-height:1.45;}
+.season-badge{
+  font-family:var(--font-display);
+  text-align:center;
+  border:2px solid var(--bd-gold);
+  border-radius:8px;
+  padding:14px 22px;
+  min-width:130px;
+}
+.season-badge .num{font-size:34px;color:var(--bd-gold-bright);display:block;}
+.season-badge .txt{font-size:12px;color:var(--bd-muted);text-transform:uppercase;letter-spacing:.08em;font-family:var(--font-cond);font-weight:700;}
+
+/* ---------- AWARD STRIP ---------- */
+.award-strip{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin:30px 0 6px;}
+.award-card{
+  background:var(--bd-panel-2);border:1px solid var(--bd-line);border-radius:10px;
+  padding:18px 16px;text-align:center;
+}
+.award-card .value{font-family:var(--font-display);font-size:30px;color:var(--bd-gold-bright);}
+.award-card .label{font-size:13px;color:var(--bd-muted);text-transform:uppercase;letter-spacing:.06em;margin-top:6px;font-weight:600;}
+.award-card .sub{font-size:12px;color:var(--bd-gold-dim);margin-top:4px;}
+
+/* ---------- SECTION HEADERS ---------- */
+.section{margin:56px 0;}
+.section-head{display:flex;align-items:baseline;gap:14px;margin-bottom:8px;}
+.section-title{
+  font-family:var(--font-display);
+  font-size:clamp(20px,3vw,28px);
+  color:var(--bd-gold-bright);
+  text-transform:uppercase;
+  letter-spacing:.03em;
+  margin:0;
+}
+.section-line{flex:1;height:1px;background:linear-gradient(90deg,var(--bd-gold-dim),transparent);}
+.section-desc{color:var(--bd-muted);font-size:15px;margin:0 0 20px;max-width:680px;line-height:1.5;}
+
+/* ---------- ENSHRINED BANNERS ---------- */
+.banner-rail{display:flex;gap:22px;overflow-x:auto;padding:12px 4px 24px;}
+.banner-card{
+  flex:0 0 260px;
+  background:var(--bd-panel);
+  border:1px solid var(--bd-gold-dim);
+  border-radius:12px;
+  overflow:hidden;
+  position:relative;
+}
+.banner-card .ribbon{
+  background:linear-gradient(160deg,var(--bd-gold-bright),var(--bd-gold-dim));
+  color:var(--bd-black);
+  padding:16px 18px;
+  text-align:center;
+}
+.banner-card .ribbon .cls{font-size:12px;letter-spacing:.12em;text-transform:uppercase;font-weight:700;}
+.banner-card .ribbon .yr{font-family:var(--font-display);font-size:26px;margin-top:2px;}
+.banner-card .body{padding:18px;}
+.banner-card .nm{font-family:var(--font-display);font-size:22px;color:var(--bd-white);}
+.banner-card .pts{color:var(--bd-gold-bright);font-size:15px;font-weight:700;margin-top:4px;}
+.banner-card .mini-stats{display:flex;gap:14px;margin-top:14px;flex-wrap:wrap;}
+.banner-card .mini-stats div{text-align:left;}
+.banner-card .mini-stats .v{font-family:var(--font-display);font-size:18px;color:var(--bd-gold-bright);}
+.banner-card .mini-stats .l{font-size:11px;color:var(--bd-muted);text-transform:uppercase;letter-spacing:.05em;}
+.empty-note{color:var(--bd-muted);font-size:14px;font-style:italic;}
+
+/* ---------- CRITERIA ---------- */
+.criteria-grid{display:grid;grid-template-columns:1.1fr 1fr;gap:56px;}
+.criteria-grid h3{
+  font-family:var(--font-display);font-size:19px;text-transform:uppercase;
+  color:var(--bd-gold-bright);margin:0 0 16px;letter-spacing:.02em;
+}
+.criteria-list{list-style:none;margin:0;padding:0;}
+.criteria-list li{
+  display:flex;justify-content:space-between;gap:16px;
+  padding:11px 0;border-bottom:1px solid var(--bd-line);font-size:15px;color:var(--bd-white);
+}
+.criteria-list li .pt{font-family:var(--font-display);font-size:14px;color:var(--bd-gold-bright);white-space:nowrap;}
+.criteria-note{background:var(--bd-panel);border:1px solid var(--bd-line);border-radius:10px;padding:18px 20px;font-size:14px;color:var(--bd-muted);line-height:1.6;margin-top:18px;}
+.criteria-note strong{color:var(--bd-gold-bright);}
+
+/* ---------- LEADERBOARD TABLE ---------- */
+.table-wrap{overflow-x:auto;border:1px solid var(--bd-line);border-radius:10px;}
+table.hoftable{width:100%;border-collapse:collapse;min-width:760px;}
+table.hoftable th{
+  background:var(--bd-panel-2);color:var(--bd-gold-bright);
+  font-size:12px;text-transform:uppercase;letter-spacing:.05em;
+  text-align:left;padding:12px 12px;font-weight:700;
+  border-bottom:1px solid var(--bd-line);white-space:nowrap;
+}
+table.hoftable th.num, table.hoftable td.num{text-align:center;}
+table.hoftable td{padding:11px 12px;border-bottom:1px solid var(--bd-line);font-size:15px;white-space:nowrap;}
+table.hoftable tr:hover td{background:rgba(212,175,55,0.05);}
+table.hoftable tr.inducted td{background:rgba(212,175,55,0.07);}
+table.hoftable tr.inducted td.nm{color:var(--bd-gold-bright);font-weight:700;}
+table.hoftable td.rk{font-family:var(--font-cond);font-weight:700;color:var(--bd-muted);}
+table.hoftable tr.inducted td.rk{color:var(--bd-gold-bright);}
+table.hoftable td.pts{font-family:var(--font-display);font-size:16px;color:var(--bd-gold-bright);text-align:center;}
+.hof-pin{display:inline-block;margin-left:8px;font-size:11px;color:var(--bd-black);background:var(--bd-gold-bright);padding:2px 7px;border-radius:20px;text-transform:uppercase;letter-spacing:.04em;font-weight:700;}
+.status-pill{font-size:10px;text-transform:uppercase;letter-spacing:.05em;padding:2px 7px;border:1px solid var(--bd-line);color:var(--bd-muted);margin-left:8px;border-radius:20px;}
+
+.view-tabs{display:flex;gap:8px;margin-bottom:20px;}
+.view-tab{
+  font-family:var(--font-cond); font-size:14px; letter-spacing:.04em; text-transform:uppercase; font-weight:700;
+  padding:9px 18px; border:1px solid var(--bd-line); background:var(--bd-panel-2); color:var(--bd-muted); cursor:pointer;
+  border-radius:20px;
+}
+.view-tab.active{border-color:var(--bd-gold); color:var(--bd-gold-bright); background:rgba(212,175,55,0.08);}
+.view-tab:hover:not(.active){color:var(--bd-white);}
+.view-panel{display:none;}
+.view-panel.shown{display:block;}
+
+/* ---------- ON THE CUSP ---------- */
+.cusp-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;}
+.cusp-card{
+  background:var(--bd-panel);border:1px solid var(--bd-line);border-radius:10px;
+  padding:18px 16px;
+}
+.cusp-card .rk{font-size:12px;color:var(--bd-muted);text-transform:uppercase;letter-spacing:.06em;font-weight:700;}
+.cusp-card .nm{font-family:var(--font-display);font-size:19px;color:var(--bd-white);margin-top:6px;}
+.cusp-card .bar-track{height:8px;border-radius:6px;background:var(--bd-line);margin-top:14px;overflow:hidden;}
+.cusp-card .bar-fill{height:100%;background:linear-gradient(90deg,var(--bd-gold-dim),var(--bd-gold-bright));}
+.cusp-card .bar-txt{font-size:13px;color:var(--bd-gold-dim);margin-top:8px;}
+.cusp-card .need{font-size:13px;color:var(--bd-muted);margin-top:2px;}
+
+/* ---------- JUMP TO PROFILE ---------- */
+.jump-grid{display:grid;grid-template-columns:repeat(6,1fr);gap:10px;}
+.jump-btn{
+  background:var(--bd-panel-2);border:1px solid var(--bd-line);color:var(--bd-white);
+  font-family:var(--font-cond);font-weight:600;font-size:15px;
+  padding:12px 6px;border-radius:8px;cursor:pointer;text-align:center;
+  text-decoration:none;display:block;
+  transition:border-color .15s, color .15s;
+}
+.jump-btn:hover{border-color:var(--bd-gold);color:var(--bd-gold-bright);}
+.jump-btn.inducted{border-color:var(--bd-gold);color:var(--bd-gold-bright);background:rgba(212,175,55,0.08);}
+
+footer{padding:34px 0 60px;text-align:center;color:var(--bd-muted);font-size:13px;}
+
+/* ---------- RESPONSIVE ---------- */
+@media (max-width:820px){
+  .award-strip{grid-template-columns:repeat(2,1fr);}
+  .criteria-grid{grid-template-columns:1fr;gap:36px;}
+  .cusp-grid{grid-template-columns:repeat(2,1fr);}
+  .jump-grid{grid-template-columns:repeat(3,1fr);}
+}
+@media (max-width:480px){
+  .award-strip, .cusp-grid{grid-template-columns:repeat(2,1fr);}
+  .jump-grid{grid-template-columns:repeat(2,1fr);}
+  .banner-card{flex:0 0 220px;}
+}
+
+/* ===================== SHARED SITE LAYOUT (SIDEBAR) ===================== */
+.app{display:flex;min-height:100vh;}
+.sidebar{
+  width:230px;flex:none;
+  background:linear-gradient(180deg, var(--bd-panel) 0%, var(--bd-black) 100%);
+  border-right:1px solid var(--bd-line);
+  display:flex;flex-direction:column;
+  position:sticky;top:0;height:100vh;overflow-y:auto;
+}
+.sidebar-brand{padding:26px 22px 22px;border-bottom:1px solid var(--bd-line);}
+.sidebar-brand .word1{font-family:var(--font-display);font-size:19px;color:var(--bd-white);letter-spacing:0.02em;line-height:1.1;}
+.sidebar-brand .word2{font-family:var(--font-display);font-size:19px;color:var(--bd-gold-bright);letter-spacing:0.02em;line-height:1.1;}
+.sidebar-brand .tag{margin-top:6px;font-family:var(--font-cond);font-size:10.5px;letter-spacing:0.24em;text-transform:uppercase;color:var(--bd-muted);}
+.sidebar-nav{display:flex;flex-direction:column;padding:10px 0;}
+.sidebar-nav a{
+  display:flex;align-items:center;justify-content:space-between;padding:11px 22px;
+  font-family:var(--font-cond);font-weight:600;font-size:13px;letter-spacing:0.08em;text-transform:uppercase;
+  color:var(--bd-muted);text-decoration:none;border-left:3px solid transparent;
+  transition:background .12s ease, color .12s ease;
+}
+.sidebar-nav a:hover{background:rgba(255,255,255,0.03);color:var(--bd-white);}
+.sidebar-nav a.active{background:rgba(212,175,55,0.12);color:var(--bd-gold-bright);border-left-color:var(--bd-gold-bright);}
+.main{flex:1;min-width:0;display:flex;flex-direction:column;}
+.topbar{
+  height:56px;flex:none;display:flex;align-items:center;justify-content:space-between;
+  padding:0 28px;border-bottom:1px solid var(--bd-line);background:var(--bd-black);
+  position:sticky;top:0;z-index:10;
+}
+.topbar-title{font-family:var(--font-cond);font-weight:700;font-size:14px;letter-spacing:0.18em;text-transform:uppercase;color:var(--bd-gold-bright);}
+.topbar-meta{font-family:var(--font-cond);font-size:11.5px;letter-spacing:0.05em;color:var(--bd-muted);}
+.content{flex:1;}
+@media (max-width:860px){
+  .sidebar{position:fixed;left:0;top:0;bottom:0;transform:translateX(-100%);z-index:50;transition:transform .2s ease;box-shadow:20px 0 40px rgba(0,0,0,0.4);}
+  .sidebar.open{transform:translateX(0);}
+  .topbar-menu-btn{display:inline-flex;}
+}
+@media (min-width:861px){.topbar-menu-btn{display:none;}}
+.topbar-menu-btn{background:none;border:1px solid var(--bd-line);color:var(--bd-white);border-radius:6px;padding:6px 10px;cursor:pointer;font-size:14px;}
+
+</style>
+</head>
+<body>
+
+<div class="app">
+
+  <nav class="sidebar" id="sidebar">
+    <div class="sidebar-brand">
+      <div class="word1">BALLS</div>
+      <div class="word2">DEEP FFL</div>
+      <div class="tag">Est. 2012</div>
+    </div>
+    <div class="sidebar-nav">
+      <a href="index.html">Dashboard</a>
+      <a href="our-story.html">Our Story</a>
+      <a href="season-recaps.html">Season Recaps</a>
+      <a href="regular-season.html">Regular Season</a>
+      <a href="postseason.html">Postseason</a>
+      <a href="awards.html">Awards</a>
+      <a href="records.html">Records</a>
+      <a href="milestones.html">Milestones</a>
+      <a href="survivor-tourney.html">Survivor Tourney</a>
+      <a href="draft.html">Draft</a>
+      <a href="rosters.html">Rosters</a>
+      <a href="managers.html">Managers</a>
+      <a href="hall-of-fame.html" class="active">Hall of Fame</a>
+      <a href="constitution.html">Constitution</a>
+    </div>
+  </nav>
+
+  <div class="main">
+    <header class="topbar">
+      <button class="topbar-menu-btn" onclick="document.getElementById('sidebar').classList.toggle('open')">&#9776;</button>
+      <div class="topbar-title">Hall of Fame</div>
+      <div class="topbar-meta">Balls Deep FFL &middot; through 2025 season</div>
+    </header>
+
+    <div class="content">
+
+<div class="wrap">
+
+  <section class="hero">
+    <div class="hero-eyebrow">14 Seasons of Balls Deep FFL &middot; Est. 2012</div>
+    <div class="hero-top">
+      <div>
+        <h1 class="hero-name">Hall of <span>Fame</span></h1>
+        <p class="hero-sub" id="heroSub">Every championship, every playoff run, every dominant season — tracked, scored, and ranked since day one. Cross the lifetime point threshold and your name goes up for good.</p>
+      </div>
+      <div class="season-badge">
+        <span class="num" id="hbEnshrined">—</span>
+        <span class="txt">Enshrined</span>
+      </div>
+    </div>
+
+    <div class="award-strip">
+      <div class="award-card"><div class="value" id="awEnshrined">—</div><div class="label">Enshrined Members</div></div>
+      <div class="award-card"><div class="value" id="awHighest">—</div><div class="label">Highest Lifetime Score</div></div>
+      <div class="award-card"><div class="value" id="awThreshold">25</div><div class="label">Entry Threshold (pts)</div></div>
+      <div class="award-card"><div class="value" id="awNewest">—</div><div class="label">Newest Inductee</div><div class="sub" id="awNewestSub">—</div></div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="section-head"><h2 class="section-title">The Enshrined</h2><div class="section-line"></div></div>
+    <p class="section-desc">Members who have crossed the lifetime score threshold, calculated retroactively from the 2012 inaugural season.</p>
+    <div class="banner-rail" id="enshrinedRail"></div>
+  </section>
+
+  <section class="section">
+    <div class="section-head"><h2 class="section-title">How Scoring Works</h2><div class="section-line"></div></div>
+    <div class="criteria-grid">
+      <div>
+        <h3>Point Values</h3>
+        <ul class="criteria-list">
+          <li><span>Championship won</span><span class="pt">4 pts</span></li>
+          <li><span>Championship game appearance</span><span class="pt">1 pt</span></li>
+          <li><span>Playoff appearance</span><span class="pt">1 pt</span></li>
+          <li><span>10+ win season</span><span class="pt">2 pts</span></li>
+          <li><span>Survivor Tourney winner</span><span class="pt">1 pt</span></li>
+          <li><span>Season points leader</span><span class="pt">1 pt</span></li>
+        </ul>
+      </div>
+      <div>
+        <h3>Entry Criteria</h3>
+        <ul class="criteria-list">
+          <li><span>League member, active or former</span><span class="pt">—</span></li>
+          <li><span>Lifetime score of at least</span><span class="pt">25 pts</span></li>
+        </ul>
+        <div class="criteria-note">Scores are calculated retroactively from the 2012 inaugural season using data that's already verified elsewhere in the workbook — Championship Game Appearances count title-game losses too, not just wins. Survivor Tourney Winner is the one manually-tracked category. If a manager leaves the league, their lifetime score stays on the books; it does not transfer to a replacement.</div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="section-head"><h2 class="section-title">Lifetime Score Leaderboard</h2><div class="section-line"></div></div>
+    <p class="section-desc">Every point, broken down by category. Gold rows have cleared the 25-point threshold.</p>
+
+    <div class="view-tabs">
+      <button class="view-tab active" onclick="showView('active', this)">Active Managers</button>
+      <button class="view-tab" onclick="showView('alltime', this)">All-Time (<span id="allTimeCount">—</span>)</button>
+    </div>
+
+    <div class="view-panel shown" id="panel-active">
+      <div class="table-wrap">
+        <table class="hoftable">
+          <thead>
+            <tr>
+              <th>Rank</th><th>Manager</th><th class="num">Seasons</th>
+              <th class="num">Champs</th><th class="num">Champ&nbsp;Game</th><th class="num">Playoff&nbsp;Apps</th>
+              <th class="num">10+&nbsp;Win</th><th class="num">Survivor</th><th class="num">Pts&nbsp;Leader</th>
+              <th class="num">Total</th>
+            </tr>
+          </thead>
+          <tbody id="activeBody"></tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="view-panel" id="panel-alltime">
+      <div class="table-wrap">
+        <table class="hoftable">
+          <thead>
+            <tr><th>Rank</th><th>Manager</th><th class="num">Seasons</th><th class="num">Championships</th><th class="num">Lifetime Pts</th></tr>
+          </thead>
+          <tbody id="allTimeBody"></tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="section-head"><h2 class="section-title">On the Cusp</h2><div class="section-line"></div></div>
+    <p class="section-desc">The active managers closest to enshrinement, and how far they still have to go.</p>
+    <div class="cusp-grid" id="cuspGrid"></div>
+  </section>
+
+  <section class="section">
+    <div class="section-head"><h2 class="section-title">Jump to Profile</h2><div class="section-line"></div></div>
+    <div class="jump-grid" id="jumpGrid"></div>
+  </section>
+
+</div>
+
+<footer>Balls Deep Fantasy Football League &middot; Est. 2012</footer>
+
+<script id="hofData" type="application/json">[{"manager":"Jason G.","status":"Active","active":true,"seasons":14,"first_season":2012,"last_season":2025,"champs":5,"champ_game":7,"playoff_apps":9,"ten_win":7,"survivor":6,"leader":5,"total":61,"inducted":true,"rank":1,"induction_year":2019},{"manager":"Cordel G.","status":"Active","active":true,"seasons":12,"first_season":2012,"last_season":2025,"champs":2,"champ_game":3,"playoff_apps":7,"ten_win":3,"survivor":1,"leader":0,"total":25,"inducted":true,"rank":2,"induction_year":2025},{"manager":"Tony M.","status":"Left after 2018","active":false,"seasons":7,"first_season":2012,"last_season":2018,"champs":2,"champ_game":2,"playoff_apps":5,"ten_win":1,"survivor":0,"leader":2,"total":19,"inducted":false,"rank":3},{"manager":"Ben G.","status":"Active","active":true,"seasons":14,"first_season":2012,"last_season":2025,"champs":0,"champ_game":1,"playoff_apps":8,"ten_win":1,"survivor":3,"leader":2,"total":16,"inducted":false,"rank":4},{"manager":"Travis J.","status":"Active","active":true,"seasons":6,"first_season":2020,"last_season":2025,"champs":1,"champ_game":2,"playoff_apps":3,"ten_win":1,"survivor":1,"leader":0,"total":12,"inducted":false,"rank":5},{"manager":"Ben F.","status":"Active","active":true,"seasons":14,"first_season":2012,"last_season":2025,"champs":1,"champ_game":2,"playoff_apps":5,"ten_win":0,"survivor":0,"leader":0,"total":11,"inducted":false,"rank":6},{"manager":"Corey R.","status":"Active","active":true,"seasons":13,"first_season":2013,"last_season":2025,"champs":0,"champ_game":3,"playoff_apps":8,"ten_win":0,"survivor":0,"leader":0,"total":11,"inducted":false,"rank":6},{"manager":"Daniel H.","status":"Left after 2019","active":false,"seasons":8,"first_season":2012,"last_season":2019,"champs":1,"champ_game":1,"playoff_apps":5,"ten_win":0,"survivor":0,"leader":0,"total":10,"inducted":false,"rank":8},{"manager":"Jacob C.","status":"Active","active":true,"seasons":2,"first_season":2024,"last_season":2025,"champs":1,"champ_game":1,"playoff_apps":2,"ten_win":1,"survivor":0,"leader":1,"total":10,"inducted":false,"rank":8},{"manager":"Bradley F.","status":"Active","active":true,"seasons":11,"first_season":2015,"last_season":2025,"champs":0,"champ_game":0,"playoff_apps":7,"ten_win":1,"survivor":0,"leader":0,"total":9,"inducted":false,"rank":10},{"manager":"JC P.","status":"Active","active":true,"seasons":8,"first_season":2018,"last_season":2025,"champs":0,"champ_game":2,"playoff_apps":5,"ten_win":1,"survivor":0,"leader":0,"total":9,"inducted":false,"rank":10},{"manager":"Chris B.","status":"Left after 2014","active":false,"seasons":2,"first_season":2013,"last_season":2014,"champs":1,"champ_game":1,"playoff_apps":2,"ten_win":0,"survivor":0,"leader":1,"total":8,"inducted":false,"rank":12},{"manager":"Luke S.","status":"Active","active":true,"seasons":7,"first_season":2019,"last_season":2025,"champs":0,"champ_game":0,"playoff_apps":3,"ten_win":1,"survivor":1,"leader":1,"total":7,"inducted":false,"rank":13},{"manager":"Derrick T.","status":"Active","active":true,"seasons":9,"first_season":2017,"last_season":2025,"champs":0,"champ_game":1,"playoff_apps":3,"ten_win":0,"survivor":1,"leader":0,"total":5,"inducted":false,"rank":14},{"manager":"Scott R.","status":"Left after 2017","active":false,"seasons":4,"first_season":2014,"last_season":2017,"champs":0,"champ_game":0,"playoff_apps":3,"ten_win":0,"survivor":1,"leader":1,"total":5,"inducted":false,"rank":14},{"manager":"Jeff H.","status":"Left after 2018","active":false,"seasons":6,"first_season":2013,"last_season":2018,"champs":0,"champ_game":0,"playoff_apps":3,"ten_win":0,"survivor":0,"leader":0,"total":3,"inducted":false,"rank":16},{"manager":"Ryan M.","status":"Left after 2021","active":false,"seasons":4,"first_season":2018,"last_season":2021,"champs":0,"champ_game":0,"playoff_apps":2,"ten_win":0,"survivor":0,"leader":1,"total":3,"inducted":false,"rank":16},{"manager":"Chris P.","status":"Left after 2014","active":false,"seasons":3,"first_season":2012,"last_season":2014,"champs":0,"champ_game":1,"playoff_apps":1,"ten_win":0,"survivor":0,"leader":0,"total":2,"inducted":false,"rank":18},{"manager":"Jen G.","status":"Left after 2013","active":false,"seasons":1,"first_season":2013,"last_season":2013,"champs":0,"champ_game":1,"playoff_apps":1,"ten_win":0,"survivor":0,"leader":0,"total":2,"inducted":false,"rank":18},{"manager":"Kaiden P.","status":"Left after 2023","active":false,"seasons":3,"first_season":2021,"last_season":2023,"champs":0,"champ_game":0,"playoff_apps":2,"ten_win":0,"survivor":0,"leader":0,"total":2,"inducted":false,"rank":18},{"manager":"Chad G.","status":"Left after 2015","active":false,"seasons":4,"first_season":2012,"last_season":2015,"champs":0,"champ_game":0,"playoff_apps":1,"ten_win":0,"survivor":0,"leader":0,"total":1,"inducted":false,"rank":21},{"manager":"Karissa G.","status":"Left after 2021","active":false,"seasons":3,"first_season":2019,"last_season":2021,"champs":0,"champ_game":0,"playoff_apps":1,"ten_win":0,"survivor":0,"leader":0,"total":1,"inducted":false,"rank":21},{"manager":"Alcoholics","status":"Left after 2022","active":false,"seasons":1,"first_season":2022,"last_season":2022,"champs":0,"champ_game":0,"playoff_apps":0,"ten_win":0,"survivor":0,"leader":0,"total":0,"inducted":false,"rank":23},{"manager":"Brian O.","status":"Active","active":true,"seasons":2,"first_season":2024,"last_season":2025,"champs":0,"champ_game":0,"playoff_apps":0,"ten_win":0,"survivor":0,"leader":0,"total":0,"inducted":false,"rank":23},{"manager":"Chris S.","status":"Left after 2017","active":false,"seasons":2,"first_season":2016,"last_season":2017,"champs":0,"champ_game":0,"playoff_apps":0,"ten_win":0,"survivor":0,"leader":0,"total":0,"inducted":false,"rank":23},{"manager":"Jordan M.","status":"Left after 2016","active":false,"seasons":2,"first_season":2015,"last_season":2016,"champs":0,"champ_game":0,"playoff_apps":0,"ten_win":0,"survivor":0,"leader":0,"total":0,"inducted":false,"rank":23},{"manager":"Stranglers","status":"Left after 2023","active":false,"seasons":2,"first_season":2022,"last_season":2023,"champs":0,"champ_game":0,"playoff_apps":0,"ten_win":0,"survivor":0,"leader":0,"total":0,"inducted":false,"rank":23}]</script>
+<script>
+const DATA = JSON.parse(document.getElementById('hofData').textContent);
+const THRESHOLD = 25;
+
+function ordinal(n){
+  const s=['th','st','nd','rd'], v=n%100;
+  return n+(s[(v-20)%10]||s[v]||s[0]);
+}
+
+const activeManagers = DATA.filter(d => d.active).sort((a,b)=> b.total-a.total || a.manager.localeCompare(b.manager));
+const allManagers = [...DATA].sort((a,b)=> b.total-a.total || a.manager.localeCompare(b.manager));
+const enshrined = [...DATA].filter(d => d.inducted).sort((a,b)=> b.total-a.total);
+
+function renderHero(){
+  document.getElementById('hbEnshrined').textContent = enshrined.length;
+  document.getElementById('awEnshrined').textContent = enshrined.length;
+  const highest = allManagers[0];
+  document.getElementById('awHighest').textContent = highest.total;
+  if(enshrined.length){
+    // "newest" = most recently qualifying, approximated by latest last_season among the enshrined
+    const newest = [...enshrined].sort((a,b)=> (b.induction_year||b.last_season) - (a.induction_year||a.last_season))[0];
+    document.getElementById('awNewest').textContent = newest.manager;
+    document.getElementById('awNewestSub').textContent = `${newest.total} pts`;
+  } else {
+    document.getElementById('awNewest').textContent = '—';
+  }
+}
+
+function renderEnshrined(){
+  const rail = document.getElementById('enshrinedRail');
+  if(!enshrined.length){
+    rail.innerHTML = '<p class="empty-note">No members have crossed the threshold yet.</p>';
+    return;
+  }
+  rail.innerHTML = enshrined.map(m => `
+    <div class="banner-card">
+      <div class="ribbon">
+        <div class="cls">Class of</div>
+        <div class="yr">${m.induction_year || m.last_season}</div>
+      </div>
+      <div class="body">
+        <div class="nm">${m.manager}</div>
+        <div class="pts">${m.total} lifetime pts</div>
+        <div class="mini-stats">
+          <div><div class="v">${m.champs}</div><div class="l">Championships</div></div>
+          <div><div class="v">${m.champ_game}</div><div class="l">Title Games</div></div>
+          <div><div class="v">${m.playoff_apps}</div><div class="l">Playoff Apps</div></div>
+          <div><div class="v">${m.seasons}</div><div class="l">Seasons</div></div>
+        </div>
+      </div>
+    </div>`).join('');
+}
+
+function renderActiveTable(){
+  const tb = document.getElementById('activeBody');
+  tb.innerHTML = activeManagers.map(m => `
+    <tr class="${m.inducted?'inducted':''}">
+      <td class="rk">${m.rank}</td>
+      <td class="nm">${m.manager}${m.inducted?'<span class="hof-pin">HOF</span>':''}</td>
+      <td class="num">${m.seasons}</td>
+      <td class="num">${m.champs}</td>
+      <td class="num">${m.champ_game}</td>
+      <td class="num">${m.playoff_apps}</td>
+      <td class="num">${m.ten_win}</td>
+      <td class="num">${m.survivor}</td>
+      <td class="num">${m.leader}</td>
+      <td class="pts">${m.total}</td>
+    </tr>`).join('');
+}
+
+function renderAllTimeTable(){
+  document.getElementById('allTimeCount').textContent = allManagers.length;
+  const tb = document.getElementById('allTimeBody');
+  tb.innerHTML = allManagers.map(m => `
+    <tr class="${m.inducted?'inducted':''}">
+      <td class="rk">${m.rank}</td>
+      <td class="nm">${m.manager}${m.inducted?'<span class="hof-pin">HOF</span>':''}${m.active?'':'<span class="status-pill">Former</span>'}</td>
+      <td class="num">${m.seasons}</td>
+      <td class="num">${m.champs}</td>
+      <td class="pts">${m.total}</td>
+    </tr>`).join('');
+}
+
+function renderCusp(){
+  const notYet = activeManagers.filter(m => !m.inducted).slice(0,4);
+  const grid = document.getElementById('cuspGrid');
+  grid.innerHTML = notYet.map(m => {
+    const pct = Math.min(100, Math.round((m.total/THRESHOLD)*100));
+    const need = THRESHOLD - m.total;
+    return `
+    <div class="cusp-card">
+      <div class="rk">${ordinal(m.rank)} overall</div>
+      <div class="nm">${m.manager}</div>
+      <div class="bar-track"><div class="bar-fill" style="width:${pct}%;"></div></div>
+      <div class="bar-txt">${m.total} / ${THRESHOLD} pts</div>
+      <div class="need">${need} point${need===1?'':'s'} from enshrinement</div>
+    </div>`;
+  }).join('');
+}
+
+function renderJumpGrid(){
+  const grid = document.getElementById('jumpGrid');
+  grid.innerHTML = allManagers.map(m =>
+    `<a class="jump-btn ${m.inducted?'inducted':''}" href="managers.html#${encodeURIComponent(m.manager)}">${m.manager}</a>`
+  ).join('');
+}
+
+renderHero();
+renderEnshrined();
+renderActiveTable();
+renderAllTimeTable();
+renderCusp();
+renderJumpGrid();
+
+function showView(view, btn){
+  document.querySelectorAll('.view-tab').forEach(t => t.classList.remove('active'));
+  btn.classList.add('active');
+  document.getElementById('panel-active').classList.toggle('shown', view==='active');
+  document.getElementById('panel-alltime').classList.toggle('shown', view==='alltime');
+}
+</script>
+    </div>
+  </div>
+</div>
+
+</body>
+</html>
