@@ -1,0 +1,1340 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Postseason — Balls Deep FFL</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Barlow+Condensed:wght@500;600;700&family=Barlow:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+
+
+  :root{
+  --bd-black:#0e0c09;
+  --bd-panel:#18150f;
+  --bd-panel-2:#211c14;
+  --bd-line:#332b1c;
+  --bd-gold:#d4af37;
+  --bd-gold-bright:#f2cc4d;
+  --bd-gold-dim:#8a7228;
+  --bd-gold-soft: rgba(212,175,55,0.22);
+  --bd-white:#f3ede0;
+  --bd-muted:#9c9384;
+  --bd-green:#5aa876;
+  --bd-green-soft: rgba(90,168,118,0.18);
+  --bd-red:#c1596a;
+  --bd-silver:#b9bcc3;
+  --bd-bronze:#c08a4f;
+  --font-display:'Archivo Black', sans-serif;
+  --font-cond:'Barlow Condensed', sans-serif;
+}
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;background:var(--bd-black);color:var(--bd-white);font-family:'Barlow Condensed',sans-serif;}
+
+  /* ===================== SHARED SITE LAYOUT ===================== */
+  .app{display:flex;min-height:100vh;}
+
+  .sidebar{
+    width:230px;
+    flex:none;
+    background:linear-gradient(180deg, #14181f 0%, #0e1116 100%);
+    border-right:1px solid var(--bd-line);
+    display:flex;
+    flex-direction:column;
+    position:sticky;
+    top:0;
+    height:100vh;
+    overflow-y:auto;
+  }
+  .sidebar-brand{
+    padding:26px 22px 22px;
+    border-bottom:1px solid var(--bd-line);
+  }
+  .sidebar-brand .brand-logo{display:block;width:100%;max-width:190px;height:auto;margin:0 auto;}
+  .sidebar-brand .word1{
+    font-family:'Archivo Black',sans-serif;
+    font-size:19px;
+    color:var(--bd-white);
+    letter-spacing:0.02em;
+    line-height:1.1;
+  }
+  .sidebar-brand .word2{
+    font-family:'Archivo Black',sans-serif;
+    font-size:19px;
+    color:var(--bd-gold);
+    letter-spacing:0.02em;
+    line-height:1.1;
+  }
+  .sidebar-brand .tag{
+    margin-top:6px;
+    font-family:'Barlow Condensed',sans-serif;
+    font-size:10.5px;
+    letter-spacing:0.24em;
+    text-transform:uppercase;
+    color:var(--bd-muted);
+  }
+  .sidebar-nav{
+    display:flex;
+    flex-direction:column;
+    padding:10px 0;
+  }
+  .sidebar-nav a{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    padding:11px 22px;
+    font-family:'Barlow Condensed',sans-serif;
+    font-weight:600;
+    font-size:13px;
+    letter-spacing:0.08em;
+    text-transform:uppercase;
+    color:var(--bd-muted);
+    text-decoration:none;
+    border-left:3px solid transparent;
+    transition:background .12s ease, color .12s ease;
+  }
+  .sidebar-nav a:hover{
+    background:rgba(255,255,255,0.03);
+    color:var(--bd-white);
+  }
+  .sidebar-nav a.active{
+    background:var(--bd-gold-soft);
+    color:var(--bd-gold);
+    border-left-color:var(--bd-gold);
+  }
+  .sidebar-nav a .ic{
+    font-size:12px;
+    opacity:0.7;
+  }
+
+  .main{flex:1;min-width:0;display:flex;flex-direction:column;}
+
+  .topbar{
+    height:56px;
+    flex:none;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    padding:0 28px;
+    border-bottom:1px solid var(--bd-line);
+    background:#10141b;
+    position:sticky;
+    top:0;
+    z-index:10;
+  }
+  .topbar-title{
+    font-family:'Barlow Condensed',sans-serif;
+    font-weight:700;
+    font-size:14px;
+    letter-spacing:0.18em;
+    text-transform:uppercase;
+    color:var(--bd-gold);
+  }
+  .topbar-meta{
+    font-family:'Barlow Condensed',sans-serif;
+    font-size:11.5px;
+    letter-spacing:0.05em;
+    color:var(--bd-muted);
+  }
+
+  .content{flex:1;}
+
+  @media (max-width:860px){
+    .sidebar{
+      position:fixed;
+      left:0; top:0; bottom:0;
+      transform:translateX(-100%);
+      z-index:50;
+      transition:transform .2s ease;
+      box-shadow:20px 0 40px rgba(0,0,0,0.4);
+    }
+    .sidebar.open{transform:translateX(0);}
+    .topbar-menu-btn{display:inline-flex;}
+  }
+  @media (min-width:861px){
+    .topbar-menu-btn{display:none;}
+  }
+  .topbar-menu-btn{
+    background:none;border:1px solid var(--bd-line);color:var(--bd-white);
+    border-radius:6px;padding:6px 10px;cursor:pointer;font-size:14px;
+  }
+
+  /* ===================== DASHBOARD PAGE ===================== */
+
+  .wrap{max-width:1320px;margin:0 auto;padding:26px 28px 60px;}
+
+  /* Hero */
+  .hero-banner{
+    background:
+      radial-gradient(ellipse at 50% 0%, rgba(212,175,55,0.14), transparent 60%),
+      linear-gradient(180deg, #171b23 0%, #0e1116 100%);
+    border:1px solid var(--bd-line);
+    border-radius:14px;
+    padding:44px 30px 38px;
+    text-align:center;
+    margin-bottom:22px;
+    position:relative;
+    overflow:hidden;
+  }
+  .hero-banner::before{
+    content:"";
+    position:absolute; inset:0;
+    background-image:
+      repeating-linear-gradient(45deg, rgba(212,175,55,0.03) 0 2px, transparent 2px 40px);
+    pointer-events:none;
+  }
+  .hero-banner .eyebrow{
+    font-family:'Barlow Condensed',sans-serif;
+    letter-spacing:0.3em;
+    text-transform:uppercase;
+    font-size:11.5px;
+    color:var(--bd-muted);
+    margin:0 0 10px;
+  }
+  .hero-banner h1{
+    font-family:'Archivo Black',sans-serif;
+    font-size:44px;
+    letter-spacing:0.01em;
+    margin:0;
+    color:var(--bd-white);
+  }
+  .hero-banner h1 span{color:var(--bd-gold);}
+  .hero-banner p.sub{
+    font-family:'Barlow Condensed',sans-serif;
+    color:var(--bd-muted);
+    font-size:14.5px;
+    margin:10px 0 0;
+  }
+
+  /* Stat cards row */
+  .stat-row{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:16px;
+    margin-bottom:22px;
+  }
+  .stat-card{
+    background:var(--bd-panel);
+    border:1px solid var(--bd-line);
+    border-radius:12px;
+    padding:18px 20px;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:14px;
+  }
+  .stat-card .label{
+    font-family:'Barlow Condensed',sans-serif;
+    font-size:11px;
+    letter-spacing:0.16em;
+    text-transform:uppercase;
+    color:var(--bd-muted);
+    margin:0 0 6px;
+  }
+  .stat-card .value{
+    font-family:'Archivo Black',sans-serif;
+    font-size:24px;
+    color:var(--bd-white);
+  }
+  .stat-card .icon{
+    width:42px;height:42px;flex:none;
+    border-radius:10px;
+    background:var(--bd-gold-soft);
+    color:var(--bd-gold);
+    display:flex;align-items:center;justify-content:center;
+    font-size:19px;
+  }
+
+  /* Section panel shell */
+  .panel{
+    background:var(--bd-panel);
+    border:1px solid var(--bd-line);
+    border-radius:12px;
+    margin-bottom:20px;
+    overflow:hidden;
+  }
+  .panel-head{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    padding:13px 20px;
+    background:linear-gradient(90deg, rgba(212,175,55,0.14), rgba(212,175,55,0.02));
+    border-bottom:1px solid var(--bd-line);
+  }
+  .panel-head h2{
+    font-family:'Barlow Condensed',sans-serif;
+    font-weight:700;
+    font-size:13px;
+    letter-spacing:0.18em;
+    text-transform:uppercase;
+    color:var(--bd-gold);
+    margin:0;
+  }
+  .panel-body{padding:20px;}
+
+  /* Trophy grid */
+  .trophy-grid{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:12px;
+  }
+  .trophy-card{
+    background:var(--bd-panel-2);
+    border:1px solid var(--bd-line);
+    border-radius:10px;
+    padding:14px 16px;
+    text-align:center;
+    transition:border-color .12s ease, transform .12s ease;
+  }
+  .trophy-card:hover{border-color:var(--bd-gold-soft); transform:translateY(-1px);}
+  .trophy-card .yr{
+    font-family:'Barlow Condensed',sans-serif;
+    font-size:10.5px;
+    letter-spacing:0.14em;
+    text-transform:uppercase;
+    color:var(--bd-muted);
+    margin:0 0 6px;
+  }
+  .trophy-card .who{
+    font-family:'Archivo Black',sans-serif;
+    font-size:17px;
+    color:var(--bd-gold);
+  }
+
+  /* Two-column layout: postseason chart + regular season table */
+  .two-col{
+    display:grid;
+    grid-template-columns:1.15fr 1fr;
+    gap:20px;
+    margin-bottom:20px;
+  }
+  @media (max-width:1080px){ .two-col{grid-template-columns:1fr;} }
+
+  /* Postseason bar chart */
+  .chart-legend{
+    display:flex;
+    gap:18px;
+    padding:14px 20px 0;
+    font-family:'Barlow Condensed',sans-serif;
+    font-size:11.5px;
+    letter-spacing:0.06em;
+    text-transform:uppercase;
+    color:var(--bd-muted);
+  }
+  .chart-legend .sw{
+    display:inline-block;width:11px;height:11px;border-radius:2px;margin-right:6px;vertical-align:-1px;
+  }
+  .sw.blue{background:#5a8fd6;}
+  .sw.gray{background:#5c6472;}
+  .sw.green{background:var(--bd-green);}
+
+  .bar-row{
+    display:grid;
+    grid-template-columns:76px 1fr;
+    align-items:center;
+    gap:10px;
+    padding:7px 0;
+  }
+  .bar-row .nm{
+    font-family:'Barlow Condensed',sans-serif;
+    font-size:13px;
+    font-weight:600;
+    color:var(--bd-white);
+    text-align:right;
+  }
+  .bar-track{
+    position:relative;
+    height:20px;
+    background:rgba(255,255,255,0.04);
+    border-radius:4px;
+    cursor:default;
+    overflow:visible;
+  }
+  .bar-gridline{
+    position:absolute;
+    top:0;bottom:0;
+    width:1px;
+    background:rgba(255,255,255,0.12);
+  }
+  .bar-gridline.major{background:rgba(255,255,255,0.22);}
+  .bar-seg{
+    position:absolute;
+    top:0;bottom:0;
+    cursor:default;
+  }
+  .bar-count{
+    font-family:'Barlow Condensed',sans-serif;
+    font-size:10.5px;
+    color:var(--bd-muted);
+    margin-left:6px;
+  }
+  .bar-seg:hover{filter:brightness(1.25);}
+
+  .chart-axis{
+    position:relative;
+    height:16px;
+    margin:2px 0 6px;
+  }
+  .chart-axis span{
+    position:absolute;
+    top:0;
+    transform:translateX(-50%);
+    font-family:'Barlow Condensed',sans-serif;
+    font-size:10px;
+    color:var(--bd-muted);
+  }
+  .chart-axis span:first-child{transform:translateX(0);}
+
+  #chart-tooltip{
+    position:fixed;
+    pointer-events:none;
+    z-index:200;
+    background:#0e1116;
+    border:1px solid var(--bd-gold-soft);
+    border-radius:8px;
+    padding:8px 12px;
+    font-family:'Barlow Condensed',sans-serif;
+    font-size:12px;
+    color:var(--bd-white);
+    box-shadow:0 8px 24px rgba(0,0,0,0.5);
+    opacity:0;
+    transition:opacity .1s ease;
+    white-space:nowrap;
+  }
+  #chart-tooltip .tt-mgr{
+    color:var(--bd-gold);
+    font-weight:700;
+    letter-spacing:0.06em;
+    text-transform:uppercase;
+    font-size:11px;
+    margin-bottom:4px;
+  }
+  #chart-tooltip .tt-row{display:flex;align-items:center;gap:6px;padding:1px 0;}
+  #chart-tooltip .tt-row .sw{width:9px;height:9px;border-radius:2px;display:inline-block;}
+
+  /* Data tables */
+  table.dtable{
+    width:100%;
+    border-collapse:collapse;
+    font-family:'Barlow Condensed',sans-serif;
+    font-size:13px;
+  }
+  table.dtable thead th{
+    text-align:left;
+    font-family:'Barlow Condensed',sans-serif;
+    font-size:10.5px;
+    letter-spacing:0.1em;
+    text-transform:uppercase;
+    color:var(--bd-muted);
+    padding:8px 10px;
+    border-bottom:1px solid var(--bd-line);
+    white-space:nowrap;
+  }
+  table.dtable thead th.num, table.dtable td.num{text-align:right;}
+  table.dtable thead th.sortable{
+    cursor:pointer;
+    user-select:none;
+    transition:color .12s ease;
+  }
+  table.dtable thead th.sortable:hover{color:var(--bd-white);}
+  table.dtable thead th.sortable::after{
+    content:"\2195";
+    display:inline-block;
+    margin-left:5px;
+    opacity:0.35;
+    font-size:10px;
+  }
+  table.dtable thead th.sortable.sort-desc::after{content:"\2193"; opacity:1; color:var(--bd-gold);}
+  table.dtable thead th.sortable.sort-asc::after{content:"\2191"; opacity:1; color:var(--bd-gold);}
+  table.dtable tbody td{
+    padding:8px 10px;
+    border-bottom:1px solid rgba(255,255,255,0.04);
+    color:var(--bd-white);
+    white-space:nowrap;
+  }
+  table.dtable tbody tr:hover{background:rgba(255,255,255,0.025);}
+  table.dtable tbody td.mgr{color:var(--bd-gold); font-weight:600;}
+  .pos{color:var(--bd-green);}
+  .neg{color:var(--bd-red);}
+  .table-scroll{overflow-x:auto;}
+
+  /* Three-column stats row */
+  .three-col{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:20px;
+  }
+  @media (max-width:1080px){ .three-col{grid-template-columns:1fr;} }
+  .panel-foot{
+    padding:10px 20px 16px;
+    font-family:'Barlow Condensed',sans-serif;
+    font-size:11px;
+    color:var(--bd-muted);
+    border-top:1px solid var(--bd-line);
+  }
+
+  /* Stat view selector */
+  .stat-select-row{
+    padding:12px 20px;
+    border-bottom:1px solid var(--bd-line);
+    background:rgba(255,255,255,0.015);
+  }
+  select.stat-select{
+    width:100%;
+    background:var(--bd-panel-2);
+    color:var(--bd-white);
+    border:1px solid var(--bd-line);
+    border-radius:7px;
+    padding:8px 32px 8px 12px;
+    font-family:'Barlow Condensed',sans-serif;
+    font-weight:600;
+    font-size:12.5px;
+    letter-spacing:0.04em;
+    text-transform:uppercase;
+    cursor:pointer;
+    appearance:none;
+    -webkit-appearance:none;
+    background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='10' height='6'><path d='M0 0 L5 6 L10 0 Z' fill='%23d4af37'/></svg>");
+    background-repeat:no-repeat;
+    background-position:right 12px center;
+  }
+  select.stat-select:focus{outline:1px solid var(--bd-gold-soft);}
+  select.stat-select option{background:var(--bd-panel-2); color:var(--bd-white);}
+  select.stat-select option:disabled{color:var(--bd-muted);}
+
+  /* Row-count control */
+  .table-controls{
+    display:flex;
+    align-items:center;
+    justify-content:flex-end;
+    gap:8px;
+    padding:0 20px 10px;
+  }
+  .table-controls label{
+    font-family:'Barlow Condensed',sans-serif;
+    font-size:11px;
+    letter-spacing:0.08em;
+    text-transform:uppercase;
+    color:var(--bd-muted);
+  }
+  select.rows-select{
+    background:var(--bd-panel-2);
+    color:var(--bd-white);
+    border:1px solid var(--bd-line);
+    border-radius:6px;
+    padding:4px 24px 4px 9px;
+    font-family:'Barlow Condensed',sans-serif;
+    font-weight:600;
+    font-size:12px;
+    cursor:pointer;
+    appearance:none;
+    -webkit-appearance:none;
+    background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='9' height='5'><path d='M0 0 L4.5 5 L9 0 Z' fill='%23d4af37'/></svg>");
+    background-repeat:no-repeat;
+    background-position:right 9px center;
+  }
+  select.rows-select option{background:var(--bd-panel-2); color:var(--bd-white);}
+
+  /* Pagination */
+  .pagination{
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    gap:6px;
+    padding:12px 20px 4px;
+    flex-wrap:wrap;
+  }
+  .pagination:empty{display:none;}
+  .pagination button{
+    min-width:28px;
+    height:28px;
+    padding:0 8px;
+    background:var(--bd-panel-2);
+    border:1px solid var(--bd-line);
+    border-radius:6px;
+    color:var(--bd-muted);
+    font-family:'Barlow Condensed',sans-serif;
+    font-weight:600;
+    font-size:12px;
+    cursor:pointer;
+    transition:all .12s ease;
+  }
+  .pagination button:hover{border-color:var(--bd-gold-soft); color:var(--bd-white);}
+  .pagination button.active{
+    background:var(--bd-gold-soft);
+    border-color:var(--bd-gold);
+    color:var(--bd-gold);
+  }
+  .pagination button:disabled{
+    opacity:0.35;
+    cursor:default;
+  }
+  .pagination button:disabled:hover{border-color:var(--bd-line); color:var(--bd-muted);}
+  .pagination .ellipsis{color:var(--bd-muted); padding:0 2px; font-family:'Barlow Condensed',sans-serif; font-size:12px;}
+
+  .rank-badge{
+    display:inline-flex;
+    align-items:center;
+    justify-content:center;
+    width:20px;height:20px;
+    border-radius:50%;
+    background:rgba(212,175,55,0.14);
+    color:var(--bd-gold);
+    font-family:'Barlow Condensed',sans-serif;
+    font-size:11px;
+    font-weight:700;
+    margin-right:6px;
+  }
+
+  footer.site-foot{
+    text-align:center;
+    padding:20px;
+    font-family:'Barlow Condensed',sans-serif;
+    font-size:11px;
+    letter-spacing:0.08em;
+    color:var(--bd-muted);
+    border-top:1px solid var(--bd-line);
+  }
+
+
+
+  /* ===================== SEASON RECAPS PAGE ===================== */
+  .recap-topbar{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    flex-wrap:wrap;
+    gap:14px;
+    margin-bottom:22px;
+  }
+  .tab-row{display:flex; flex-wrap:wrap; gap:8px;}
+  .tab-btn{
+    background:var(--bd-panel);
+    border:1px solid var(--bd-line);
+    color:var(--bd-muted);
+    font-family:'Barlow Condensed',sans-serif;
+    font-weight:700;
+    font-size:12.5px;
+    letter-spacing:0.1em;
+    text-transform:uppercase;
+    padding:9px 16px;
+    border-radius:999px;
+    cursor:pointer;
+    transition:background .12s ease, color .12s ease, border-color .12s ease;
+  }
+  .tab-btn:hover{color:var(--bd-white); border-color:var(--bd-gold-soft);}
+  .tab-btn.active{background:var(--bd-gold); border-color:var(--bd-gold); color:#1a1508;}
+  .season-select{
+    background:var(--bd-panel);
+    border:1px solid var(--bd-line);
+    color:var(--bd-white);
+    font-family:'Barlow Condensed',sans-serif;
+    font-weight:600;
+    font-size:15px;
+    letter-spacing:0.04em;
+    padding:9px 16px;
+    border-radius:10px;
+    cursor:pointer;
+    min-width:110px;
+    flex:none;
+  }
+  .season-select:focus{outline:1px solid var(--bd-gold-soft);}
+  .tab-panel{display:none;}
+  .tab-panel.active{display:block;}
+
+  .recap-hero{margin-bottom:20px;}
+  .recap-hero .eyebrow{
+    font-family:'Barlow Condensed',sans-serif;
+    font-size:12px; letter-spacing:0.22em; text-transform:uppercase;
+    color:var(--bd-gold); margin:0 0 4px;
+  }
+  .recap-hero h1{font-family:'Archivo Black',sans-serif; font-size:30px; margin:0; color:var(--bd-white);}
+
+  .stat-card.champion .icon{background:var(--bd-gold-soft); color:var(--bd-gold);}
+  .stat-card.second .icon{background:rgba(255,255,255,0.07); color:var(--bd-muted);}
+  .stat-card.regchamp .icon{background:var(--bd-green-soft); color:var(--bd-green);}
+  .stat-card.mostpoints .icon{background:rgba(90,143,214,0.16); color:#5a8fd6;}
+
+  /* ---- Playoff bracket ---- */
+  .bracket-wrap{overflow-x:auto; padding-bottom:6px;}
+  .bracket-col-heads{display:flex; margin-bottom:18px;}
+  .bracket-col-heads span{
+    width:var(--bx-w); flex:none;
+    font-family:'Barlow Condensed',sans-serif; font-size:12.5px; font-weight:700;
+    letter-spacing:0.2em; text-transform:uppercase; color:var(--bd-gold); text-align:center;
+  }
+  .bracket-col-heads .sp{flex:none; width:var(--col-gap);}
+  #bracket-canvas{position:relative; min-width:820px;}
+  .bx{
+    position:absolute; width:var(--bx-w); height:var(--bx-h);
+    background:var(--bd-panel-2); border:1px solid var(--bd-line); border-radius:10px; overflow:hidden;
+  }
+  .bx.final{border-color:var(--bd-gold-soft);}
+  .bxrow{
+    display:flex; align-items:center; gap:9px; height:calc(var(--bx-h) / 2); padding:0 13px;
+    font-family:'Barlow Condensed',sans-serif; font-size:15px; font-weight:600; color:var(--bd-muted);
+  }
+  .bxrow + .bxrow{border-top:1px solid var(--bd-line);}
+  .bxrow.win{color:var(--bd-white); background:var(--bd-green-soft);}
+  .bx.final .bxrow.win{background:var(--bd-gold-soft); color:var(--bd-white);}
+  .bxrow .seed{
+    flex:none; width:20px; height:20px; border-radius:50%;
+    background:rgba(255,255,255,0.09); color:var(--bd-muted);
+    font-size:10.5px; font-weight:700; display:flex; align-items:center; justify-content:center;
+  }
+  .bxrow.win .seed{background:var(--bd-green); color:#fff;}
+  .bx.final .bxrow.win .seed{background:var(--bd-gold); color:#1a1508;}
+  .bxrow .nm{flex:1; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;}
+  .bxrow .sc{flex:none; font-size:13.5px; color:var(--bd-muted);}
+  .bxrow.win .sc{color:var(--bd-green); font-weight:700;}
+  .bx.final .bxrow.win .sc{color:var(--bd-gold);}
+  .bxrow.bye .nm{color:var(--bd-muted); font-style:italic;}
+  .bx-line{position:absolute; background:var(--bd-line);}
+  .bracket-stack{display:none;}
+  .bracket-round-block{margin-bottom:22px;}
+  .bracket-round-block h3{
+    font-family:'Barlow Condensed',sans-serif; font-size:12.5px; font-weight:700;
+    letter-spacing:0.18em; text-transform:uppercase; color:var(--bd-gold); margin:0 0 10px;
+  }
+  .bracket-stack .bx{position:static; width:100%; height:auto; margin-bottom:12px;}
+  .bracket-stack .bxrow{height:auto; padding:10px 13px;}
+  @media (max-width:820px){
+    #bracket-canvas, .bracket-col-heads{display:none;}
+    .bracket-stack{display:block;}
+  }
+  @media (max-width:700px){
+    .stat-row{grid-template-columns:repeat(2,1fr);}
+  }
+
+  /* ---- Generic smart table (Standings / Draft / Matchups / Trades) ---- */
+  .smart-toolbar{
+    display:flex; align-items:center; justify-content:space-between; gap:14px;
+    flex-wrap:wrap; padding:14px 20px; border-bottom:1px solid var(--bd-line);
+  }
+  .smart-search{
+    background:var(--bd-panel-2); border:1px solid var(--bd-line); border-radius:8px;
+    color:var(--bd-white); font-family:'Barlow Condensed',sans-serif; font-size:13.5px;
+    padding:8px 12px; min-width:220px;
+  }
+  .smart-search::placeholder{color:var(--bd-muted);}
+  .smart-search:focus{outline:1px solid var(--bd-gold-soft);}
+  table.smart-table{border-collapse:collapse; width:100%;}
+  table.smart-table th{
+    font-family:'Barlow Condensed',sans-serif; font-weight:700; font-size:11px;
+    letter-spacing:0.08em; text-transform:uppercase; color:var(--bd-muted);
+    text-align:left; padding:10px 14px; border-bottom:1px solid var(--bd-line);
+    cursor:pointer; white-space:nowrap; user-select:none;
+  }
+  table.smart-table th.num, table.smart-table td.num{text-align:right;}
+  table.smart-table th:hover{color:var(--bd-white);}
+  table.smart-table th.sort-asc::after{content:' \25B2'; color:var(--bd-gold); font-size:9px;}
+  table.smart-table th.sort-desc::after{content:' \25BC'; color:var(--bd-gold); font-size:9px;}
+  table.smart-table td{
+    padding:10px 14px; border-bottom:1px solid var(--bd-line);
+    font-family:'Barlow Condensed',sans-serif; font-size:14px; color:var(--bd-muted);
+  }
+  table.smart-table tbody tr:hover{background:rgba(255,255,255,0.02);}
+  table.smart-table td.mgr{color:var(--bd-white); font-weight:600;}
+  table.smart-table tr.playoff-line td{border-bottom:2px solid var(--bd-gold);}
+  table.smart-table tr.round-head td{
+    background:rgba(212,175,55,0.06); color:var(--bd-gold);
+    font-weight:700; letter-spacing:0.1em; text-transform:uppercase; font-size:11.5px;
+  }
+  tr.trade-row-alt td{background:rgba(255,255,255,0.035);}
+  tr.trade-group-start td{border-top:2px solid rgba(255,255,255,0.16); padding-top:14px;}
+  tr.trade-group-start{scroll-margin-top:8px;}
+  .score-note{
+    display:inline-block; margin-left:6px; padding:1px 6px; border-radius:5px;
+    font-size:10px; font-weight:700; letter-spacing:0.03em; text-transform:uppercase;
+    vertical-align:1px;
+  }
+  .score-note.hi{background:var(--bd-green-soft); color:var(--bd-green);}
+  .score-note.lo{background:rgba(200,90,90,0.18); color:var(--bd-red);}
+  .score-note.yr{background:var(--bd-gold-soft); color:var(--bd-gold);}
+  .smart-pagination{
+    display:flex; align-items:center; justify-content:center; gap:6px;
+    padding:14px 20px; flex-wrap:wrap;
+  }
+  .smart-pagination button{
+    background:var(--bd-panel-2); border:1px solid var(--bd-line); color:var(--bd-muted);
+    font-family:'Barlow Condensed',sans-serif; font-weight:600; font-size:12.5px;
+    padding:6px 11px; border-radius:6px; cursor:pointer;
+  }
+  .smart-pagination button.active{background:var(--bd-gold); border-color:var(--bd-gold); color:#1a1508;}
+  .smart-pagination button:disabled{opacity:0.35; cursor:default;}
+  .smart-pagination .ellipsis{color:var(--bd-muted); padding:0 4px;}
+  .smart-foot{padding:12px 20px 16px; font-family:'Barlow Condensed',sans-serif; font-size:12px; color:var(--bd-muted);}
+  .no-data{padding:26px; text-align:center; font-family:'Barlow Condensed',sans-serif; color:var(--bd-muted); font-size:14px;}
+
+  /* ---- Weekly standings chart ---- */
+  .ws-chart-legend{
+    display:flex; flex-wrap:wrap; gap:12px 18px; padding:16px 20px 4px;
+    font-family:'Barlow Condensed',sans-serif; font-size:12px; letter-spacing:0.04em; color:var(--bd-muted);
+  }
+  .ws-chart-legend span{display:flex; align-items:center; gap:6px; cursor:pointer;}
+  .ws-chart-legend .sw{width:11px; height:11px; border-radius:2px; display:inline-block;}
+  .ws-chart-legend span.dim{opacity:0.3;}
+  #ws-chart-wrap{position:relative; padding:10px 20px 20px; overflow-x:auto;}
+  #ws-tooltip{
+    position:fixed; pointer-events:none; z-index:200;
+    background:#0e1116; border:1px solid var(--bd-gold-soft); border-radius:8px;
+    padding:8px 12px; font-family:'Barlow Condensed',sans-serif; font-size:12px;
+    color:var(--bd-white); box-shadow:0 8px 24px rgba(0,0,0,0.5); opacity:0;
+    transition:opacity .1s ease; white-space:nowrap;
+  }
+
+
+<style>
+  .grid-2{display:grid; grid-template-columns:340px 1fr; gap:20px; align-items:start;}
+  @media (max-width:900px){ .grid-2{grid-template-columns:1fr;} }
+  .filter-row{display:flex; gap:10px; flex-wrap:wrap; padding:14px 20px 0;}
+  .filter-row select, .filter-row input{
+    background:var(--bd-panel-2); border:1px solid var(--bd-line); color:var(--bd-white);
+    font-family:'Barlow Condensed',sans-serif; font-size:13px; padding:8px 10px; border-radius:6px;
+  }
+  .filter-row label{font-family:'Barlow Condensed',sans-serif; font-size:11px; letter-spacing:.1em; text-transform:uppercase; color:var(--bd-muted); display:flex; flex-direction:column; gap:4px;}
+  .badge-note{display:inline-block; padding:2px 7px; border-radius:4px; font-family:'Barlow Condensed',sans-serif; font-size:10.5px; font-weight:700; letter-spacing:.04em;}
+  .badge-note.hi{background:var(--bd-green-soft); color:var(--bd-green);}
+  .badge-note.lo{background:rgba(200,90,90,0.18); color:var(--bd-red);}
+  .lookup-panel{padding:20px; display:flex; flex-direction:column; gap:14px;}
+  .lookup-row{display:flex; flex-wrap:wrap; gap:14px; align-items:flex-end;}
+  .lookup-row .field{display:flex; flex-direction:column; gap:5px;}
+  .lookup-row label{font-family:'Barlow Condensed',sans-serif; font-size:11px; letter-spacing:.1em; text-transform:uppercase; color:var(--bd-muted);}
+  .lookup-row select{background:var(--bd-panel-2); border:1px solid var(--bd-line); color:var(--bd-white); font-family:'Barlow Condensed',sans-serif; font-size:13px; padding:9px 10px; border-radius:6px; min-width:160px;}
+  .lookup-row .checkbox-field{flex-direction:row; align-items:center; gap:8px;}
+  .lookup-row button{background:var(--bd-gold); border:none; color:#1a1508; font-family:'Barlow Condensed',sans-serif; font-weight:700; letter-spacing:.06em; text-transform:uppercase; font-size:13px; padding:10px 22px; border-radius:6px; cursor:pointer;}
+  .lookup-summary{font-family:'Barlow Condensed',sans-serif; font-size:14.5px; color:var(--bd-white); padding:0 20px;}
+  .lookup-summary b{color:var(--bd-gold);}
+  .chart-wrap{padding:16px 20px 20px; overflow-x:auto;}
+  .chart-legend{display:flex; flex-wrap:wrap; gap:10px 16px; padding:14px 20px 0; font-family:'Barlow Condensed',sans-serif; font-size:12px; color:var(--bd-muted);}
+  .chart-legend .item{display:flex; align-items:center; gap:6px; cursor:pointer;}
+  .chart-legend .sw{width:12px; height:3px; border-radius:2px;}
+  .chart-legend .item.dim{opacity:0.28;}
+  .rrbar-wrap{padding:16px 20px 20px;}
+  .rrbar-row{display:flex; align-items:center; gap:10px; margin-bottom:8px;}
+  .rrbar-label{width:80px; font-family:'Barlow Condensed',sans-serif; font-size:12px; color:var(--bd-muted); flex:none;}
+  .rrbar-track{flex:1; display:flex; height:18px; border-radius:4px; overflow:hidden; background:var(--bd-panel-2);}
+  .rrbar-seg{height:100%;}
+  .rrbar-seg.r1{background:var(--bd-green);}
+  .rrbar-seg.r2{background:#d4af37;}
+  .rrbar-seg.r3{background:rgba(200,90,90,0.55);}
+  .svg-tooltip{
+    position:absolute; pointer-events:none; background:#0e1116; border:1px solid var(--bd-gold-soft);
+    border-radius:6px; padding:8px 10px; font-family:'Barlow Condensed',sans-serif; font-size:12.5px; color:var(--bd-white);
+    opacity:0; transition:opacity .1s; z-index:20; white-space:nowrap;
+  }
+  .chart-container{position:relative;}
+  .rec-table-wrap{overflow-x:auto; padding:0 20px 20px;}
+  table.rec-table{border-collapse:collapse; width:100%; font-family:'Barlow Condensed',sans-serif; font-size:12.5px;}
+  table.rec-table th, table.rec-table td{padding:7px 9px; text-align:center; border-bottom:1px solid var(--bd-line); white-space:nowrap;}
+  table.rec-table th{color:var(--bd-muted); font-family:'Barlow Condensed',sans-serif; text-transform:uppercase; letter-spacing:.05em; font-size:11px;}
+  table.rec-table td.mgr-col{text-align:left; color:var(--bd-white); font-weight:600; position:sticky; left:0; background:var(--bd-panel);}
+  .panel-sub{padding:14px 20px 0; font-family:'Barlow Condensed',sans-serif; font-size:13px; color:var(--bd-muted);}
+</style>
+</head>
+
+<style>
+  /* ===================== POSTSEASON PAGE ===================== */
+  .medal{display:inline-flex; align-items:center; gap:3px;}
+  .pie-wrap{padding:20px; display:flex; align-items:center; justify-content:center;}
+  .pie-legend{padding:0 20px 20px; display:flex; flex-wrap:wrap; gap:10px 16px;}
+  .pie-legend .item{display:flex; align-items:center; gap:7px; font-family:'Barlow Condensed',sans-serif; font-size:12.5px; color:var(--bd-muted);}
+  .pie-legend .sw{width:11px; height:11px; border-radius:3px; flex:none;}
+  .seed-pill{
+    display:inline-flex; align-items:center; justify-content:center;
+    width:18px; height:18px; border-radius:50%;
+    font-family:'Barlow Condensed',sans-serif; font-size:10.5px; font-weight:700;
+    margin-left:6px; vertical-align:1px;
+  }
+  .seed-pill.win{background:var(--bd-green-soft); color:var(--bd-green);}
+  .seed-pill.loss{background:rgba(200,90,90,0.18); color:var(--bd-red);}
+  table.h2h-table{border-collapse:collapse; width:100%; font-family:'Barlow Condensed',sans-serif; font-size:12.5px;}
+  table.h2h-table th, table.h2h-table td{padding:7px 9px; text-align:center; border-bottom:1px solid var(--bd-line); white-space:nowrap;}
+  table.h2h-table th{color:var(--bd-muted); text-transform:uppercase; letter-spacing:.05em; font-size:10.5px;}
+  table.h2h-table td.mgr-col{text-align:left; color:var(--bd-white); font-weight:600; position:sticky; left:0; background:var(--bd-panel);}
+  table.h2h-table td.diag{color:var(--bd-muted);}
+  .h2h-scroll{overflow-x:auto; padding:0 20px 20px;}
+  .cbp-wrap{padding:16px 20px 20px;}
+  .cbp-row{display:grid; grid-template-columns:56px 1fr 28px; align-items:center; gap:10px; padding:5px 0;}
+  .cbp-row .lbl{font-family:'Barlow Condensed',sans-serif; font-size:11.5px; color:var(--bd-muted); text-align:right;}
+  .cbp-track{height:16px; background:rgba(255,255,255,0.04); border-radius:4px; position:relative; overflow:hidden;}
+  .cbp-fill{height:100%; background:linear-gradient(90deg, var(--bd-gold), rgba(212,175,55,0.55)); border-radius:4px;}
+  .cbp-count{font-family:'Barlow Condensed',sans-serif; font-size:11.5px; color:var(--bd-muted);}
+  .champ-cell{font-weight:700; color:var(--bd-gold);}
+  .pts-note{color:var(--bd-muted); font-size:11px;}
+</style>
+<body>
+
+<div class="app">
+
+  <nav class="sidebar" id="sidebar">
+    <div class="sidebar-brand">
+      <img class="brand-logo" src="data:image/png;base64,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" alt="Balls Deep FFL" width="340" height="162">
+      <div class="tag">Est. 2012</div>
+    </div>
+        <div class="sidebar-nav">
+      <a href="index.html">Dashboard</a>
+      <a href="our-story.html">Our Story</a>
+      <a href="season-recaps.html">Season Recaps</a>
+      <a href="regular-season.html">Regular Season</a>
+      <a href="postseason.html" class="active">Postseason</a>
+      <a href="toilet-bowl.html">Toilet Bowl Championships</a>
+      <a href="charts.html">Charts</a>
+      <a href="awards.html">Awards</a>
+      <a href="records.html">Records</a>
+      <a href="milestones.html">Milestones</a>
+      <a href="survivor-tourney.html">Survivor Tourney</a>
+      <a href="what-if.html">What If</a>
+      <a href="draft.html">Draft</a>
+      <a href="rosters.html">Rosters</a>
+      <a href="players.html">Players</a>
+      <a href="managers.html">Managers</a>
+      <a href="hall-of-fame.html">Hall of Fame</a>
+      <a href="constitution.html">Constitution</a>
+      <a href="schedule.html">Schedule</a>
+      <a href="current-season.html">Current Season</a>
+      <a href="newsletter.html">Newsletter</a>
+    </div>
+  </nav>
+
+  <div class="main">
+    <header class="topbar">
+      <button class="topbar-menu-btn" onclick="document.getElementById('sidebar').classList.toggle('open')">&#9776;</button>
+      <div class="topbar-title">Postseason</div>
+      <div class="topbar-meta">Balls Deep FFL &middot; through 2025 season</div>
+    </header>
+
+    <div class="content">
+      <div class="wrap">
+        <div class="recap-topbar">
+          <div class="tab-row" id="tab-row">
+            <button class="tab-btn" data-tab="wl-records">W/L Records</button>
+            <button class="tab-btn" data-tab="champion-details">Champion Details</button>
+            <button class="tab-btn" data-tab="matchups">Matchups</button>
+            <button class="tab-btn active" data-tab="overview">Overview</button>
+          </div>
+        </div>
+
+        <div class="recap-hero">
+          <p class="eyebrow">Postseason</p>
+          <h1>All-Time Postseason Data</h1>
+        </div>
+
+        <!-- ===== OVERVIEW TAB ===== -->
+        <div class="tab-panel active" id="panel-overview">
+          <div class="grid-2" style="grid-template-columns:1fr 1.2fr;">
+            <div class="panel">
+              <div class="panel-head"><h2>Championships</h2></div>
+              <div class="pie-wrap" id="champ-pie-mount"></div>
+              <div class="pie-legend" id="champ-pie-legend"></div>
+            </div>
+            <div class="panel">
+              <div class="panel-head"><h2>Postseason</h2></div>
+              <div id="avg-finish-mount"></div>
+              <div class="smart-foot">Average placing in league among seasons the manager made the playoffs.</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- ===== MATCHUPS TAB ===== -->
+        <div class="tab-panel" id="panel-matchups">
+          <div class="grid-2" style="grid-template-columns:1fr 1.4fr;">
+            <div class="panel">
+              <div class="panel-head"><h2>Head to Head Matchup Counts</h2></div>
+              <div class="h2h-scroll"><table class="h2h-table" id="h2h-table"></table></div>
+            </div>
+            <div class="panel">
+              <div class="panel-head"><h2>Matchups</h2></div>
+              <div id="matchups-mount"></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- ===== CHAMPION DETAILS TAB ===== -->
+        <div class="tab-panel" id="panel-champion-details">
+          <div class="panel" style="margin-bottom:20px;">
+            <div class="panel-head"><h2>Champion Details</h2></div>
+            <div id="champion-details-mount"></div>
+          </div>
+          <div class="panel">
+            <div class="panel-head"><h2>Championships by Draft Pick</h2></div>
+            <div class="cbp-wrap" id="cbp-mount"></div>
+          </div>
+        </div>
+
+        <!-- ===== W/L RECORDS TAB ===== -->
+        <div class="tab-panel" id="panel-wl-records">
+          <div class="panel">
+            <div class="panel-head"><h2>W/L Records</h2></div>
+            <div id="wl-records-mount"></div>
+          </div>
+        </div>
+
+      </div>
+      <footer class="site-foot">Balls Deep FFL &middot; Est. 2012 &middot; Data through 2025 season</footer>
+    </div>
+  </div>
+</div>
+
+<div id="chart-tooltip"></div>
+
+<script>
+const DATA = {"years":[2012,2013,2014,2015,2016,2017,2018,2019,2020,2021,2022,2023,2024,2025],"managers":["Alcoholics","Ben F.","Ben G.","Bradley F.","Brian O.","Chad G.","Chris B.","Chris P.","Chris S.","Cordel G.","Corey R.","Daniel H.","Derrick T.","JC P.","Jacob C.","Jason G.","Jeff H.","Jen G.","Jordan M.","Kaiden P.","Karissa G.","Luke S.","Ryan M.","Scott R.","Stranglers","Tony M.","Travis J."],"championDetails":[{"year":2025,"champion":"Jacob C.","draftPick":8,"record":"11-3","seed":1,"trades":1,"topDraftPick":"Josh Allen","topDraftPickPts":340.85,"topAdd":"Chase McLaughlin","topAddPts":74.14},{"year":2024,"champion":"Cordel G.","draftPick":9,"record":"12-2","seed":1,"trades":2,"topDraftPick":"Jalen Hurts","topDraftPickPts":308.5,"topAdd":"Jake Bates","topAddPts":98.76},{"year":2023,"champion":"Jason G.","draftPick":11,"record":"10-4","seed":1,"trades":3,"topDraftPick":"Justin Herbert","topDraftPickPts":265.0,"topAdd":"C.J. Stroud","topAddPts":217.05},{"year":2022,"champion":"Travis J.","draftPick":5,"record":"10-4","seed":1,"trades":0,"topDraftPick":"Josh Jacobs","topDraftPickPts":260.8,"topAdd":"Kirk Cousins","topAddPts":153.05},{"year":2021,"champion":"Ben F.","draftPick":5,"record":"9-4","seed":1,"trades":1,"topDraftPick":"Kyler Murray","topDraftPickPts":253.8,"topAdd":"Colts","topAddPts":83.0},{"year":2020,"champion":"Jason G.","draftPick":12,"record":"11-2","seed":1,"trades":3,"topDraftPick":"Russell Wilson","topDraftPickPts":322.35,"topAdd":"Chiefs","topAddPts":51.0},{"year":2019,"champion":"Jason G.","draftPick":10,"record":"7-6","seed":1,"trades":2,"topDraftPick":"Kyler Murray","topDraftPickPts":261.9,"topAdd":"Jameis Winston","topAddPts":162.2},{"year":2018,"champion":"Jason G.","draftPick":1,"record":"10-3","seed":1,"trades":2,"topDraftPick":"Russell Wilson","topDraftPickPts":261.2,"topAdd":"Andrew Luck","topAddPts":246.8},{"year":2017,"champion":"Tony M.","draftPick":1,"record":"12-1","seed":1,"trades":6,"topDraftPick":"Kareem Hunt","topDraftPickPts":163.7,"topAdd":"Russell Wilson","topAddPts":203.5},{"year":2016,"champion":"Daniel H.","draftPick":9,"record":"8-5","seed":1,"trades":0,"topDraftPick":"Aaron Rodgers","topDraftPickPts":308.25,"topAdd":"Jay Ajayi","topAddPts":126.2},{"year":2015,"champion":"Tony M.","draftPick":11,"record":"8-5","seed":1,"trades":1,"topDraftPick":"Philip Rivers","topDraftPickPts":283.9,"topAdd":"Panthers","topAddPts":177.0},{"year":2014,"champion":"Cordel G.","draftPick":8,"record":"11-2","seed":1,"trades":1,"topDraftPick":"Drew Brees","topDraftPickPts":307.1,"topAdd":"Eagles","topAddPts":125.0},{"year":2013,"champion":"Chris B.","draftPick":10,"record":"9-4","seed":1,"trades":0,"topDraftPick":"Peyton Manning","topDraftPickPts":376.25,"topAdd":"Brian Hartline","topAddPts":98.4},{"year":2012,"champion":"Jason G.","draftPick":2,"record":"11-3","seed":1,"trades":1,"topDraftPick":"Cam Newton","topDraftPickPts":304.0,"topAdd":"Michael Turner","topAddPts":74.0}],"championshipsByPick":[{"pick":1,"count":2},{"pick":2,"count":1},{"pick":3,"count":0},{"pick":4,"count":0},{"pick":5,"count":2},{"pick":6,"count":0},{"pick":7,"count":0},{"pick":8,"count":2},{"pick":9,"count":2},{"pick":10,"count":2},{"pick":11,"count":2},{"pick":12,"count":1}],"postseasonMatchups":[{"year":2025,"round":"Quarterfinals","a":"Ben G.","aScore":176.6,"aSeed":4,"aWin":true,"b":"Derrick T.","bScore":127.86,"bSeed":5,"bWin":false,"margin":48.74},{"year":2025,"round":"Quarterfinals","a":"Cordel G.","aScore":107.89,"aSeed":6,"aWin":true,"b":"Jason G.","bScore":85.55,"bSeed":3,"bWin":false,"margin":22.34},{"year":2025,"round":"Semifinals","a":"Cordel G.","aScore":159.67,"aSeed":6,"aWin":true,"b":"JC P.","bScore":107.08,"bSeed":1,"bWin":false,"margin":52.59},{"year":2025,"round":"Semifinals","a":"Ben G.","aScore":115.64,"aSeed":4,"aWin":false,"b":"Jacob C.","bScore":126.46,"bSeed":2,"bWin":true,"margin":10.82},{"year":2025,"round":"3rd Place Game","a":"Ben G.","aScore":105.43,"aSeed":4,"aWin":false,"b":"JC P.","bScore":111.19,"bSeed":1,"bWin":true,"margin":5.76},{"year":2025,"round":"Finals","a":"Cordel G.","aScore":105.66,"aSeed":6,"aWin":false,"b":"Jacob C.","bScore":121.86,"bSeed":2,"bWin":true,"margin":16.2},{"year":2025,"round":"5th Place Game","a":"Derrick T.","aScore":101.15,"aSeed":5,"aWin":false,"b":"Jason G.","bScore":130.71,"bSeed":3,"bWin":true,"margin":29.56},{"year":2024,"round":"Quarterfinals","a":"Bradley F.","aScore":83.3,"aSeed":5,"aWin":false,"b":"Corey R.","bScore":127.34,"bSeed":4,"bWin":true,"margin":44.04},{"year":2024,"round":"Quarterfinals","a":"JC P.","aScore":129.83,"aSeed":3,"aWin":true,"b":"Jacob C.","bScore":127.0,"bSeed":6,"bWin":false,"margin":2.83},{"year":2024,"round":"Semifinals","a":"Cordel G.","aScore":114.43,"aSeed":1,"aWin":true,"b":"JC P.","bScore":99.0,"bSeed":6,"bWin":false,"margin":15.43},{"year":2024,"round":"Semifinals","a":"Corey R.","aScore":110.27,"aSeed":4,"aWin":false,"b":"Derrick T.","bScore":127.14,"bSeed":2,"bWin":true,"margin":16.87},{"year":2024,"round":"3rd Place Game","a":"Corey R.","aScore":116.7,"aSeed":4,"aWin":false,"b":"JC P.","bScore":157.6,"bSeed":6,"bWin":true,"margin":40.9},{"year":2024,"round":"Finals","a":"Cordel G.","aScore":132.23,"aSeed":1,"aWin":true,"b":"Derrick T.","bScore":122.81,"bSeed":2,"bWin":false,"margin":9.42},{"year":2024,"round":"5th Place Game","a":"Bradley F.","aScore":161.07,"aSeed":5,"aWin":true,"b":"Jacob C.","bScore":109.18,"bSeed":3,"bWin":false,"margin":51.89},{"year":2023,"round":"Quarterfinals","a":"Ben G.","aScore":117.44,"aSeed":3,"aWin":true,"b":"Corey R.","bScore":104.59,"bSeed":6,"bWin":false,"margin":12.85},{"year":2023,"round":"Quarterfinals","a":"JC P.","aScore":110.91,"aSeed":5,"aWin":true,"b":"Travis J.","bScore":100.55,"bSeed":4,"bWin":false,"margin":10.36},{"year":2023,"round":"Semifinals","a":"Ben G.","aScore":148.02,"aSeed":3,"aWin":false,"b":"Jason G.","bScore":156.27,"bSeed":2,"bWin":true,"margin":8.25},{"year":2023,"round":"Semifinals","a":"Bradley F.","aScore":97.37,"aSeed":1,"aWin":false,"b":"JC P.","bScore":100.23,"bSeed":5,"bWin":true,"margin":2.86},{"year":2023,"round":"3rd Place Game","a":"Ben G.","aScore":103.46,"aSeed":3,"aWin":false,"b":"Bradley F.","bScore":127.15,"bSeed":1,"bWin":true,"margin":23.69},{"year":2023,"round":"Finals","a":"JC P.","aScore":113.73,"aSeed":5,"aWin":false,"b":"Jason G.","bScore":124.83,"bSeed":2,"bWin":true,"margin":11.1},{"year":2023,"round":"5th Place Game","a":"Corey R.","aScore":86.15,"aSeed":6,"aWin":false,"b":"Travis J.","bScore":111.0,"bSeed":4,"bWin":true,"margin":24.85},{"year":2022,"round":"Quarterfinals","a":"Bradley F.","aScore":96.79,"aSeed":4,"aWin":false,"b":"Travis J.","bScore":124.85,"bSeed":5,"bWin":true,"margin":28.06},{"year":2022,"round":"Quarterfinals","a":"Jason G.","aScore":132.91,"aSeed":3,"aWin":true,"b":"Kaiden P.","bScore":104.5,"bSeed":6,"bWin":false,"margin":28.41},{"year":2022,"round":"Semifinals","a":"Ben G.","aScore":84.25,"aSeed":1,"aWin":false,"b":"Travis J.","bScore":129.31,"bSeed":5,"bWin":true,"margin":45.06},{"year":2022,"round":"Semifinals","a":"Jason G.","aScore":114.45,"aSeed":3,"aWin":true,"b":"Luke S.","bScore":95.09,"bSeed":2,"bWin":false,"margin":19.36},{"year":2022,"round":"3rd Place Game","a":"Ben G.","aScore":106.55,"aSeed":1,"aWin":true,"b":"Luke S.","bScore":69.96,"bSeed":2,"bWin":false,"margin":36.59},{"year":2022,"round":"Finals","a":"Jason G.","aScore":97.15,"aSeed":3,"aWin":false,"b":"Travis J.","bScore":106.39,"bSeed":5,"bWin":true,"margin":9.24},{"year":2022,"round":"5th Place Game","a":"Bradley F.","aScore":86.01,"aSeed":4,"aWin":false,"b":"Kaiden P.","bScore":94.6,"bSeed":6,"bWin":true,"margin":8.59},{"year":2021,"round":"Quarterfinals","a":"Ben G.","aScore":150.45,"aSeed":6,"aWin":true,"b":"Kaiden P.","bScore":111.65,"bSeed":3,"bWin":false,"margin":38.8},{"year":2021,"round":"Quarterfinals","a":"Karissa G.","aScore":88.45,"aSeed":4,"aWin":false,"b":"Luke S.","bScore":131.35,"bSeed":5,"bWin":true,"margin":42.9},{"year":2021,"round":"Semifinals","a":"Ben F.","aScore":88.05,"aSeed":1,"aWin":true,"b":"Ben G.","bScore":76.4,"bSeed":6,"bWin":false,"margin":11.65},{"year":2021,"round":"Semifinals","a":"Luke S.","aScore":69.8,"aSeed":5,"aWin":false,"b":"Travis J.","bScore":82.9,"bSeed":2,"bWin":true,"margin":13.1},{"year":2021,"round":"3rd Place Game","a":"Ben G.","aScore":114.45,"aSeed":6,"aWin":true,"b":"Luke S.","bScore":109.6,"bSeed":5,"bWin":false,"margin":4.85},{"year":2021,"round":"Finals","a":"Ben F.","aScore":124.15,"aSeed":1,"aWin":true,"b":"Travis J.","bScore":105.05,"bSeed":2,"bWin":false,"margin":19.1},{"year":2021,"round":"5th Place Game","a":"Kaiden P.","aScore":0.0,"aSeed":3,"aWin":false,"b":"Karissa G.","bScore":95.6,"bSeed":4,"bWin":true,"margin":95.6},{"year":2020,"round":"Quarterfinals","a":"Bradley F.","aScore":140.6,"aSeed":3,"aWin":true,"b":"Cordel G.","bScore":93.65,"bSeed":6,"bWin":false,"margin":46.95},{"year":2020,"round":"Quarterfinals","a":"Corey R.","aScore":112.8,"aSeed":4,"aWin":true,"b":"Ryan M.","bScore":109.85,"bSeed":5,"bWin":false,"margin":2.95},{"year":2020,"round":"Semifinals","a":"Bradley F.","aScore":114.45,"aSeed":3,"aWin":false,"b":"JC P.","bScore":141.8,"bSeed":2,"bWin":true,"margin":27.35},{"year":2020,"round":"Semifinals","a":"Corey R.","aScore":125.25,"aSeed":4,"aWin":false,"b":"Jason G.","bScore":125.35,"bSeed":1,"bWin":true,"margin":0.1},{"year":2020,"round":"3rd Place Game","a":"Bradley F.","aScore":102.65,"aSeed":3,"aWin":false,"b":"Corey R.","bScore":132.4,"bSeed":4,"bWin":true,"margin":29.75},{"year":2020,"round":"Finals","a":"JC P.","aScore":112.3,"aSeed":2,"aWin":false,"b":"Jason G.","bScore":156.6,"bSeed":1,"bWin":true,"margin":44.3},{"year":2020,"round":"5th Place Game","a":"Cordel G.","aScore":84.2,"aSeed":6,"aWin":false,"b":"Ryan M.","bScore":143.75,"bSeed":5,"bWin":true,"margin":59.55},{"year":2019,"round":"Quarterfinals","a":"Corey R.","aScore":87.15,"aSeed":5,"aWin":true,"b":"Luke S.","bScore":71.05,"bSeed":4,"bWin":false,"margin":16.1},{"year":2019,"round":"Quarterfinals","a":"Derrick T.","aScore":77.25,"aSeed":3,"aWin":false,"b":"Jason G.","bScore":109.0,"bSeed":6,"bWin":true,"margin":31.75},{"year":2019,"round":"Semifinals","a":"Cordel G.","aScore":78.65,"aSeed":1,"aWin":false,"b":"Jason G.","bScore":143.3,"bSeed":6,"bWin":true,"margin":64.65},{"year":2019,"round":"Semifinals","a":"Corey R.","aScore":121.6,"aSeed":5,"aWin":true,"b":"Ryan M.","bScore":79.3,"bSeed":2,"bWin":false,"margin":42.3},{"year":2019,"round":"3rd Place Game","a":"Cordel G.","aScore":86.4,"aSeed":1,"aWin":false,"b":"Ryan M.","bScore":90.35,"bSeed":2,"bWin":true,"margin":3.95},{"year":2019,"round":"Finals","a":"Corey R.","aScore":101.8,"aSeed":5,"aWin":false,"b":"Jason G.","bScore":142.75,"bSeed":6,"bWin":true,"margin":40.95},{"year":2019,"round":"5th Place Game","a":"Derrick T.","aScore":111.85,"aSeed":3,"aWin":false,"b":"Luke S.","bScore":114.75,"bSeed":4,"bWin":true,"margin":2.9},{"year":2018,"round":"Quarterfinals","a":"Ben F.","aScore":78.35,"aSeed":4,"aWin":true,"b":"Bradley F.","bScore":65.8,"bSeed":5,"bWin":false,"margin":12.55},{"year":2018,"round":"Quarterfinals","a":"Ben G.","aScore":116.1,"aSeed":3,"aWin":true,"b":"Jeff H.","bScore":109.2,"bSeed":6,"bWin":false,"margin":6.9},{"year":2018,"round":"Semifinals","a":"Ben F.","aScore":46.75,"aSeed":4,"aWin":false,"b":"Jason G.","bScore":72.8,"bSeed":1,"bWin":true,"margin":26.05},{"year":2018,"round":"Semifinals","a":"Ben G.","aScore":105.55,"aSeed":3,"aWin":true,"b":"JC P.","bScore":72.85,"bSeed":2,"bWin":false,"margin":32.7},{"year":2018,"round":"3rd Place Game","a":"Ben F.","aScore":108.1,"aSeed":4,"aWin":false,"b":"JC P.","bScore":134.25,"bSeed":2,"bWin":true,"margin":26.15},{"year":2018,"round":"Finals","a":"Ben G.","aScore":87.45,"aSeed":3,"aWin":false,"b":"Jason G.","bScore":117.85,"bSeed":1,"bWin":true,"margin":30.4},{"year":2018,"round":"5th Place Game","a":"Bradley F.","aScore":123.55,"aSeed":5,"aWin":true,"b":"Jeff H.","bScore":101.15,"bSeed":6,"bWin":false,"margin":22.4},{"year":2017,"round":"Quarterfinals","a":"Bradley F.","aScore":74.35,"aSeed":4,"aWin":false,"b":"Corey R.","bScore":108.55,"bSeed":5,"bWin":true,"margin":34.2},{"year":2017,"round":"Quarterfinals","a":"Daniel H.","aScore":75.35,"aSeed":3,"aWin":false,"b":"Scott R.","bScore":94.9,"bSeed":6,"bWin":true,"margin":19.55},{"year":2017,"round":"Semifinals","a":"Ben G.","aScore":78.05,"aSeed":2,"aWin":false,"b":"Corey R.","bScore":92.8,"bSeed":5,"bWin":true,"margin":14.75},{"year":2017,"round":"Semifinals","a":"Scott R.","aScore":95.0,"aSeed":6,"aWin":false,"b":"Tony M.","bScore":131.9,"bSeed":1,"bWin":true,"margin":36.9},{"year":2017,"round":"3rd Place Game","a":"Ben G.","aScore":132.4,"aSeed":2,"aWin":true,"b":"Scott R.","bScore":107.3,"bSeed":6,"bWin":false,"margin":25.1},{"year":2017,"round":"Finals","a":"Corey R.","aScore":76.8,"aSeed":5,"aWin":false,"b":"Tony M.","bScore":79.15,"bSeed":1,"bWin":true,"margin":2.35},{"year":2017,"round":"5th Place Game","a":"Bradley F.","aScore":87.8,"aSeed":4,"aWin":false,"b":"Daniel H.","bScore":90.8,"bSeed":3,"bWin":true,"margin":3.0},{"year":2016,"round":"Quarterfinals","a":"Bradley F.","aScore":94.8,"aSeed":4,"aWin":false,"b":"Scott R.","bScore":95.25,"bSeed":5,"bWin":true,"margin":0.45},{"year":2016,"round":"Quarterfinals","a":"Corey R.","aScore":60.85,"aSeed":6,"aWin":false,"b":"Daniel H.","bScore":79.1,"bSeed":3,"bWin":true,"margin":18.25},{"year":2016,"round":"Semifinals","a":"Daniel H.","aScore":76.4,"aSeed":3,"aWin":true,"b":"Jeff H.","bScore":69.85,"bSeed":2,"bWin":false,"margin":6.55},{"year":2016,"round":"Semifinals","a":"Jason G.","aScore":77.7,"aSeed":1,"aWin":true,"b":"Scott R.","bScore":71.8,"bSeed":5,"bWin":false,"margin":5.9},{"year":2016,"round":"3rd Place Game","a":"Jeff H.","aScore":81.8,"aSeed":2,"aWin":false,"b":"Scott R.","bScore":91.05,"bSeed":5,"bWin":true,"margin":9.25},{"year":2016,"round":"Finals","a":"Daniel H.","aScore":133.35,"aSeed":3,"aWin":true,"b":"Jason G.","bScore":112.9,"bSeed":1,"bWin":false,"margin":20.45},{"year":2016,"round":"5th Place Game","a":"Bradley F.","aScore":83.95,"aSeed":4,"aWin":false,"b":"Corey R.","bScore":125.4,"bSeed":6,"bWin":true,"margin":41.45},{"year":2015,"round":"Quarterfinals","a":"Corey R.","aScore":109.0,"aSeed":3,"aWin":true,"b":"Scott R.","bScore":103.8,"bSeed":6,"bWin":false,"margin":5.2},{"year":2015,"round":"Quarterfinals","a":"Jeff H.","aScore":96.85,"aSeed":5,"aWin":false,"b":"Tony M.","bScore":119.55,"bSeed":4,"bWin":true,"margin":22.7},{"year":2015,"round":"Semifinals","a":"Ben F.","aScore":107.0,"aSeed":2,"aWin":false,"b":"Corey R.","bScore":113.35,"bSeed":3,"bWin":true,"margin":6.35},{"year":2015,"round":"Semifinals","a":"Daniel H.","aScore":81.2,"aSeed":1,"aWin":false,"b":"Tony M.","bScore":83.75,"bSeed":4,"bWin":true,"margin":2.55},{"year":2015,"round":"3rd Place Game","a":"Ben F.","aScore":91.5,"aSeed":2,"aWin":true,"b":"Daniel H.","bScore":85.55,"bSeed":1,"bWin":false,"margin":5.95},{"year":2015,"round":"Finals","a":"Corey R.","aScore":109.55,"aSeed":3,"aWin":false,"b":"Tony M.","bScore":131.1,"bSeed":4,"bWin":true,"margin":21.55},{"year":2015,"round":"5th Place Game","a":"Jeff H.","aScore":154.8,"aSeed":5,"aWin":true,"b":"Scott R.","bScore":108.35,"bSeed":6,"bWin":false,"margin":46.45},{"year":2014,"round":"Quarterfinals","a":"Ben F.","aScore":122.85,"aSeed":3,"aWin":true,"b":"Chris B.","bScore":55.35,"bSeed":6,"bWin":false,"margin":67.5},{"year":2014,"round":"Quarterfinals","a":"Ben G.","aScore":77.05,"aSeed":4,"aWin":false,"b":"Corey R.","bScore":95.0,"bSeed":5,"bWin":true,"margin":17.95},{"year":2014,"round":"Semifinals","a":"Ben F.","aScore":99.4,"aSeed":3,"aWin":true,"b":"Tony M.","bScore":89.55,"bSeed":2,"bWin":false,"margin":9.85},{"year":2014,"round":"Semifinals","a":"Cordel G.","aScore":107.45,"aSeed":1,"aWin":true,"b":"Corey R.","bScore":100.85,"bSeed":5,"bWin":false,"margin":6.6},{"year":2014,"round":"3rd Place Game","a":"Corey R.","aScore":98.25,"aSeed":5,"aWin":false,"b":"Tony M.","bScore":121.9,"bSeed":2,"bWin":true,"margin":23.65},{"year":2014,"round":"Finals","a":"Ben F.","aScore":91.95,"aSeed":3,"aWin":false,"b":"Cordel G.","bScore":94.25,"bSeed":1,"bWin":true,"margin":2.3},{"year":2014,"round":"5th Place Game","a":"Ben G.","aScore":110.5,"aSeed":4,"aWin":true,"b":"Chris B.","bScore":78.25,"bSeed":6,"bWin":false,"margin":32.25},{"year":2013,"round":"Quarterfinals","a":"Chris B.","aScore":102.25,"aSeed":5,"aWin":true,"b":"Daniel H.","bScore":75.7,"bSeed":4,"bWin":false,"margin":26.55},{"year":2013,"round":"Quarterfinals","a":"Cordel G.","aScore":132.35,"aSeed":3,"aWin":true,"b":"Tony M.","bScore":117.85,"bSeed":6,"bWin":false,"margin":14.5},{"year":2013,"round":"Semifinals","a":"Chris B.","aScore":86.05,"aSeed":5,"aWin":true,"b":"Jason G.","bScore":75.15,"bSeed":1,"bWin":false,"margin":10.9},{"year":2013,"round":"Semifinals","a":"Cordel G.","aScore":100.35,"aSeed":3,"aWin":false,"b":"Jen G.","bScore":101.95,"bSeed":2,"bWin":true,"margin":1.6},{"year":2013,"round":"3rd Place Game","a":"Cordel G.","aScore":88.55,"aSeed":3,"aWin":true,"b":"Jason G.","bScore":79.25,"bSeed":1,"bWin":false,"margin":9.3},{"year":2013,"round":"Finals","a":"Chris B.","aScore":106.1,"aSeed":5,"aWin":true,"b":"Jen G.","bScore":64.9,"bSeed":2,"bWin":false,"margin":41.2},{"year":2013,"round":"5th Place Game","a":"Daniel H.","aScore":69.45,"aSeed":4,"aWin":false,"b":"Tony M.","bScore":146.4,"bSeed":6,"bWin":true,"margin":76.95},{"year":2012,"round":"Quarterfinals","a":"Ben F.","aScore":71.0,"aSeed":7,"aWin":false,"b":"Chris P.","bScore":98.0,"bSeed":2,"bWin":true,"margin":27.0},{"year":2012,"round":"Quarterfinals","a":"Ben G.","aScore":77.0,"aSeed":8,"aWin":false,"b":"Jason G.","bScore":77.0,"bSeed":1,"bWin":true,"margin":0.0},{"year":2012,"round":"Quarterfinals","a":"Chad G.","aScore":119.0,"aSeed":6,"aWin":true,"b":"Cordel G.","bScore":67.0,"bSeed":3,"bWin":false,"margin":52.0},{"year":2012,"round":"Quarterfinals","a":"Daniel H.","aScore":120.0,"aSeed":4,"aWin":true,"b":"Tony M.","bScore":82.0,"bSeed":5,"bWin":false,"margin":38.0},{"year":2012,"round":"Semifinals","a":"Ben F.","aScore":128.0,"aSeed":7,"aWin":true,"b":"Cordel G.","bScore":85.0,"bSeed":3,"bWin":false,"margin":43.0},{"year":2012,"round":"Semifinals","a":"Ben G.","aScore":124.0,"aSeed":8,"aWin":true,"b":"Tony M.","bScore":74.0,"bSeed":5,"bWin":false,"margin":50.0},{"year":2012,"round":"Semifinals","a":"Chad G.","aScore":85.0,"aSeed":6,"aWin":false,"b":"Chris P.","bScore":100.0,"bSeed":2,"bWin":true,"margin":15.0},{"year":2012,"round":"Semifinals","a":"Daniel H.","aScore":98.0,"aSeed":4,"aWin":false,"b":"Jason G.","bScore":107.0,"bSeed":1,"bWin":true,"margin":9.0},{"year":2012,"round":"3rd Place Game","a":"Chad G.","aScore":103.0,"aSeed":6,"aWin":true,"b":"Daniel H.","bScore":82.0,"bSeed":4,"bWin":false,"margin":21.0},{"year":2012,"round":"Finals","a":"Chris P.","aScore":104.0,"aSeed":2,"aWin":false,"b":"Jason G.","bScore":125.0,"bSeed":1,"bWin":true,"margin":21.0},{"year":2012,"round":"5th Place Game","a":"Ben F.","aScore":85.0,"aSeed":7,"aWin":false,"b":"Ben G.","bScore":100.0,"bSeed":8,"bWin":true,"margin":15.0},{"year":2012,"round":"7th Place Game","a":"Cordel G.","aScore":110.0,"aSeed":3,"aWin":true,"b":"Tony M.","bScore":57.0,"bSeed":5,"bWin":false,"margin":53.0}],"h2hManagers":["Ben F.","Ben G.","Bradley F.","Chad G.","Chris B.","Chris P.","Cordel G.","Corey R.","Daniel H.","Derrick T.","JC P.","Jacob C.","Jason G.","Jeff H.","Jen G.","Kaiden P.","Karissa G.","Luke S.","Ryan M.","Scott R.","Tony M.","Travis J."],"h2hTable":[{"mgr":"Ben F.","Ben F.":null,"Ben G.":2,"Bradley F.":1,"Chad G.":0,"Chris B.":1,"Chris P.":1,"Cordel G.":2,"Corey R.":1,"Daniel H.":1,"Derrick T.":0,"JC P.":1,"Jacob C.":0,"Jason G.":1,"Jeff H.":0,"Jen G.":0,"Kaiden P.":0,"Karissa G.":0,"Luke S.":0,"Ryan M.":0,"Scott R.":0,"Tony M.":1,"Travis J.":1},{"mgr":"Ben G.","Ben F.":2,"Ben G.":null,"Bradley F.":1,"Chad G.":0,"Chris B.":1,"Chris P.":0,"Cordel G.":0,"Corey R.":3,"Daniel H.":0,"Derrick T.":1,"JC P.":2,"Jacob C.":1,"Jason G.":3,"Jeff H.":1,"Jen G.":0,"Kaiden P.":1,"Karissa G.":0,"Luke S.":2,"Ryan M.":0,"Scott R.":1,"Tony M.":1,"Travis J.":1},{"mgr":"Bradley F.","Ben F.":1,"Ben G.":1,"Bradley F.":null,"Chad G.":0,"Chris B.":0,"Chris P.":0,"Cordel G.":1,"Corey R.":4,"Daniel H.":1,"Derrick T.":0,"JC P.":2,"Jacob C.":1,"Jason G.":0,"Jeff H.":1,"Jen G.":0,"Kaiden P.":1,"Karissa G.":0,"Luke S.":0,"Ryan M.":0,"Scott R.":1,"Tony M.":0,"Travis J.":1},{"mgr":"Chad G.","Ben F.":0,"Ben G.":0,"Bradley F.":0,"Chad G.":null,"Chris B.":0,"Chris P.":1,"Cordel G.":1,"Corey R.":0,"Daniel H.":1,"Derrick T.":0,"JC P.":0,"Jacob C.":0,"Jason G.":0,"Jeff H.":0,"Jen G.":0,"Kaiden P.":0,"Karissa G.":0,"Luke S.":0,"Ryan M.":0,"Scott R.":0,"Tony M.":0,"Travis J.":0},{"mgr":"Chris B.","Ben F.":1,"Ben G.":1,"Bradley F.":0,"Chad G.":0,"Chris B.":null,"Chris P.":0,"Cordel G.":0,"Corey R.":0,"Daniel H.":1,"Derrick T.":0,"JC P.":0,"Jacob C.":0,"Jason G.":1,"Jeff H.":0,"Jen G.":1,"Kaiden P.":0,"Karissa G.":0,"Luke S.":0,"Ryan M.":0,"Scott R.":0,"Tony M.":0,"Travis J.":0},{"mgr":"Chris P.","Ben F.":1,"Ben G.":0,"Bradley F.":0,"Chad G.":1,"Chris B.":0,"Chris P.":null,"Cordel G.":0,"Corey R.":0,"Daniel H.":0,"Derrick T.":0,"JC P.":0,"Jacob C.":0,"Jason G.":1,"Jeff H.":0,"Jen G.":0,"Kaiden P.":0,"Karissa G.":0,"Luke S.":0,"Ryan M.":0,"Scott R.":0,"Tony M.":0,"Travis J.":0},{"mgr":"Cordel G.","Ben F.":2,"Ben G.":0,"Bradley F.":1,"Chad G.":1,"Chris B.":0,"Chris P.":0,"Cordel G.":null,"Corey R.":1,"Daniel H.":0,"Derrick T.":1,"JC P.":2,"Jacob C.":1,"Jason G.":3,"Jeff H.":0,"Jen G.":1,"Kaiden P.":0,"Karissa G.":0,"Luke S.":0,"Ryan M.":2,"Scott R.":0,"Tony M.":2,"Travis J.":0},{"mgr":"Corey R.","Ben F.":1,"Ben G.":3,"Bradley F.":4,"Chad G.":0,"Chris B.":0,"Chris P.":0,"Cordel G.":1,"Corey R.":null,"Daniel H.":1,"Derrick T.":1,"JC P.":1,"Jacob C.":0,"Jason G.":2,"Jeff H.":0,"Jen G.":0,"Kaiden P.":0,"Karissa G.":0,"Luke S.":1,"Ryan M.":2,"Scott R.":1,"Tony M.":3,"Travis J.":1},{"mgr":"Daniel H.","Ben F.":1,"Ben G.":0,"Bradley F.":1,"Chad G.":1,"Chris B.":1,"Chris P.":0,"Cordel G.":0,"Corey R.":1,"Daniel H.":null,"Derrick T.":0,"JC P.":0,"Jacob C.":0,"Jason G.":2,"Jeff H.":1,"Jen G.":0,"Kaiden P.":0,"Karissa G.":0,"Luke S.":0,"Ryan M.":0,"Scott R.":1,"Tony M.":3,"Travis J.":0},{"mgr":"Derrick T.","Ben F.":0,"Ben G.":1,"Bradley F.":0,"Chad G.":0,"Chris B.":0,"Chris P.":0,"Cordel G.":1,"Corey R.":1,"Daniel H.":0,"Derrick T.":null,"JC P.":0,"Jacob C.":0,"Jason G.":2,"Jeff H.":0,"Jen G.":0,"Kaiden P.":0,"Karissa G.":0,"Luke S.":1,"Ryan M.":0,"Scott R.":0,"Tony M.":0,"Travis J.":0},{"mgr":"JC P.","Ben F.":1,"Ben G.":2,"Bradley F.":2,"Chad G.":0,"Chris B.":0,"Chris P.":0,"Cordel G.":2,"Corey R.":1,"Daniel H.":0,"Derrick T.":0,"JC P.":null,"Jacob C.":1,"Jason G.":2,"Jeff H.":0,"Jen G.":0,"Kaiden P.":0,"Karissa G.":0,"Luke S.":0,"Ryan M.":0,"Scott R.":0,"Tony M.":0,"Travis J.":1},{"mgr":"Jacob C.","Ben F.":0,"Ben G.":1,"Bradley F.":1,"Chad G.":0,"Chris B.":0,"Chris P.":0,"Cordel G.":1,"Corey R.":0,"Daniel H.":0,"Derrick T.":0,"JC P.":1,"Jacob C.":null,"Jason G.":0,"Jeff H.":0,"Jen G.":0,"Kaiden P.":0,"Karissa G.":0,"Luke S.":0,"Ryan M.":0,"Scott R.":0,"Tony M.":0,"Travis J.":0},{"mgr":"Jason G.","Ben F.":1,"Ben G.":3,"Bradley F.":0,"Chad G.":0,"Chris B.":1,"Chris P.":1,"Cordel G.":3,"Corey R.":2,"Daniel H.":2,"Derrick T.":2,"JC P.":2,"Jacob C.":0,"Jason G.":null,"Jeff H.":0,"Jen G.":0,"Kaiden P.":1,"Karissa G.":0,"Luke S.":1,"Ryan M.":0,"Scott R.":1,"Tony M.":0,"Travis J.":1},{"mgr":"Jeff H.","Ben F.":0,"Ben G.":1,"Bradley F.":1,"Chad G.":0,"Chris B.":0,"Chris P.":0,"Cordel G.":0,"Corey R.":0,"Daniel H.":1,"Derrick T.":0,"JC P.":0,"Jacob C.":0,"Jason G.":0,"Jeff H.":null,"Jen G.":0,"Kaiden P.":0,"Karissa G.":0,"Luke S.":0,"Ryan M.":0,"Scott R.":2,"Tony M.":1,"Travis J.":0},{"mgr":"Jen G.","Ben F.":0,"Ben G.":0,"Bradley F.":0,"Chad G.":0,"Chris B.":1,"Chris P.":0,"Cordel G.":1,"Corey R.":0,"Daniel H.":0,"Derrick T.":0,"JC P.":0,"Jacob C.":0,"Jason G.":0,"Jeff H.":0,"Jen G.":null,"Kaiden P.":0,"Karissa G.":0,"Luke S.":0,"Ryan M.":0,"Scott R.":0,"Tony M.":0,"Travis J.":0},{"mgr":"Kaiden P.","Ben F.":0,"Ben G.":1,"Bradley F.":1,"Chad G.":0,"Chris B.":0,"Chris P.":0,"Cordel G.":0,"Corey R.":0,"Daniel H.":0,"Derrick T.":0,"JC P.":0,"Jacob C.":0,"Jason G.":1,"Jeff H.":0,"Jen G.":0,"Kaiden P.":null,"Karissa G.":1,"Luke S.":0,"Ryan M.":0,"Scott R.":0,"Tony M.":0,"Travis J.":0},{"mgr":"Karissa G.","Ben F.":0,"Ben G.":0,"Bradley F.":0,"Chad G.":0,"Chris B.":0,"Chris P.":0,"Cordel G.":0,"Corey R.":0,"Daniel H.":0,"Derrick T.":0,"JC P.":0,"Jacob C.":0,"Jason G.":0,"Jeff H.":0,"Jen G.":0,"Kaiden P.":1,"Karissa G.":null,"Luke S.":1,"Ryan M.":0,"Scott R.":0,"Tony M.":0,"Travis J.":0},{"mgr":"Luke S.","Ben F.":0,"Ben G.":2,"Bradley F.":0,"Chad G.":0,"Chris B.":0,"Chris P.":0,"Cordel G.":0,"Corey R.":1,"Daniel H.":0,"Derrick T.":1,"JC P.":0,"Jacob C.":0,"Jason G.":1,"Jeff H.":0,"Jen G.":0,"Kaiden P.":0,"Karissa G.":1,"Luke S.":null,"Ryan M.":0,"Scott R.":0,"Tony M.":0,"Travis J.":1},{"mgr":"Ryan M.","Ben F.":0,"Ben G.":0,"Bradley F.":0,"Chad G.":0,"Chris B.":0,"Chris P.":0,"Cordel G.":2,"Corey R.":2,"Daniel H.":0,"Derrick T.":0,"JC P.":0,"Jacob C.":0,"Jason G.":0,"Jeff H.":0,"Jen G.":0,"Kaiden P.":0,"Karissa G.":0,"Luke S.":0,"Ryan M.":null,"Scott R.":0,"Tony M.":0,"Travis J.":0},{"mgr":"Scott R.","Ben F.":0,"Ben G.":1,"Bradley F.":1,"Chad G.":0,"Chris B.":0,"Chris P.":0,"Cordel G.":0,"Corey R.":1,"Daniel H.":1,"Derrick T.":0,"JC P.":0,"Jacob C.":0,"Jason G.":1,"Jeff H.":2,"Jen G.":0,"Kaiden P.":0,"Karissa G.":0,"Luke S.":0,"Ryan M.":0,"Scott R.":null,"Tony M.":1,"Travis J.":0},{"mgr":"Tony M.","Ben F.":1,"Ben G.":1,"Bradley F.":0,"Chad G.":0,"Chris B.":0,"Chris P.":0,"Cordel G.":2,"Corey R.":3,"Daniel H.":3,"Derrick T.":0,"JC P.":0,"Jacob C.":0,"Jason G.":0,"Jeff H.":1,"Jen G.":0,"Kaiden P.":0,"Karissa G.":0,"Luke S.":0,"Ryan M.":0,"Scott R.":1,"Tony M.":null,"Travis J.":0},{"mgr":"Travis J.","Ben F.":1,"Ben G.":1,"Bradley F.":1,"Chad G.":0,"Chris B.":0,"Chris P.":0,"Cordel G.":0,"Corey R.":1,"Daniel H.":0,"Derrick T.":0,"JC P.":1,"Jacob C.":0,"Jason G.":1,"Jeff H.":0,"Jen G.":0,"Kaiden P.":0,"Karissa G.":0,"Luke S.":1,"Ryan M.":0,"Scott R.":0,"Tony M.":0,"Travis J.":null}],"wlTable":[{"mgr":"Jason G.","quarterWins":3,"quarterLosses":1,"semiWins":7,"semiLosses":1,"finalWins":5,"finalLosses":2,"totalWins":16,"totalLosses":5,"winPct":0.762},{"mgr":"Ben G.","quarterWins":4,"quarterLosses":2,"semiWins":2,"semiLosses":5,"finalWins":0,"finalLosses":1,"totalWins":11,"totalLosses":10,"winPct":0.524},{"mgr":"Corey R.","quarterWins":6,"quarterLosses":2,"semiWins":3,"semiLosses":3,"finalWins":0,"finalLosses":3,"totalWins":11,"totalLosses":11,"winPct":0.5},{"mgr":"Cordel G.","quarterWins":2,"quarterLosses":2,"semiWins":3,"semiLosses":3,"finalWins":2,"finalLosses":1,"totalWins":9,"totalLosses":8,"winPct":0.529},{"mgr":"Ben F.","quarterWins":2,"quarterLosses":1,"semiWins":3,"semiLosses":2,"finalWins":1,"finalLosses":1,"totalWins":7,"totalLosses":6,"winPct":0.538},{"mgr":"Tony M.","quarterWins":1,"quarterLosses":2,"semiWins":2,"semiLosses":2,"finalWins":2,"finalLosses":0,"totalWins":7,"totalLosses":5,"winPct":0.583},{"mgr":"JC P.","quarterWins":2,"quarterLosses":0,"semiWins":2,"semiLosses":3,"finalWins":0,"finalLosses":2,"totalWins":7,"totalLosses":5,"winPct":0.583},{"mgr":"Daniel H.","quarterWins":2,"quarterLosses":2,"semiWins":1,"semiLosses":2,"finalWins":1,"finalLosses":0,"totalWins":5,"totalLosses":7,"winPct":0.417},{"mgr":"Travis J.","quarterWins":1,"quarterLosses":1,"semiWins":2,"semiLosses":0,"finalWins":1,"finalLosses":1,"totalWins":5,"totalLosses":2,"winPct":0.714},{"mgr":"Bradley F.","quarterWins":1,"quarterLosses":5,"semiWins":0,"semiLosses":2,"finalWins":0,"finalLosses":0,"totalWins":4,"totalLosses":11,"winPct":0.267},{"mgr":"Chris B.","quarterWins":1,"quarterLosses":1,"semiWins":1,"semiLosses":0,"finalWins":1,"finalLosses":0,"totalWins":3,"totalLosses":2,"winPct":0.6},{"mgr":"Scott R.","quarterWins":2,"quarterLosses":1,"semiWins":0,"semiLosses":2,"finalWins":0,"finalLosses":0,"totalWins":3,"totalLosses":5,"winPct":0.375},{"mgr":"Chad G.","quarterWins":1,"quarterLosses":0,"semiWins":0,"semiLosses":1,"finalWins":0,"finalLosses":0,"totalWins":2,"totalLosses":1,"winPct":0.667},{"mgr":"Chris P.","quarterWins":1,"quarterLosses":0,"semiWins":1,"semiLosses":0,"finalWins":0,"finalLosses":1,"totalWins":2,"totalLosses":1,"winPct":0.667},{"mgr":"Luke S.","quarterWins":1,"quarterLosses":1,"semiWins":0,"semiLosses":2,"finalWins":0,"finalLosses":0,"totalWins":2,"totalLosses":5,"winPct":0.286},{"mgr":"Ryan M.","quarterWins":0,"quarterLosses":1,"semiWins":0,"semiLosses":1,"finalWins":0,"finalLosses":0,"totalWins":2,"totalLosses":2,"winPct":0.5},{"mgr":"Jacob C.","quarterWins":0,"quarterLosses":1,"semiWins":1,"semiLosses":0,"finalWins":1,"finalLosses":0,"totalWins":2,"totalLosses":2,"winPct":0.5},{"mgr":"Jen G.","quarterWins":0,"quarterLosses":0,"semiWins":1,"semiLosses":0,"finalWins":0,"finalLosses":1,"totalWins":1,"totalLosses":1,"winPct":0.5},{"mgr":"Jeff H.","quarterWins":0,"quarterLosses":2,"semiWins":0,"semiLosses":1,"finalWins":0,"finalLosses":0,"totalWins":1,"totalLosses":5,"winPct":0.167},{"mgr":"Derrick T.","quarterWins":0,"quarterLosses":2,"semiWins":1,"semiLosses":0,"finalWins":0,"finalLosses":1,"totalWins":1,"totalLosses":5,"winPct":0.167},{"mgr":"Kaiden P.","quarterWins":0,"quarterLosses":2,"semiWins":0,"semiLosses":0,"finalWins":0,"finalLosses":0,"totalWins":1,"totalLosses":3,"winPct":0.25},{"mgr":"Karissa G.","quarterWins":0,"quarterLosses":1,"semiWins":0,"semiLosses":0,"finalWins":0,"finalLosses":0,"totalWins":1,"totalLosses":1,"winPct":0.5}],"avgFinishTable":[{"mgr":"Chris P.","avgFinish":2,"gold":0,"silver":1,"bronze":0,"appearances":1},{"mgr":"Jason G.","avgFinish":2,"gold":5,"silver":2,"bronze":0,"appearances":9},{"mgr":"Jen G.","avgFinish":2,"gold":0,"silver":1,"bronze":0,"appearances":1},{"mgr":"JC P.","avgFinish":2.6,"gold":0,"silver":2,"bronze":3,"appearances":5},{"mgr":"Travis J.","avgFinish":2.67,"gold":1,"silver":1,"bronze":0,"appearances":3},{"mgr":"Chad G.","avgFinish":3,"gold":0,"silver":0,"bronze":1,"appearances":1},{"mgr":"Ben F.","avgFinish":3.2,"gold":1,"silver":1,"bronze":1,"appearances":5},{"mgr":"Cordel G.","avgFinish":3.43,"gold":2,"silver":1,"bronze":1,"appearances":7},{"mgr":"Chris B.","avgFinish":3.5,"gold":1,"silver":0,"bronze":0,"appearances":2},{"mgr":"Corey R.","avgFinish":3.5,"gold":0,"silver":3,"bronze":1,"appearances":8},{"mgr":"Jacob C.","avgFinish":3.5,"gold":1,"silver":0,"bronze":0,"appearances":2},{"mgr":"Tony M.","avgFinish":3.6,"gold":2,"silver":0,"bronze":1,"appearances":5},{"mgr":"Ben G.","avgFinish":3.62,"gold":0,"silver":1,"bronze":3,"appearances":8},{"mgr":"Daniel H.","avgFinish":4,"gold":1,"silver":0,"bronze":0,"appearances":5},{"mgr":"Ryan M.","avgFinish":4,"gold":0,"silver":0,"bronze":1,"appearances":2},{"mgr":"Scott R.","avgFinish":4.33,"gold":0,"silver":0,"bronze":1,"appearances":3},{"mgr":"Luke S.","avgFinish":4.33,"gold":0,"silver":0,"bronze":0,"appearances":3},{"mgr":"Derrick T.","avgFinish":4.67,"gold":0,"silver":1,"bronze":0,"appearances":3},{"mgr":"Jeff H.","avgFinish":5,"gold":0,"silver":0,"bronze":0,"appearances":3},{"mgr":"Bradley F.","avgFinish":5,"gold":0,"silver":0,"bronze":1,"appearances":7},{"mgr":"Karissa G.","avgFinish":5,"gold":0,"silver":0,"bronze":0,"appearances":1},{"mgr":"Kaiden P.","avgFinish":5.5,"gold":0,"silver":0,"bronze":0,"appearances":2}],"championshipsPie":[{"mgr":"Jason G.","count":5},{"mgr":"Cordel G.","count":2},{"mgr":"Tony M.","count":2},{"mgr":"Jacob C.","count":1},{"mgr":"Travis J.","count":1},{"mgr":"Ben F.","count":1},{"mgr":"Daniel H.","count":1},{"mgr":"Chris B.","count":1}]};
+
+function fmt1(n){ return (n===null||n===undefined||isNaN(n)) ? '\u2014' : (Math.round(n*10)/10).toFixed(1); }
+function esc(s){ return (s===null||s===undefined) ? '' : String(s); }
+function ordinal(n){
+  if (n===null||n===undefined) return '\u2014';
+  n = Math.round(n);
+  const suf = (10 <= n%100 && n%100 <=20) ? 'th' : ({1:'st',2:'nd',3:'rd'}[n%10] || 'th');
+  return n + suf;
+}
+const PALETTE = ['#d4af37','#5a8fd6','#3fae66','#c85a5a','#a978d6','#d68f45','#4bb8b8','#c74f9c','#8bb84b','#7a7ee0','#e0a13a','#5cc2e0'];
+function colorFor(mgr){
+  const idx = DATA.managers.indexOf(mgr);
+  return PALETTE[(idx>=0?idx:0) % PALETTE.length];
+}
+
+// ============================================================
+// Tabs
+// ============================================================
+const tabBtns = document.querySelectorAll('.tab-btn');
+function activateTab(tab){
+  tabBtns.forEach(b=> b.classList.toggle('active', b.dataset.tab===tab));
+  document.querySelectorAll('.tab-panel').forEach(p=> p.classList.remove('active'));
+  document.getElementById('panel-'+tab).classList.add('active');
+  renderTab(tab);
+}
+tabBtns.forEach(btn=> btn.addEventListener('click', ()=> activateTab(btn.dataset.tab)));
+
+function renderTab(tab){
+  if (tab==='overview') renderOverview();
+  else if (tab==='matchups') renderMatchups();
+  else if (tab==='champion-details') renderChampionDetails();
+  else if (tab==='wl-records') renderWLRecords();
+}
+
+// ============================================================
+// Generic smart table (search + sort + paginate) -- shared pattern
+// ============================================================
+function buildSmartTable(mountEl, opts){
+  const state = { sortKey: opts.defaultSortKey || null, sortDir: opts.defaultSortDir || 'asc', page: 1, query: '' };
+  mountEl.innerHTML = `
+    <div class="smart-toolbar">
+      <input class="smart-search" type="text" placeholder="Search...">
+      <select class="rows-select">
+        <option value="10">10 / page</option>
+        <option value="25" selected>25 / page</option>
+        <option value="50">50 / page</option>
+        <option value="100">100 / page</option>
+      </select>
+    </div>
+    <div class="table-scroll" style="max-height:640px;">
+      <table class="smart-table"><thead><tr></tr></thead><tbody></tbody></table>
+    </div>
+    <div class="smart-pagination"></div>
+    ${opts.footNote ? `<div class="smart-foot">${opts.footNote}</div>` : ''}
+  `;
+  const searchEl = mountEl.querySelector('.smart-search');
+  const rowsSelect = mountEl.querySelector('.rows-select');
+  const theadRow = mountEl.querySelector('thead tr');
+  const tbody = mountEl.querySelector('tbody');
+  const paginationEl = mountEl.querySelector('.smart-pagination');
+  if (opts.searchable===false) searchEl.style.display = 'none';
+  if (opts.pageSize) rowsSelect.value = String(opts.pageSize);
+
+  theadRow.innerHTML = opts.columns.map(c=>{
+    const cls = [c.numeric ? 'num' : '', 'sortable'].filter(Boolean).join(' ');
+    return `<th class="${cls}" data-key="${c.key}">${c.label}</th>`;
+  }).join('');
+
+  function filteredSorted(){
+    let rows = opts.rows;
+    if (state.query){
+      const q = state.query.toLowerCase();
+      rows = rows.filter(r => (opts.searchKeys||[]).some(k => String(r[k]||'').toLowerCase().includes(q)));
+    }
+    if (state.sortKey){
+      rows = [...rows].sort((a,b)=>{
+        const av = a[state.sortKey], bv = b[state.sortKey];
+        const an = av===null||av===undefined, bn = bv===null||bv===undefined;
+        if (an && bn) return 0;
+        if (an) return 1;
+        if (bn) return -1;
+        if (typeof av === 'string') return state.sortDir==='asc' ? av.localeCompare(bv) : bv.localeCompare(av);
+        return state.sortDir==='asc' ? av-bv : bv-av;
+      });
+    }
+    return rows;
+  }
+
+  function render(){
+    const pageSize = parseInt(rowsSelect.value, 10);
+    const all = filteredSorted();
+    const totalPages = Math.max(1, Math.ceil(all.length / pageSize));
+    state.page = Math.min(state.page, totalPages);
+    const start = (state.page-1)*pageSize;
+    const pageRows = all.slice(start, start+pageSize);
+
+    if (!all.length){
+      tbody.innerHTML = `<tr><td colspan="${opts.columns.length}" class="no-data">No results.</td></tr>`;
+    } else {
+      tbody.innerHTML = pageRows.map((r) => (
+        '<tr>' + opts.columns.map(c=>{
+          const cls = c.numeric ? ' class="num"' : (c.mgr ? ' class="mgr"' : '');
+          const val = c.render ? c.render(r) : esc(r[c.key]);
+          return `<td${cls}>${val}</td>`;
+        }).join('') + '</tr>'
+      )).join('');
+    }
+
+    theadRow.querySelectorAll('th').forEach(th=>{
+      th.classList.remove('sort-asc','sort-desc');
+      if (th.dataset.key === state.sortKey) th.classList.add(state.sortDir==='asc' ? 'sort-asc':'sort-desc');
+    });
+
+    if (totalPages <= 1){ paginationEl.innerHTML=''; }
+    else {
+      let html = `<button data-pg="prev" ${state.page===1?'disabled':''}>&#8249;</button>`;
+      const pages = [];
+      for (let p=1;p<=totalPages;p++){
+        if (p===1||p===totalPages||Math.abs(p-state.page)<=1) pages.push(p);
+        else if (pages[pages.length-1] !== '...') pages.push('...');
+      }
+      pages.forEach(p=>{
+        html += p==='...' ? `<span class="ellipsis">&hellip;</span>` : `<button data-pg="${p}" class="${p===state.page?'active':''}">${p}</button>`;
+      });
+      html += `<button data-pg="next" ${state.page===totalPages?'disabled':''}>&#8250;</button>`;
+      paginationEl.innerHTML = html;
+      paginationEl.querySelectorAll('button[data-pg]').forEach(btn=>{
+        btn.addEventListener('click', ()=>{
+          const v = btn.dataset.pg;
+          if (v==='prev') state.page = Math.max(1, state.page-1);
+          else if (v==='next') state.page = Math.min(totalPages, state.page+1);
+          else state.page = parseInt(v,10);
+          render();
+        });
+      });
+    }
+  }
+
+  theadRow.querySelectorAll('th[data-key]').forEach(th=>{
+    th.addEventListener('click', ()=>{
+      const key = th.dataset.key;
+      if (state.sortKey === key) state.sortDir = state.sortDir==='asc' ? 'desc' : 'asc';
+      else { state.sortKey = key; state.sortDir = 'asc'; }
+      state.page = 1;
+      render();
+    });
+  });
+  searchEl.addEventListener('input', ()=>{ state.query = searchEl.value; state.page = 1; render(); });
+  rowsSelect.addEventListener('change', ()=>{ state.page = 1; render(); });
+
+  render();
+}
+
+function seedPill(seed, win){
+  if (seed===null||seed===undefined) return '';
+  return `<span class="seed-pill ${win?'win':'loss'}">${seed}</span>`;
+}
+
+// ============================================================
+// OVERVIEW: Championships pie + Average Finish
+// ============================================================
+function polarToXY(cx, cy, r, angleDeg){
+  const rad = (angleDeg - 90) * Math.PI / 180;
+  return [cx + r*Math.cos(rad), cy + r*Math.sin(rad)];
+}
+function buildPieSVG(data, size){
+  const total = data.reduce((s,d)=> s + d.count, 0);
+  const cx = size/2, cy = size/2, r = size/2 - 6;
+  let angle = 0;
+  let paths = '';
+  data.forEach(d=>{
+    const slice = total ? (d.count/total)*360 : 0;
+    const start = angle;
+    const end = angle + slice;
+    const [x1,y1] = polarToXY(cx,cy,r,start);
+    const [x2,y2] = polarToXY(cx,cy,r,end);
+    const largeArc = slice > 180 ? 1 : 0;
+    const color = colorFor(d.mgr);
+    if (slice >= 359.99){
+      paths += `<circle cx="${cx}" cy="${cy}" r="${r}" fill="${color}" data-mgr="${esc(d.mgr)}" data-count="${d.count}"></circle>`;
+    } else {
+      paths += `<path d="M${cx},${cy} L${x1},${y1} A${r},${r} 0 ${largeArc} 1 ${x2},${y2} Z" fill="${color}" data-mgr="${esc(d.mgr)}" data-count="${d.count}" stroke="#0e1116" stroke-width="1"></path>`;
+    }
+    // label
+    const mid = start + slice/2;
+    const [lx,ly] = polarToXY(cx,cy,r*0.62,mid);
+    if (slice > 8){
+      paths += `<text x="${lx}" y="${ly}" text-anchor="middle" dominant-baseline="middle" font-family="Barlow Condensed, sans-serif" font-size="12" font-weight="700" fill="var(--bd-black)">${esc(d.mgr)}: ${d.count}</text>`;
+    }
+    angle = end;
+  });
+  return `<svg viewBox="0 0 ${size} ${size}" width="${size}" height="${size}">${paths}</svg>`;
+}
+
+function renderOverview(){
+  const pieMount = document.getElementById('champ-pie-mount');
+  if (!pieMount.dataset.built){
+    pieMount.dataset.built = '1';
+    pieMount.innerHTML = buildPieSVG(DATA.championshipsPie, 280);
+    const legend = document.getElementById('champ-pie-legend');
+    legend.innerHTML = DATA.championshipsPie.map(d=>
+      `<div class="item"><span class="sw" style="background:${colorFor(d.mgr)}"></span>${esc(d.mgr)}: ${d.count}</div>`
+    ).join('');
+    const tooltip = document.getElementById('chart-tooltip');
+    pieMount.querySelectorAll('[data-mgr]').forEach(el=>{
+      el.addEventListener('mouseenter', ()=>{
+        tooltip.innerHTML = `<b>${esc(el.dataset.mgr)}</b><br>${el.dataset.count} championship${el.dataset.count==1?'':'s'}`;
+        tooltip.style.opacity = 1;
+      });
+      el.addEventListener('mousemove', (e)=>{
+        tooltip.style.left = (e.clientX+14)+'px';
+        tooltip.style.top = (e.clientY-10)+'px';
+      });
+      el.addEventListener('mouseleave', ()=> tooltip.style.opacity = 0);
+    });
+  }
+
+  const mount = document.getElementById('avg-finish-mount');
+  if (!mount.dataset.built){
+    mount.dataset.built = '1';
+    buildSmartTable(mount, {
+      rows: DATA.avgFinishTable,
+      searchKeys: ['mgr'],
+      defaultSortKey: 'avgFinish', defaultSortDir: 'asc',
+      pageSize: 25,
+      footNote: 'Average placing in league',
+      columns: [
+        {key:'mgr', label:'Manager', mgr:true},
+        {key:'avgFinish', label:'Average Finish', numeric:true, render:r=>fmt1(r.avgFinish)},
+        {key:'gold', label:'\uD83C\uDFC6', numeric:true, render:r=> r.gold ? 'x'+r.gold : ''},
+        {key:'silver', label:'\uD83E\uDD48', numeric:true, render:r=> r.silver ? 'x'+r.silver : ''},
+        {key:'bronze', label:'\uD83E\uDD49', numeric:true, render:r=> r.bronze ? 'x'+r.bronze : ''},
+      ]
+    });
+  }
+}
+
+// ============================================================
+// MATCHUPS
+// ============================================================
+function renderMatchups(){
+  const table = document.getElementById('h2h-table');
+  if (!table.dataset.built){
+    table.dataset.built = '1';
+    let head = '<thead><tr><th></th>';
+    DATA.h2hManagers.forEach(m=> head += `<th>${esc(m)}</th>`);
+    head += '</tr></thead>';
+    let body = '<tbody>';
+    DATA.h2hTable.forEach(row=>{
+      body += `<tr><td class="mgr-col">${esc(row.mgr)}</td>`;
+      DATA.h2hManagers.forEach(m=>{
+        const v = row[m];
+        body += v===null ? `<td class="diag">\u2013</td>` : `<td>${v}</td>`;
+      });
+      body += '</tr>';
+    });
+    body += '</tbody>';
+    table.innerHTML = head + body;
+  }
+
+  const mount = document.getElementById('matchups-mount');
+  if (!mount.dataset.built){
+    mount.dataset.built = '1';
+    buildSmartTable(mount, {
+      rows: DATA.postseasonMatchups,
+      searchKeys: ['a','b','round'],
+      defaultSortKey: 'year', defaultSortDir: 'desc',
+      pageSize: 10,
+      columns: [
+        {key:'year', label:'Year', numeric:true},
+        {key:'round', label:'Round'},
+        {key:'a', label:'Manager 1', mgr:true, render:r=>esc(r.a)+seedPill(r.aSeed, r.aWin)},
+        {key:'b', label:'Manager 2', mgr:true, render:r=>esc(r.b)+seedPill(r.bSeed, r.bWin)},
+        {key:'aScore', label:'Score 1', numeric:true, render:r=>fmt1(r.aScore)},
+        {key:'bScore', label:'Score 2', numeric:true, render:r=>fmt1(r.bScore)},
+        {key:'margin', label:'Margin', numeric:true, render:r=>fmt1(r.margin)},
+      ]
+    });
+  }
+}
+
+// ============================================================
+// CHAMPION DETAILS
+// ============================================================
+function renderChampionDetails(){
+  const mount = document.getElementById('champion-details-mount');
+  if (!mount.dataset.built){
+    mount.dataset.built = '1';
+    buildSmartTable(mount, {
+      rows: DATA.championDetails,
+      searchKeys: ['champion','topDraftPick','topAdd'],
+      defaultSortKey: 'year', defaultSortDir: 'desc',
+      pageSize: 25,
+      columns: [
+        {key:'year', label:'Year', numeric:true},
+        {key:'champion', label:'Champion', render:r=>`<span class="champ-cell">${esc(r.champion)}</span>`},
+        {key:'draftPick', label:'Draft Pick', numeric:true, render:r=> r.draftPick ? ordinal(r.draftPick) : '\u2014'},
+        {key:'record', label:'Record'},
+        {key:'seed', label:'Seed', numeric:true, render:r=> r.seed ? ordinal(r.seed) : '\u2014'},
+        {key:'trades', label:'Trades', numeric:true},
+        {key:'topDraftPick', label:'Top Draft Pick', render:r=> r.topDraftPick ? `${esc(r.topDraftPick)} <span class="pts-note">(${fmt1(r.topDraftPickPts)} pts)</span>` : '\u2014'},
+        {key:'topAdd', label:'Top Add', render:r=> r.topAdd ? `${esc(r.topAdd)} <span class="pts-note">(${fmt1(r.topAddPts)} pts)</span>` : '\u2014'},
+      ]
+    });
+  }
+
+  const cbp = document.getElementById('cbp-mount');
+  if (!cbp.dataset.built){
+    cbp.dataset.built = '1';
+    const max = Math.max(1, ...DATA.championshipsByPick.map(d=>d.count));
+    cbp.innerHTML = DATA.championshipsByPick.map(d=>
+      `<div class="cbp-row">
+        <div class="lbl">Pick ${d.pick}</div>
+        <div class="cbp-track"><div class="cbp-fill" style="width:${d.count? (d.count/max*100):0}%"></div></div>
+        <div class="cbp-count">${d.count||''}</div>
+      </div>`
+    ).join('');
+  }
+}
+
+// ============================================================
+// W/L RECORDS
+// ============================================================
+function renderWLRecords(){
+  const mount = document.getElementById('wl-records-mount');
+  if (!mount.dataset.built){
+    mount.dataset.built = '1';
+    buildSmartTable(mount, {
+      rows: DATA.wlTable,
+      searchKeys: ['mgr'],
+      defaultSortKey: 'totalWins', defaultSortDir: 'desc',
+      pageSize: 25,
+      columns: [
+        {key:'mgr', label:'Manager', mgr:true},
+        {key:'quarterWins', label:'Quarter Wins', numeric:true},
+        {key:'quarterLosses', label:'Quarter Losses', numeric:true},
+        {key:'semiWins', label:'Semi Wins', numeric:true},
+        {key:'semiLosses', label:'Semi Losses', numeric:true},
+        {key:'finalWins', label:'Final Wins', numeric:true},
+        {key:'finalLosses', label:'Final Losses', numeric:true},
+        {key:'totalWins', label:'Total Wins', numeric:true},
+        {key:'totalLosses', label:'Total Losses', numeric:true},
+        {key:'winPct', label:'Overall Win %', numeric:true, render:r=> r.winPct!==null ? (Math.round(r.winPct*1000)/10)+'%' : '\u2014'},
+      ]
+    });
+  }
+}
+
+// ============================================================
+// Init
+// ============================================================
+renderOverview();
+
+window.addEventListener('resize', ()=>{});
+</script>
+
+</body>
+</html>

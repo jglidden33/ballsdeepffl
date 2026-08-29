@@ -1,0 +1,392 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>BDFL — Milestones</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Barlow+Condensed:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bd-black:#0e0c09;
+  --bd-panel:#18150f;
+  --bd-panel-2:#211c14;
+  --bd-line:#332b1c;
+  --bd-gold:#d4af37;
+  --bd-gold-bright:#f2cc4d;
+  --bd-gold-dim:#8a7228;
+  --bd-white:#f3ede0;
+  --bd-muted:#9c9384;
+  --bd-green:#5aa876;
+  --bd-red:#c1596a;
+  --bd-silver:#b9bcc3;
+  --bd-bronze:#c08a4f;
+  --font-display:'Archivo Black', sans-serif;
+  --font-cond:'Barlow Condensed', sans-serif;
+}
+*{box-sizing:border-box;}
+html,body{margin:0;padding:0;}
+body{
+  background:var(--bd-black);
+  background-image:
+    radial-gradient(circle at 15% 0%, rgba(212,175,55,0.07), transparent 40%),
+    radial-gradient(circle at 85% 20%, rgba(212,175,55,0.05), transparent 35%);
+  color:var(--bd-white);
+  font-family:var(--font-cond);
+  min-height:100vh;
+}
+a{color:inherit;}
+.wrap{max-width:1100px;margin:0 auto;padding:0 20px;}
+
+/* ---------- HERO ---------- */
+.hero{padding:52px 0 30px;}
+.hero-eyebrow{font-size:14px;color:var(--bd-gold-bright);letter-spacing:.14em;text-transform:uppercase;font-weight:700;margin-bottom:10px;}
+.hero-name{
+  font-family:var(--font-display);
+  font-size:clamp(38px,7vw,72px);
+  color:var(--bd-white);
+  line-height:.95;
+  margin:0;
+}
+.hero-name span{color:var(--bd-gold-bright);}
+.hero-sub{color:var(--bd-muted);font-size:18px;margin-top:14px;max-width:640px;line-height:1.45;}
+
+/* ---------- SECTION HEADERS ---------- */
+.section{margin:56px 0;}
+.section-head{display:flex;align-items:baseline;gap:14px;margin-bottom:8px;}
+.section-title{
+  font-family:var(--font-display);
+  font-size:clamp(18px,2.6vw,24px);
+  color:var(--bd-gold-bright);
+  text-transform:uppercase;
+  letter-spacing:.03em;
+  margin:0;
+}
+.section-line{flex:1;height:1px;background:linear-gradient(90deg,var(--bd-gold-dim),transparent);}
+.section-desc{color:var(--bd-muted);font-size:15px;margin:0 0 20px;max-width:680px;line-height:1.5;}
+
+/* ---------- VIEW TABS ---------- */
+.view-tabs{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:36px;}
+.view-tab{
+  font-family:var(--font-cond); font-size:14px; letter-spacing:.04em; text-transform:uppercase; font-weight:700;
+  padding:9px 18px; border:1px solid var(--bd-line); background:var(--bd-panel-2); color:var(--bd-muted); cursor:pointer;
+  border-radius:20px;
+}
+.view-tab.active{border-color:var(--bd-gold); color:var(--bd-gold-bright); background:rgba(212,175,55,0.08);}
+.view-panel{display:none;}
+.view-panel.shown{display:block;}
+
+/* ---------- FASTEST-TO TILES ---------- */
+.fastest-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;}
+.fastest-cell{background:var(--bd-panel);border:1px solid var(--bd-line);border-radius:10px;padding:22px 20px;}
+.fastest-cell .fl{font-size:12px;color:var(--bd-muted);text-transform:uppercase;letter-spacing:.06em;margin-bottom:10px;}
+.fastest-cell .fv{font-family:var(--font-display);font-size:30px;color:var(--bd-gold-bright);}
+.fastest-cell .fm{font-size:13px;color:var(--bd-muted);margin-top:10px;line-height:1.5;}
+.fastest-cell .fm b{color:var(--bd-white);font-weight:700;}
+
+/* ---------- PROGRESS BARS ---------- */
+.progress-list{display:flex;flex-direction:column;gap:14px;background:var(--bd-panel);border:1px solid var(--bd-line);border-radius:10px;padding:18px 22px;}
+.progress-row{display:grid;grid-template-columns:110px 1fr 190px;align-items:center;gap:18px;}
+.progress-name{font-size:14px;font-weight:600;color:var(--bd-white);}
+.progress-track{height:10px;background:var(--bd-black);position:relative;border:1px solid var(--bd-line);border-radius:6px;overflow:hidden;}
+.progress-fill{height:100%;background:var(--bd-gold-dim);}
+.progress-row:first-child .progress-fill{background:var(--bd-gold-bright);}
+.progress-stats{text-align:right;font-size:12.5px;color:var(--bd-muted);white-space:nowrap;}
+.progress-stats .pv{color:var(--bd-white);font-weight:700;}
+
+/* ---------- MILESTONE TABLES ---------- */
+table.milestone-table{width:100%;border-collapse:collapse;}
+table.milestone-table th{text-align:right;font-size:11px;color:var(--bd-muted);text-transform:uppercase;letter-spacing:.04em;font-weight:700;padding:0 10px 12px;border-bottom:1px solid var(--bd-line);white-space:nowrap;}
+table.milestone-table th:first-child{text-align:left;}
+table.milestone-table td{padding:11px 10px;border-bottom:1px solid var(--bd-line);font-size:13px;text-align:right;color:var(--bd-muted);}
+table.milestone-table td:first-child{text-align:left;color:var(--bd-white);font-weight:600;font-size:14px;}
+table.milestone-table td.empty{color:var(--bd-line);}
+table.milestone-table td.fastest{color:var(--bd-gold-bright);font-weight:700;}
+.table-scroll{overflow-x:auto;background:var(--bd-panel);border:1px solid var(--bd-line);border-radius:10px;padding:14px 18px;}
+.table-note{font-size:12.5px;color:var(--bd-muted);margin-top:14px;line-height:1.5;}
+
+/* ---------- NOTES ---------- */
+.criteria-note{background:var(--bd-panel);border:1px solid var(--bd-line);border-radius:10px;padding:16px 18px;font-size:14px;color:var(--bd-muted);line-height:1.6;}
+.criteria-note b{color:var(--bd-gold-bright);}
+
+footer{padding:34px 0 60px;text-align:center;color:var(--bd-muted);font-size:13px;}
+
+/* ---------- RESPONSIVE ---------- */
+@media (max-width:820px){
+  .fastest-grid{grid-template-columns:1fr;}
+}
+@media (max-width:600px){
+  .progress-row{grid-template-columns:80px 1fr;}
+  .progress-stats{display:none;}
+}
+
+/* ===================== SHARED SITE LAYOUT (SIDEBAR) ===================== */
+.app{display:flex;min-height:100vh;}
+.sidebar{
+  width:230px;flex:none;
+  background:linear-gradient(180deg, var(--bd-panel) 0%, var(--bd-black) 100%);
+  border-right:1px solid var(--bd-line);
+  display:flex;flex-direction:column;
+  position:sticky;top:0;height:100vh;overflow-y:auto;
+}
+.sidebar-brand{padding:26px 22px 22px;border-bottom:1px solid var(--bd-line);}
+  .sidebar-brand .brand-logo{display:block;width:100%;max-width:190px;height:auto;margin:0 auto;}
+.sidebar-brand .word1{font-family:var(--font-display);font-size:19px;color:var(--bd-white);letter-spacing:0.02em;line-height:1.1;}
+.sidebar-brand .word2{font-family:var(--font-display);font-size:19px;color:var(--bd-gold-bright);letter-spacing:0.02em;line-height:1.1;}
+.sidebar-brand .tag{margin-top:6px;font-family:var(--font-cond);font-size:10.5px;letter-spacing:0.24em;text-transform:uppercase;color:var(--bd-muted);}
+.sidebar-nav{display:flex;flex-direction:column;padding:10px 0;}
+.sidebar-nav a{
+  display:flex;align-items:center;justify-content:space-between;padding:11px 22px;
+  font-family:var(--font-cond);font-weight:600;font-size:13px;letter-spacing:0.08em;text-transform:uppercase;
+  color:var(--bd-muted);text-decoration:none;border-left:3px solid transparent;
+  transition:background .12s ease, color .12s ease;
+}
+.sidebar-nav a:hover{background:rgba(255,255,255,0.03);color:var(--bd-white);}
+.sidebar-nav a.active{background:rgba(212,175,55,0.12);color:var(--bd-gold-bright);border-left-color:var(--bd-gold-bright);}
+.main{flex:1;min-width:0;display:flex;flex-direction:column;}
+.topbar{
+  height:56px;flex:none;display:flex;align-items:center;justify-content:space-between;
+  padding:0 28px;border-bottom:1px solid var(--bd-line);background:var(--bd-black);
+  position:sticky;top:0;z-index:10;
+}
+.topbar-title{font-family:var(--font-cond);font-weight:700;font-size:14px;letter-spacing:0.18em;text-transform:uppercase;color:var(--bd-gold-bright);}
+.topbar-meta{font-family:var(--font-cond);font-size:11.5px;letter-spacing:0.05em;color:var(--bd-muted);}
+.content{flex:1;}
+@media (max-width:860px){
+  .sidebar{position:fixed;left:0;top:0;bottom:0;transform:translateX(-100%);z-index:50;transition:transform .2s ease;box-shadow:20px 0 40px rgba(0,0,0,0.4);}
+  .sidebar.open{transform:translateX(0);}
+  .topbar-menu-btn{display:inline-flex;}
+}
+@media (min-width:861px){.topbar-menu-btn{display:none;}}
+.topbar-menu-btn{background:none;border:1px solid var(--bd-line);color:var(--bd-white);border-radius:6px;padding:6px 10px;cursor:pointer;font-size:14px;}
+
+</style>
+</head>
+<body>
+
+<div class="app">
+
+  <nav class="sidebar" id="sidebar">
+    <div class="sidebar-brand">
+      <img class="brand-logo" src="data:image/png;base64,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" alt="Balls Deep FFL" width="340" height="162">
+      <div class="tag">Est. 2012</div>
+    </div>
+        <div class="sidebar-nav">
+      <a href="index.html">Dashboard</a>
+      <a href="our-story.html">Our Story</a>
+      <a href="season-recaps.html">Season Recaps</a>
+      <a href="regular-season.html">Regular Season</a>
+      <a href="postseason.html">Postseason</a>
+      <a href="toilet-bowl.html">Toilet Bowl Championships</a>
+      <a href="charts.html">Charts</a>
+      <a href="awards.html">Awards</a>
+      <a href="records.html">Records</a>
+      <a href="milestones.html" class="active">Milestones</a>
+      <a href="survivor-tourney.html">Survivor Tourney</a>
+      <a href="what-if.html">What If</a>
+      <a href="draft.html">Draft</a>
+      <a href="rosters.html">Rosters</a>
+      <a href="players.html">Players</a>
+      <a href="managers.html">Managers</a>
+      <a href="hall-of-fame.html">Hall of Fame</a>
+      <a href="constitution.html">Constitution</a>
+      <a href="schedule.html">Schedule</a>
+      <a href="current-season.html">Current Season</a>
+      <a href="newsletter.html">Newsletter</a>
+    </div>
+  </nav>
+
+  <div class="main">
+    <header class="topbar">
+      <button class="topbar-menu-btn" onclick="document.getElementById('sidebar').classList.toggle('open')">&#9776;</button>
+      <div class="topbar-title">Milestones</div>
+      <div class="topbar-meta">Balls Deep FFL &middot; through 2025 season</div>
+    </header>
+
+    <div class="content">
+
+<div class="wrap">
+
+  <section class="hero">
+    <div class="hero-eyebrow">Balls Deep Fantasy Football League &middot; 2012&ndash;2025</div>
+    <h1 class="hero-name">Milestone<br><span>Watch.</span></h1>
+    <p class="hero-sub">How many games it took to cross the big career thresholds &mdash; split out by regular season, playoff bracket, and consolation bracket &mdash; tracked game by game since 2012.</p>
+  </section>
+
+  <div class="view-tabs">
+    <button class="view-tab active" onclick="showCat('overview', this)">Overview</button>
+    <button class="view-tab" onclick="showCat('regular', this)">Regular Season</button>
+    <button class="view-tab" onclick="showCat('postseason', this)">Postseason</button>
+    <button class="view-tab" onclick="showCat('alerts', this)">Alerts</button>
+  </div>
+
+  <!-- ===================== OVERVIEW ===================== -->
+  <div class="view-panel shown" id="panel-overview">
+
+    <section class="section">
+      <div class="section-head"><h2 class="section-title">Fastest to a Milestone</h2><div class="section-line"></div></div>
+      <div class="fastest-grid">
+        <div class="fastest-cell">
+          <div class="fl">Fastest to 2,500 career points</div>
+          <div class="fv">22 games</div>
+          <div class="fm"><b>Jacob C.</b> &middot; regular season</div>
+        </div>
+        <div class="fastest-cell">
+          <div class="fl">Fastest to 10 career wins</div>
+          <div class="fv">12 games</div>
+          <div class="fm"><b>Jason G.</b> &middot; leads every win threshold, not just this one</div>
+        </div>
+        <div class="fastest-cell">
+          <div class="fl">Fastest playoff bracket to 5 wins</div>
+          <div class="fv">7 games</div>
+          <div class="fm"><b>Travis J.</b> &middot; playoff bracket</div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="section-head"><h2 class="section-title">Next Milestone Watch</h2><div class="section-line"></div></div>
+      <div class="section-desc">Career regular-season points, ranked by how close each manager is to their next threshold.</div>
+      <div class="progress-list">
+        <div class="progress-row">
+          <div class="progress-name">Jason G.</div>
+          <div class="progress-track"><div class="progress-fill" style="width:98.0%"></div></div>
+          <div class="progress-stats"><span class="pv">19,603</span> / 20,000 pts &middot; 98.0%</div>
+        </div>
+        <div class="progress-row">
+          <div class="progress-name">Ben G.</div>
+          <div class="progress-track"><div class="progress-fill" style="width:96.9%"></div></div>
+          <div class="progress-stats"><span class="pv">19,370</span> / 20,000 pts &middot; 96.9%</div>
+        </div>
+        <div class="progress-row">
+          <div class="progress-name">Corey R.</div>
+          <div class="progress-track"><div class="progress-fill" style="width:89.5%"></div></div>
+          <div class="progress-stats"><span class="pv">17,891</span> / 20,000 pts &middot; 89.5%</div>
+        </div>
+        <div class="progress-row">
+          <div class="progress-name">Ben F.</div>
+          <div class="progress-track"><div class="progress-fill" style="width:87.6%"></div></div>
+          <div class="progress-stats"><span class="pv">17,520</span> / 20,000 pts &middot; 87.6%</div>
+        </div>
+        <div class="progress-row">
+          <div class="progress-name">Travis J.</div>
+          <div class="progress-track"><div class="progress-fill" style="width:85.8%"></div></div>
+          <div class="progress-stats"><span class="pv">8,578</span> / 10,000 pts &middot; 85.8%</div>
+        </div>
+        <div class="progress-row">
+          <div class="progress-name">Cordel G.</div>
+          <div class="progress-track"><div class="progress-fill" style="width:80.0%"></div></div>
+          <div class="progress-stats"><span class="pv">15,991</span> / 20,000 pts &middot; 80.0%</div>
+        </div>
+        <div class="progress-row">
+          <div class="progress-name">Derrick T.</div>
+          <div class="progress-track"><div class="progress-fill" style="width:79.6%"></div></div>
+          <div class="progress-stats"><span class="pv">11,935</span> / 15,000 pts &middot; 79.6%</div>
+        </div>
+        <div class="progress-row">
+          <div class="progress-name">JC P.</div>
+          <div class="progress-track"><div class="progress-fill" style="width:78.4%"></div></div>
+          <div class="progress-stats"><span class="pv">11,764</span> / 15,000 pts &middot; 78.4%</div>
+        </div>
+        <div class="progress-row">
+          <div class="progress-name">Bradley F.</div>
+          <div class="progress-track"><div class="progress-fill" style="width:75.1%"></div></div>
+          <div class="progress-stats"><span class="pv">15,024</span> / 20,000 pts &middot; 75.1%</div>
+        </div>
+        <div class="progress-row">
+          <div class="progress-name">Luke S.</div>
+          <div class="progress-track"><div class="progress-fill" style="width:67.6%"></div></div>
+          <div class="progress-stats"><span class="pv">10,147</span> / 15,000 pts &middot; 67.6%</div>
+        </div>
+        <div class="progress-row">
+          <div class="progress-name">Jacob C.</div>
+          <div class="progress-track"><div class="progress-fill" style="width:64.4%"></div></div>
+          <div class="progress-stats"><span class="pv">3,219</span> / 5,000 pts &middot; 64.4%</div>
+        </div>
+        <div class="progress-row">
+          <div class="progress-name">Brian O.</div>
+          <div class="progress-track"><div class="progress-fill" style="width:50.9%"></div></div>
+          <div class="progress-stats"><span class="pv">2,547</span> / 5,000 pts &middot; 50.9%</div>
+        </div>
+      </div>
+    </section>
+
+  </div>
+
+  <!-- ===================== REGULAR SEASON ===================== -->
+  <div class="view-panel" id="panel-regular">
+
+    <section class="section">
+      <div class="section-head"><h2 class="section-title">Regular Season &mdash; Points</h2><div class="section-line"></div></div>
+      <div class="table-scroll"><table class="milestone-table"><thead><tr><th>Manager</th><th>2,500</th><th>5,000</th><th>7,500</th><th>10,000</th><th>15,000</th><th>20,000</th><th>25,000</th><th>30,000</th><th>40,000</th><th>50,000</th><th>75,000</th><th>100,000</th></tr></thead><tbody><tr><td>Ben F.</td><td class="">29</td><td class="">55</td><td class="">86</td><td class="">112</td><td class="">161</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td></tr><tr><td>Ben G.</td><td class="">27</td><td class="">53</td><td class="">80</td><td class="">106</td><td class="">150</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td></tr><tr><td>Bradley F.</td><td class="">27</td><td class="">53</td><td class="">78</td><td class="">101</td><td class="">147</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td></tr><tr><td>Cordel G.</td><td class="">28</td><td class="">54</td><td class="">81</td><td class="">104</td><td class="">151</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td></tr><tr><td>Corey R.</td><td class="">26</td><td class="">50</td><td class="">77</td><td class="">100</td><td class="">147</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td></tr><tr><td>Jason G.</td><td class="">24</td><td class="">49</td><td class="">75</td><td class="">99</td><td class="fastest">145</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td></tr><tr><td>Derrick T.</td><td class="">29</td><td class="">53</td><td class="">79</td><td class="">104</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td></tr><tr><td>JC P.</td><td class="">23</td><td class="fastest">45</td><td class="fastest">69</td><td class="fastest">93</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td></tr><tr><td>Luke S.</td><td class="">25</td><td class="">48</td><td class="">71</td><td class="">94</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td></tr><tr><td>Daniel H.</td><td class="">30</td><td class="">55</td><td class="">85</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td></tr><tr><td>Jeff H.</td><td class="">27</td><td class="">51</td><td class="">77</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td></tr><tr><td>Tony M.</td><td class="">27</td><td class="">52</td><td class="">78</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td></tr><tr><td>Travis J.</td><td class="">24</td><td class="">46</td><td class="">71</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td></tr><tr><td>Ryan M.</td><td class="">26</td><td class="">48</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td></tr><tr><td>Scott R.</td><td class="">25</td><td class="">52</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td></tr><tr><td>Brian O.</td><td class="">28</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td></tr><tr><td>Chad G.</td><td class="">29</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td></tr><tr><td>Chris B.</td><td class="">25</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td></tr><tr><td>Chris P.</td><td class="">28</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td></tr><tr><td>Jacob C.</td><td class="fastest">22</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td></tr><tr><td>Kaiden P.</td><td class="">24</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td></tr><tr><td>Karissa G.</td><td class="">26</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td></tr><tr><td>Stranglers</td><td class="">24</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td></tr></tbody></table></div>
+      <p class="table-note">Gold marks the fastest pace to that milestone across all managers. A dash means that manager hasn't reached that total.</p>
+    </section>
+
+    <section class="section">
+      <div class="section-head"><h2 class="section-title">Regular Season &mdash; Wins</h2><div class="section-line"></div></div>
+      <div class="table-scroll"><table class="milestone-table"><thead><tr><th>Manager</th><th>10</th><th>20</th><th>30</th><th>40</th><th>50</th><th>60</th><th>70</th><th>80</th><th>90</th><th>100</th><th>110</th><th>120</th></tr></thead><tbody><tr><td>Jason G.</td><td class="fastest">12</td><td class="fastest">26</td><td class="fastest">43</td><td class="fastest">63</td><td class="fastest">83</td><td class="fastest">99</td><td class="fastest">113</td><td class="fastest">132</td><td class="fastest">150</td><td class="fastest">164</td><td class="fastest">186</td><td class="empty">&mdash;</td></tr><tr><td>Ben G.</td><td class="">27</td><td class="">49</td><td class="">68</td><td class="">83</td><td class="">107</td><td class="">131</td><td class="">145</td><td class="">160</td><td class="">181</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td></tr><tr><td>Cordel G.</td><td class="">16</td><td class="">31</td><td class="">50</td><td class="">72</td><td class="">95</td><td class="">108</td><td class="">126</td><td class="">141</td><td class="">154</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td></tr><tr><td>Ben F.</td><td class="">23</td><td class="">43</td><td class="">57</td><td class="">82</td><td class="">110</td><td class="">127</td><td class="">148</td><td class="">172</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td></tr><tr><td>Corey R.</td><td class="">22</td><td class="">39</td><td class="">57</td><td class="">79</td><td class="">98</td><td class="">113</td><td class="">141</td><td class="">158</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td></tr><tr><td>Bradley F.</td><td class="">20</td><td class="">41</td><td class="">59</td><td class="">81</td><td class="">101</td><td class="">117</td><td class="">133</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td></tr><tr><td>JC P.</td><td class="">15</td><td class="">31</td><td class="">49</td><td class="">68</td><td class="">87</td><td class="">100</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td></tr><tr><td>Derrick T.</td><td class="">25</td><td class="">39</td><td class="">72</td><td class="">96</td><td class="">111</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td></tr><tr><td>Luke S.</td><td class="">18</td><td class="">38</td><td class="">51</td><td class="">71</td><td class="">95</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td></tr><tr><td>Tony M.</td><td class="">23</td><td class="">37</td><td class="">52</td><td class="">74</td><td class="">86</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td></tr><tr><td>Daniel H.</td><td class="">18</td><td class="">41</td><td class="">56</td><td class="">72</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td></tr><tr><td>Jeff H.</td><td class="">34</td><td class="">50</td><td class="">70</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td></tr><tr><td>Travis J.</td><td class="">20</td><td class="">36</td><td class="">55</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td></tr><tr><td>Kaiden P.</td><td class="">18</td><td class="">36</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td></tr><tr><td>Ryan M.</td><td class="">18</td><td class="">37</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td></tr><tr><td>Scott R.</td><td class="">22</td><td class="">39</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td></tr><tr><td>Chad G.</td><td class="">34</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td></tr><tr><td>Chris B.</td><td class="">14</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td></tr><tr><td>Chris P.</td><td class="">17</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td></tr><tr><td>Chris S.</td><td class="">22</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td></tr><tr><td>Jacob C.</td><td class="">16</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td></tr><tr><td>Karissa G.</td><td class="">20</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td></tr><tr><td>Stranglers</td><td class="">25</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td></tr></tbody></table></div>
+      <p class="table-note">Jason G. is the only manager past 100 career wins &mdash; and leads every threshold on this table, not just the highest ones.</p>
+    </section>
+
+  </div>
+
+  <!-- ===================== POSTSEASON ===================== -->
+  <div class="view-panel" id="panel-postseason">
+
+    <section class="section">
+      <div class="section-head"><h2 class="section-title">Playoff Bracket &mdash; Points</h2><div class="section-line"></div></div>
+      <div class="table-scroll"><table class="milestone-table"><thead><tr><th>Manager</th><th>500</th><th>750</th><th>1,000</th><th>1,500</th><th>2,000</th><th>2,500</th><th>3,000</th><th>4,000</th><th>5,000</th><th>7,500</th><th>10,000</th><th>15,000</th></tr></thead><tbody><tr><td>Ben G.</td><td class="">6</td><td class="">8</td><td class="">10</td><td class="">15</td><td class="">19</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td></tr><tr><td>Corey R.</td><td class="">5</td><td class="">8</td><td class="">10</td><td class="">15</td><td class="">20</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td></tr><tr><td>Jason G.</td><td class="">6</td><td class="">9</td><td class="">11</td><td class="fastest">14</td><td class="fastest">18</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td></tr><tr><td>Bradley F.</td><td class="">6</td><td class="">8</td><td class="">11</td><td class="">15</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td></tr><tr><td>Cordel G.</td><td class="">6</td><td class="">8</td><td class="">11</td><td class="">16</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td></tr><tr><td>Ben F.</td><td class="fastest">5</td><td class="">8</td><td class="">11</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td></tr><tr><td>Daniel H.</td><td class="">6</td><td class="">9</td><td class="">12</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td></tr><tr><td>JC P.</td><td class="">5</td><td class="fastest">7</td><td class="fastest">9</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td></tr><tr><td>Tony M.</td><td class="">6</td><td class="">8</td><td class="">10</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td></tr><tr><td>Scott R.</td><td class="">6</td><td class="">8</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td></tr><tr><td>Travis J.</td><td class="">5</td><td class="">7</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td></tr><tr><td>Derrick T.</td><td class="">5</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td></tr><tr><td>Jeff H.</td><td class="">5</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td></tr><tr><td>Luke S.</td><td class="">6</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td></tr></tbody></table></div>
+      <p class="table-note">Smaller totals than the regular season table &mdash; playoff games are much scarcer.</p>
+    </section>
+
+    <section class="section">
+      <div class="section-head"><h2 class="section-title">Playoff Bracket &mdash; Wins</h2><div class="section-line"></div></div>
+      <div class="table-scroll"><table class="milestone-table"><thead><tr><th>Manager</th><th>5</th><th>10</th><th>15</th><th>20</th><th>25</th><th>30</th><th>35</th><th>40</th><th>45</th><th>50</th><th>55</th><th>60</th></tr></thead><tbody><tr><td>Jason G.</td><td class="">8</td><td class="fastest">13</td><td class="fastest">19</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td></tr><tr><td>Ben G.</td><td class="">8</td><td class="">16</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td></tr><tr><td>Corey R.</td><td class="">9</td><td class="">17</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td></tr><tr><td>Ben F.</td><td class="">9</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td></tr><tr><td>Cordel G.</td><td class="">8</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td></tr><tr><td>Daniel H.</td><td class="">12</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td></tr><tr><td>JC P.</td><td class="">8</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td></tr><tr><td>Tony M.</td><td class="">10</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td></tr><tr><td>Travis J.</td><td class="fastest">7</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td></tr></tbody></table></div>
+      <p class="table-note">Smaller thresholds than the regular season table &mdash; playoff games are much scarcer.</p>
+    </section>
+
+    <section class="section">
+      <div class="section-head"><h2 class="section-title">Consolation Bracket &mdash; Points</h2><div class="section-line"></div></div>
+      <div class="table-scroll"><table class="milestone-table"><thead><tr><th>Manager</th><th>500</th><th>750</th><th>1,000</th><th>1,500</th><th>2,000</th><th>2,500</th><th>3,000</th><th>4,000</th><th>5,000</th><th>7,500</th><th>10,000</th><th>15,000</th></tr></thead><tbody><tr><td>Ben F.</td><td class="">6</td><td class="">9</td><td class="">11</td><td class="fastest">16</td><td class="fastest">21</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td></tr><tr><td>Ben G.</td><td class="">5</td><td class="">8</td><td class="">11</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td></tr><tr><td>Cordel G.</td><td class="">6</td><td class="">9</td><td class="">11</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td></tr><tr><td>Corey R.</td><td class="">6</td><td class="">8</td><td class="">11</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td></tr><tr><td>Derrick T.</td><td class="">6</td><td class="">9</td><td class="">11</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td></tr><tr><td>Luke S.</td><td class="">6</td><td class="">7</td><td class="fastest">9</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td></tr><tr><td>Bradley F.</td><td class="">5</td><td class="fastest">7</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td></tr><tr><td>Chad G.</td><td class="">6</td><td class="">8</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td></tr><tr><td>JC P.</td><td class="">5</td><td class="">7</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td></tr><tr><td>Jason G.</td><td class="">5</td><td class="">9</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td></tr><tr><td>Brian O.</td><td class="fastest">4</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td></tr><tr><td>Daniel H.</td><td class="">7</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td></tr><tr><td>Jeff H.</td><td class="">6</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td></tr><tr><td>Karissa G.</td><td class="">5</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td></tr><tr><td>Travis J.</td><td class="">6</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td></tr></tbody></table></div>
+    </section>
+
+    <section class="section">
+      <div class="section-head"><h2 class="section-title">Consolation Bracket &mdash; Wins</h2><div class="section-line"></div></div>
+      <div class="table-scroll"><table class="milestone-table"><thead><tr><th>Manager</th><th>5</th><th>10</th><th>15</th><th>20</th><th>25</th><th>30</th><th>35</th><th>40</th><th>45</th><th>50</th><th>55</th><th>60</th></tr></thead><tbody><tr><td>Ben F.</td><td class="">9</td><td class="fastest">16</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td></tr><tr><td>Ben G.</td><td class="">8</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td></tr><tr><td>Bradley F.</td><td class="">6</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td></tr><tr><td>Cordel G.</td><td class="">11</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td></tr><tr><td>Derrick T.</td><td class="">11</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td></tr><tr><td>JC P.</td><td class="fastest">5</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td></tr><tr><td>Jason G.</td><td class="">6</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td></tr><tr><td>Luke S.</td><td class="">9</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td><td class="empty">&mdash;</td></tr></tbody></table></div>
+      <p class="table-note">Consolation bracket play only exists in seasons after the format expanded past a straight playoff/no-playoff split, so totals here are lower across the board.</p>
+    </section>
+
+  </div>
+
+  <!-- ===================== ALERTS ===================== -->
+  <div class="view-panel" id="panel-alerts">
+
+    <section class="section">
+      <div class="section-head"><h2 class="section-title">Notes</h2><div class="section-line"></div></div>
+      <div class="criteria-note">
+        <b>What's live vs. illustrative:</b> every number on this page is real, pulled from league history &mdash; nothing here is a placeholder. What's still ahead: once this connects to the live sheet, the progress bars and tables update automatically as new games get logged, rather than being a snapshot from today. The cleanest place to build that check is the workbook itself, right where games are entered each week &mdash; a formula there can flag "milestone crossed" the same day it happens, feeding both this page and an automated newsletter callout.
+      </div>
+    </section>
+
+  </div>
+
+</div>
+
+<footer>Balls Deep Fantasy Football League &middot; Est. 2012</footer>
+
+<script>
+  function showCat(cat, btn) {
+    document.querySelectorAll('.view-tab').forEach(function(t) { t.classList.remove('active'); });
+    btn.classList.add('active');
+    document.querySelectorAll('.view-panel').forEach(function(p) { p.classList.remove('shown'); });
+    document.getElementById('panel-' + cat).classList.add('shown');
+    window.scrollTo({top: 0, behavior: 'smooth'});
+  }
+</script>
+
+    </div>
+  </div>
+</div>
+
+</body>
+</html>
