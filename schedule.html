@@ -1,0 +1,1554 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Schedule — Balls Deep FFL</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Barlow+Condensed:wght@500;600;700&family=Barlow:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+
+
+  :root{
+    --ink:#0e0c09;
+    --panel:#18150f;
+    --panel-2:#211c14;
+    --line: #332b1c;
+    --gold:#d4af37;
+    --gold-bright:#f2cc4d;
+    --gold-soft: rgba(212,175,55,0.22);
+    --paper:#f3ede0;
+    --dim:#9c9384;
+    --t1:#6e6656;
+    --t2:#9c9384;
+    --t3:#d4af37;
+    --green:#5aa876;
+    --green-soft: rgba(90,168,118,0.18);
+    --red:#c1596a;
+  }
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;background:var(--ink);color:var(--paper);font-family:'Barlow',sans-serif;}
+
+  /* ===================== SHARED SITE LAYOUT ===================== */
+  .app{display:flex;min-height:100vh;}
+
+  .sidebar{
+    width:230px;
+    flex:none;
+    background:linear-gradient(180deg, #18150f 0%, #0e0c09 100%);
+    border-right:1px solid var(--line);
+    display:flex;
+    flex-direction:column;
+    position:sticky;
+    top:0;
+    height:100vh;
+    overflow-y:auto;
+  }
+  .sidebar-brand{
+    padding:26px 22px 22px;
+    border-bottom:1px solid var(--line);
+  }
+  .sidebar-brand .word1{
+    font-family:'Archivo Black',sans-serif;
+    font-size:19px;
+    color:var(--paper);
+    letter-spacing:0.02em;
+    line-height:1.1;
+  }
+  .sidebar-brand .word2{
+    font-family:'Archivo Black',sans-serif;
+    font-size:19px;
+    color:var(--gold);
+    letter-spacing:0.02em;
+    line-height:1.1;
+  }
+  .sidebar-brand .tag{
+    margin-top:6px;
+    font-family:'Barlow Condensed',sans-serif;
+    font-size:10.5px;
+    letter-spacing:0.24em;
+    text-transform:uppercase;
+    color:var(--dim);
+  }
+  .sidebar-nav{
+    display:flex;
+    flex-direction:column;
+    padding:10px 0;
+  }
+  .sidebar-nav a{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    padding:11px 22px;
+    font-family:'Barlow Condensed',sans-serif;
+    font-weight:600;
+    font-size:13px;
+    letter-spacing:0.08em;
+    text-transform:uppercase;
+    color:var(--dim);
+    text-decoration:none;
+    border-left:3px solid transparent;
+    transition:background .12s ease, color .12s ease;
+  }
+  .sidebar-nav a:hover{
+    background:rgba(255,255,255,0.03);
+    color:var(--paper);
+  }
+  .sidebar-nav a.active{
+    background:rgba(212,175,55,0.12);
+    color:var(--gold-bright);
+    border-left-color:var(--gold-bright);
+  }
+  .sidebar-nav a .ic{
+    font-size:12px;
+    opacity:0.7;
+  }
+
+  .main{flex:1;min-width:0;display:flex;flex-direction:column;}
+
+  .topbar{
+    height:56px;
+    flex:none;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    padding:0 28px;
+    border-bottom:1px solid var(--line);
+    background:#0e0c09;
+    position:sticky;
+    top:0;
+    z-index:10;
+  }
+  .topbar-title{
+    font-family:'Barlow Condensed',sans-serif;
+    font-weight:700;
+    font-size:14px;
+    letter-spacing:0.18em;
+    text-transform:uppercase;
+    color:var(--gold);
+  }
+  .topbar-meta{
+    font-family:'Barlow Condensed',sans-serif;
+    font-size:11.5px;
+    letter-spacing:0.05em;
+    color:var(--dim);
+  }
+
+  .content{flex:1;}
+
+  @media (max-width:860px){
+    .sidebar{
+      position:fixed;
+      left:0; top:0; bottom:0;
+      transform:translateX(-100%);
+      z-index:50;
+      transition:transform .2s ease;
+      box-shadow:20px 0 40px rgba(0,0,0,0.4);
+    }
+    .sidebar.open{transform:translateX(0);}
+    .topbar-menu-btn{display:inline-flex;}
+  }
+  @media (min-width:861px){
+    .topbar-menu-btn{display:none;}
+  }
+  .topbar-menu-btn{
+    background:none;border:1px solid var(--line);color:var(--paper);
+    border-radius:6px;padding:6px 10px;cursor:pointer;font-size:14px;
+  }
+
+  /* ===================== DASHBOARD PAGE ===================== */
+
+  .wrap{max-width:1320px;margin:0 auto;padding:26px 28px 60px;}
+
+  /* Hero */
+  .hero-banner{
+    background:
+      radial-gradient(ellipse at 50% 0%, rgba(212,175,55,0.14), transparent 60%),
+      linear-gradient(180deg, #211c14 0%, #0e0c09 100%);
+    border:1px solid var(--line);
+    border-radius:14px;
+    padding:44px 30px 38px;
+    text-align:center;
+    margin-bottom:22px;
+    position:relative;
+    overflow:hidden;
+  }
+  .hero-banner::before{
+    content:"";
+    position:absolute; inset:0;
+    background-image:
+      repeating-linear-gradient(45deg, rgba(212,175,55,0.03) 0 2px, transparent 2px 40px);
+    pointer-events:none;
+  }
+  .hero-banner .eyebrow{
+    font-family:'Barlow Condensed',sans-serif;
+    letter-spacing:0.3em;
+    text-transform:uppercase;
+    font-size:11.5px;
+    color:var(--dim);
+    margin:0 0 10px;
+  }
+  .hero-banner h1{
+    font-family:'Archivo Black',sans-serif;
+    font-size:44px;
+    letter-spacing:0.01em;
+    margin:0;
+    color:var(--paper);
+  }
+  .hero-banner h1 span{color:var(--gold);}
+  .hero-banner p.sub{
+    font-family:'Barlow',sans-serif;
+    color:var(--t2);
+    font-size:14.5px;
+    margin:10px 0 0;
+  }
+
+  /* Stat cards row */
+  .stat-row{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:16px;
+    margin-bottom:22px;
+  }
+  .stat-card{
+    background:var(--panel);
+    border:1px solid var(--line);
+    border-radius:12px;
+    padding:18px 20px;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:14px;
+  }
+  .stat-card .label{
+    font-family:'Barlow Condensed',sans-serif;
+    font-size:11px;
+    letter-spacing:0.16em;
+    text-transform:uppercase;
+    color:var(--dim);
+    margin:0 0 6px;
+  }
+  .stat-card .value{
+    font-family:'Archivo Black',sans-serif;
+    font-size:24px;
+    color:var(--paper);
+  }
+  .stat-card .icon{
+    width:42px;height:42px;flex:none;
+    border-radius:10px;
+    background:var(--gold-soft);
+    color:var(--gold);
+    display:flex;align-items:center;justify-content:center;
+    font-size:19px;
+  }
+
+  /* Section panel shell */
+  .panel{
+    background:var(--panel);
+    border:1px solid var(--line);
+    border-radius:12px;
+    margin-bottom:20px;
+    overflow:hidden;
+  }
+  .panel-head{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    padding:13px 20px;
+    background:linear-gradient(90deg, rgba(212,175,55,0.14), rgba(212,175,55,0.02));
+    border-bottom:1px solid var(--line);
+  }
+  .panel-head h2{
+    font-family:'Barlow Condensed',sans-serif;
+    font-weight:700;
+    font-size:13px;
+    letter-spacing:0.18em;
+    text-transform:uppercase;
+    color:var(--gold);
+    margin:0;
+  }
+  .panel-body{padding:20px;}
+
+  /* Trophy grid */
+  .trophy-grid{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:12px;
+  }
+  .trophy-card{
+    background:var(--panel-2);
+    border:1px solid var(--line);
+    border-radius:10px;
+    padding:14px 16px;
+    text-align:center;
+    transition:border-color .12s ease, transform .12s ease;
+  }
+  .trophy-card:hover{border-color:var(--gold-soft); transform:translateY(-1px);}
+  .trophy-card .yr{
+    font-family:'Barlow Condensed',sans-serif;
+    font-size:10.5px;
+    letter-spacing:0.14em;
+    text-transform:uppercase;
+    color:var(--dim);
+    margin:0 0 6px;
+  }
+  .trophy-card .who{
+    font-family:'Archivo Black',sans-serif;
+    font-size:17px;
+    color:var(--gold);
+  }
+
+  /* Two-column layout: postseason chart + regular season table */
+  .two-col{
+    display:grid;
+    grid-template-columns:1.15fr 1fr;
+    gap:20px;
+    margin-bottom:20px;
+  }
+  @media (max-width:1080px){ .two-col{grid-template-columns:1fr;} }
+
+  /* Postseason bar chart */
+  .chart-legend{
+    display:flex;
+    gap:18px;
+    padding:14px 20px 0;
+    font-family:'Barlow Condensed',sans-serif;
+    font-size:11.5px;
+    letter-spacing:0.06em;
+    text-transform:uppercase;
+    color:var(--t2);
+  }
+  .chart-legend .sw{
+    display:inline-block;width:11px;height:11px;border-radius:2px;margin-right:6px;vertical-align:-1px;
+  }
+  .sw.blue{background:#5a8fd6;}
+  .sw.gray{background:#5c6472;}
+  .sw.green{background:var(--green);}
+
+  .bar-row{
+    display:grid;
+    grid-template-columns:76px 1fr;
+    align-items:center;
+    gap:10px;
+    padding:7px 0;
+  }
+  .bar-row .nm{
+    font-family:'Barlow Condensed',sans-serif;
+    font-size:13px;
+    font-weight:600;
+    color:var(--paper);
+    text-align:right;
+  }
+  .bar-track{
+    position:relative;
+    height:20px;
+    background:rgba(255,255,255,0.04);
+    border-radius:4px;
+    cursor:default;
+    overflow:visible;
+  }
+  .bar-gridline{
+    position:absolute;
+    top:0;bottom:0;
+    width:1px;
+    background:rgba(255,255,255,0.12);
+  }
+  .bar-gridline.major{background:rgba(255,255,255,0.22);}
+  .bar-seg{
+    position:absolute;
+    top:0;bottom:0;
+    cursor:default;
+  }
+  .bar-count{
+    font-family:'Barlow Condensed',sans-serif;
+    font-size:10.5px;
+    color:var(--dim);
+    margin-left:6px;
+  }
+  .bar-seg:hover{filter:brightness(1.25);}
+
+  .chart-axis{
+    position:relative;
+    height:16px;
+    margin:2px 0 6px;
+  }
+  .chart-axis span{
+    position:absolute;
+    top:0;
+    transform:translateX(-50%);
+    font-family:'Barlow Condensed',sans-serif;
+    font-size:10px;
+    color:var(--t1);
+  }
+  .chart-axis span:first-child{transform:translateX(0);}
+
+  #chart-tooltip{
+    position:fixed;
+    pointer-events:none;
+    z-index:200;
+    background:#0e1116;
+    border:1px solid var(--gold-soft);
+    border-radius:8px;
+    padding:8px 12px;
+    font-family:'Barlow Condensed',sans-serif;
+    font-size:12px;
+    color:var(--paper);
+    box-shadow:0 8px 24px rgba(0,0,0,0.5);
+    opacity:0;
+    transition:opacity .1s ease;
+    white-space:nowrap;
+  }
+  #chart-tooltip .tt-mgr{
+    color:var(--gold);
+    font-weight:700;
+    letter-spacing:0.06em;
+    text-transform:uppercase;
+    font-size:11px;
+    margin-bottom:4px;
+  }
+  #chart-tooltip .tt-row{display:flex;align-items:center;gap:6px;padding:1px 0;}
+  #chart-tooltip .tt-row .sw{width:9px;height:9px;border-radius:2px;display:inline-block;}
+
+  /* Data tables */
+  table.dtable{
+    width:100%;
+    border-collapse:collapse;
+    font-family:'Barlow',sans-serif;
+    font-size:13px;
+  }
+  table.dtable thead th{
+    text-align:left;
+    font-family:'Barlow Condensed',sans-serif;
+    font-size:10.5px;
+    letter-spacing:0.1em;
+    text-transform:uppercase;
+    color:var(--dim);
+    padding:8px 10px;
+    border-bottom:1px solid var(--line);
+    white-space:nowrap;
+  }
+  table.dtable thead th.num, table.dtable td.num{text-align:right;}
+  table.dtable thead th.sortable{
+    cursor:pointer;
+    user-select:none;
+    transition:color .12s ease;
+  }
+  table.dtable thead th.sortable:hover{color:var(--paper);}
+  table.dtable thead th.sortable::after{
+    content:"\2195";
+    display:inline-block;
+    margin-left:5px;
+    opacity:0.35;
+    font-size:10px;
+  }
+  table.dtable thead th.sortable.sort-desc::after{content:"\2193"; opacity:1; color:var(--gold);}
+  table.dtable thead th.sortable.sort-asc::after{content:"\2191"; opacity:1; color:var(--gold);}
+  table.dtable tbody td{
+    padding:8px 10px;
+    border-bottom:1px solid rgba(255,255,255,0.04);
+    color:var(--paper);
+    white-space:nowrap;
+  }
+  table.dtable tbody tr:hover{background:rgba(255,255,255,0.025);}
+  table.dtable tbody td.mgr{color:var(--gold); font-weight:600;}
+  .pos{color:var(--green);}
+  .neg{color:var(--red);}
+  .table-scroll{overflow-x:auto;}
+
+  /* Three-column stats row */
+  .three-col{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:20px;
+  }
+  @media (max-width:1080px){ .three-col{grid-template-columns:1fr;} }
+  .panel-foot{
+    padding:10px 20px 16px;
+    font-family:'Barlow Condensed',sans-serif;
+    font-size:11px;
+    color:var(--t1);
+    border-top:1px solid var(--line);
+  }
+
+  /* Stat view selector */
+  .stat-select-row{
+    padding:12px 20px;
+    border-bottom:1px solid var(--line);
+    background:rgba(255,255,255,0.015);
+  }
+  select.stat-select{
+    width:100%;
+    background:var(--panel-2);
+    color:var(--paper);
+    border:1px solid var(--line);
+    border-radius:7px;
+    padding:8px 32px 8px 12px;
+    font-family:'Barlow Condensed',sans-serif;
+    font-weight:600;
+    font-size:12.5px;
+    letter-spacing:0.04em;
+    text-transform:uppercase;
+    cursor:pointer;
+    appearance:none;
+    -webkit-appearance:none;
+    background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='10' height='6'><path d='M0 0 L5 6 L10 0 Z' fill='%23d4af37'/></svg>");
+    background-repeat:no-repeat;
+    background-position:right 12px center;
+  }
+  select.stat-select:focus{outline:1px solid var(--gold-soft);}
+  select.stat-select option{background:var(--panel-2); color:var(--paper);}
+  select.stat-select option:disabled{color:var(--t1);}
+
+  /* Row-count control */
+  .table-controls{
+    display:flex;
+    align-items:center;
+    justify-content:flex-end;
+    gap:8px;
+    padding:0 20px 10px;
+  }
+  .table-controls label{
+    font-family:'Barlow Condensed',sans-serif;
+    font-size:11px;
+    letter-spacing:0.08em;
+    text-transform:uppercase;
+    color:var(--dim);
+  }
+  select.rows-select{
+    background:var(--panel-2);
+    color:var(--paper);
+    border:1px solid var(--line);
+    border-radius:6px;
+    padding:4px 24px 4px 9px;
+    font-family:'Barlow Condensed',sans-serif;
+    font-weight:600;
+    font-size:12px;
+    cursor:pointer;
+    appearance:none;
+    -webkit-appearance:none;
+    background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='9' height='5'><path d='M0 0 L4.5 5 L9 0 Z' fill='%23d4af37'/></svg>");
+    background-repeat:no-repeat;
+    background-position:right 9px center;
+  }
+  select.rows-select option{background:var(--panel-2); color:var(--paper);}
+
+  /* Pagination */
+  .pagination{
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    gap:6px;
+    padding:12px 20px 4px;
+    flex-wrap:wrap;
+  }
+  .pagination:empty{display:none;}
+  .pagination button{
+    min-width:28px;
+    height:28px;
+    padding:0 8px;
+    background:var(--panel-2);
+    border:1px solid var(--line);
+    border-radius:6px;
+    color:var(--t2);
+    font-family:'Barlow Condensed',sans-serif;
+    font-weight:600;
+    font-size:12px;
+    cursor:pointer;
+    transition:all .12s ease;
+  }
+  .pagination button:hover{border-color:var(--gold-soft); color:var(--paper);}
+  .pagination button.active{
+    background:var(--gold-soft);
+    border-color:var(--gold);
+    color:var(--gold);
+  }
+  .pagination button:disabled{
+    opacity:0.35;
+    cursor:default;
+  }
+  .pagination button:disabled:hover{border-color:var(--line); color:var(--t2);}
+  .pagination .ellipsis{color:var(--t1); padding:0 2px; font-family:'Barlow Condensed',sans-serif; font-size:12px;}
+
+  .rank-badge{
+    display:inline-flex;
+    align-items:center;
+    justify-content:center;
+    width:20px;height:20px;
+    border-radius:50%;
+    background:rgba(212,175,55,0.14);
+    color:var(--gold);
+    font-family:'Barlow Condensed',sans-serif;
+    font-size:11px;
+    font-weight:700;
+    margin-right:6px;
+  }
+
+  footer.site-foot{
+    text-align:center;
+    padding:20px;
+    font-family:'Barlow Condensed',sans-serif;
+    font-size:11px;
+    letter-spacing:0.08em;
+    color:var(--t1);
+    border-top:1px solid var(--line);
+  }
+
+
+
+  /* ===================== SEASON RECAPS PAGE ===================== */
+  .recap-topbar{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    flex-wrap:wrap;
+    gap:14px;
+    margin-bottom:22px;
+  }
+  .tab-row{display:flex; flex-wrap:wrap; gap:8px;}
+  .tab-btn{
+    background:var(--panel);
+    border:1px solid var(--line);
+    color:var(--t2);
+    font-family:'Barlow Condensed',sans-serif;
+    font-weight:700;
+    font-size:12.5px;
+    letter-spacing:0.1em;
+    text-transform:uppercase;
+    padding:9px 16px;
+    border-radius:999px;
+    cursor:pointer;
+    transition:background .12s ease, color .12s ease, border-color .12s ease;
+  }
+  .tab-btn:hover{color:var(--paper); border-color:var(--gold-soft);}
+  .tab-btn.active{background:var(--gold); border-color:var(--gold); color:#1a1508;}
+  .season-select{
+    background:var(--panel);
+    border:1px solid var(--line);
+    color:var(--paper);
+    font-family:'Barlow Condensed',sans-serif;
+    font-weight:600;
+    font-size:15px;
+    letter-spacing:0.04em;
+    padding:9px 16px;
+    border-radius:10px;
+    cursor:pointer;
+    min-width:110px;
+    flex:none;
+  }
+  .season-select:focus{outline:1px solid var(--gold-soft);}
+  .tab-panel{display:none;}
+  .tab-panel.active{display:block;}
+
+  .recap-hero{margin-bottom:20px;}
+  .recap-hero .eyebrow{
+    font-family:'Barlow Condensed',sans-serif;
+    font-size:12px; letter-spacing:0.22em; text-transform:uppercase;
+    color:var(--gold); margin:0 0 4px;
+  }
+  .recap-hero h1{font-family:'Archivo Black',sans-serif; font-size:30px; margin:0; color:var(--paper);}
+
+  .stat-card.champion .icon{background:var(--gold-soft); color:var(--gold);}
+  .stat-card.second .icon{background:rgba(255,255,255,0.07); color:var(--dim);}
+  .stat-card.regchamp .icon{background:var(--green-soft); color:var(--green);}
+  .stat-card.mostpoints .icon{background:rgba(90,143,214,0.16); color:#5a8fd6;}
+
+  /* ---- Playoff bracket ---- */
+  .bracket-wrap{overflow-x:auto; padding-bottom:6px;}
+  .bracket-col-heads{display:flex; margin-bottom:18px;}
+  .bracket-col-heads span{
+    width:var(--bx-w); flex:none;
+    font-family:'Barlow Condensed',sans-serif; font-size:12.5px; font-weight:700;
+    letter-spacing:0.2em; text-transform:uppercase; color:var(--gold); text-align:center;
+  }
+  .bracket-col-heads .sp{flex:none; width:var(--col-gap);}
+  #bracket-canvas{position:relative; min-width:820px;}
+  .bx{
+    position:absolute; width:var(--bx-w); height:var(--bx-h);
+    background:var(--panel-2); border:1px solid var(--line); border-radius:10px; overflow:hidden;
+  }
+  .bx.final{border-color:var(--gold-soft);}
+  .bxrow{
+    display:flex; align-items:center; gap:9px; height:calc(var(--bx-h) / 2); padding:0 13px;
+    font-family:'Barlow Condensed',sans-serif; font-size:15px; font-weight:600; color:var(--t2);
+  }
+  .bxrow + .bxrow{border-top:1px solid var(--line);}
+  .bxrow.win{color:var(--paper); background:var(--green-soft);}
+  .bx.final .bxrow.win{background:var(--gold-soft); color:var(--paper);}
+  .bxrow .seed{
+    flex:none; width:20px; height:20px; border-radius:50%;
+    background:rgba(255,255,255,0.09); color:var(--t2);
+    font-size:10.5px; font-weight:700; display:flex; align-items:center; justify-content:center;
+  }
+  .bxrow.win .seed{background:var(--green); color:#fff;}
+  .bx.final .bxrow.win .seed{background:var(--gold); color:#1a1508;}
+  .bxrow .nm{flex:1; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;}
+  .bxrow .sc{flex:none; font-size:13.5px; color:var(--t1);}
+  .bxrow.win .sc{color:var(--green); font-weight:700;}
+  .bx.final .bxrow.win .sc{color:var(--gold);}
+  .bxrow.bye .nm{color:var(--t1); font-style:italic;}
+  .bx-line{position:absolute; background:var(--line);}
+  .bracket-stack{display:none;}
+  .bracket-round-block{margin-bottom:22px;}
+  .bracket-round-block h3{
+    font-family:'Barlow Condensed',sans-serif; font-size:12.5px; font-weight:700;
+    letter-spacing:0.18em; text-transform:uppercase; color:var(--gold); margin:0 0 10px;
+  }
+  .bracket-stack .bx{position:static; width:100%; height:auto; margin-bottom:12px;}
+  .bracket-stack .bxrow{height:auto; padding:10px 13px;}
+  @media (max-width:820px){
+    #bracket-canvas, .bracket-col-heads{display:none;}
+    .bracket-stack{display:block;}
+  }
+  @media (max-width:700px){
+    .stat-row{grid-template-columns:repeat(2,1fr);}
+  }
+
+  /* ---- Generic smart table (Standings / Draft / Matchups / Trades) ---- */
+  .smart-toolbar{
+    display:flex; align-items:center; justify-content:space-between; gap:14px;
+    flex-wrap:wrap; padding:14px 20px; border-bottom:1px solid var(--line);
+  }
+  .smart-search{
+    background:var(--panel-2); border:1px solid var(--line); border-radius:8px;
+    color:var(--paper); font-family:'Barlow',sans-serif; font-size:13.5px;
+    padding:8px 12px; min-width:220px;
+  }
+  .smart-search::placeholder{color:var(--t1);}
+  .smart-search:focus{outline:1px solid var(--gold-soft);}
+  table.smart-table{border-collapse:collapse; width:100%;}
+  table.smart-table th{
+    font-family:'Barlow Condensed',sans-serif; font-weight:700; font-size:11px;
+    letter-spacing:0.08em; text-transform:uppercase; color:var(--dim);
+    text-align:left; padding:10px 14px; border-bottom:1px solid var(--line);
+    cursor:pointer; white-space:nowrap; user-select:none;
+  }
+  table.smart-table th.num, table.smart-table td.num{text-align:right;}
+  table.smart-table th:hover{color:var(--paper);}
+  table.smart-table th.sort-asc::after{content:' \25B2'; color:var(--gold); font-size:9px;}
+  table.smart-table th.sort-desc::after{content:' \25BC'; color:var(--gold); font-size:9px;}
+  table.smart-table td{
+    padding:10px 14px; border-bottom:1px solid var(--line);
+    font-family:'Barlow Condensed',sans-serif; font-size:14px; color:var(--t2);
+  }
+  table.smart-table tbody tr:hover{background:rgba(255,255,255,0.02);}
+  table.smart-table td.mgr{color:var(--paper); font-weight:600;}
+  table.smart-table tr.playoff-line td{border-bottom:2px solid var(--gold);}
+  table.smart-table tr.round-head td{
+    background:rgba(212,175,55,0.06); color:var(--gold);
+    font-weight:700; letter-spacing:0.1em; text-transform:uppercase; font-size:11.5px;
+  }
+  tr.trade-row-alt td{background:rgba(255,255,255,0.035);}
+  tr.trade-group-start td{border-top:2px solid rgba(255,255,255,0.16); padding-top:14px;}
+  tr.trade-group-start{scroll-margin-top:8px;}
+  .score-note{
+    display:inline-block; margin-left:6px; padding:1px 6px; border-radius:5px;
+    font-size:10px; font-weight:700; letter-spacing:0.03em; text-transform:uppercase;
+    vertical-align:1px;
+  }
+  .score-note.hi{background:var(--green-soft); color:var(--green);}
+  .score-note.lo{background:rgba(200,90,90,0.18); color:var(--red);}
+  .score-note.yr{background:var(--gold-soft); color:var(--gold);}
+  .smart-pagination{
+    display:flex; align-items:center; justify-content:center; gap:6px;
+    padding:14px 20px; flex-wrap:wrap;
+  }
+  .smart-pagination button{
+    background:var(--panel-2); border:1px solid var(--line); color:var(--t2);
+    font-family:'Barlow Condensed',sans-serif; font-weight:600; font-size:12.5px;
+    padding:6px 11px; border-radius:6px; cursor:pointer;
+  }
+  .smart-pagination button.active{background:var(--gold); border-color:var(--gold); color:#1a1508;}
+  .smart-pagination button:disabled{opacity:0.35; cursor:default;}
+  .smart-pagination .ellipsis{color:var(--t1); padding:0 4px;}
+  .smart-foot{padding:12px 20px 16px; font-family:'Barlow Condensed',sans-serif; font-size:12px; color:var(--t1);}
+  .no-data{padding:26px; text-align:center; font-family:'Barlow Condensed',sans-serif; color:var(--dim); font-size:14px;}
+
+  /* ---- Weekly standings chart ---- */
+  .ws-chart-legend{
+    display:flex; flex-wrap:wrap; gap:12px 18px; padding:16px 20px 4px;
+    font-family:'Barlow Condensed',sans-serif; font-size:12px; letter-spacing:0.04em; color:var(--t2);
+  }
+  .ws-chart-legend span{display:flex; align-items:center; gap:6px; cursor:pointer;}
+  .ws-chart-legend .sw{width:11px; height:11px; border-radius:2px; display:inline-block;}
+  .ws-chart-legend span.dim{opacity:0.3;}
+  #ws-chart-wrap{position:relative; padding:10px 20px 20px; overflow-x:auto;}
+  #ws-tooltip{
+    position:fixed; pointer-events:none; z-index:200;
+    background:#0e0c09; border:1px solid var(--gold-soft); border-radius:8px;
+    padding:8px 12px; font-family:'Barlow Condensed',sans-serif; font-size:12px;
+    color:var(--paper); box-shadow:0 8px 24px rgba(0,0,0,0.5); opacity:0;
+    transition:opacity .1s ease; white-space:nowrap;
+  }
+
+
+<style>
+  .grid-2{display:grid; grid-template-columns:340px 1fr; gap:20px; align-items:start;}
+  @media (max-width:900px){ .grid-2{grid-template-columns:1fr;} }
+  .filter-row{display:flex; gap:10px; flex-wrap:wrap; padding:14px 20px 0;}
+  .filter-row select, .filter-row input{
+    background:var(--panel-2); border:1px solid var(--line); color:var(--paper);
+    font-family:'Barlow',sans-serif; font-size:13px; padding:8px 10px; border-radius:6px;
+  }
+  .filter-row label{font-family:'Barlow Condensed',sans-serif; font-size:11px; letter-spacing:.1em; text-transform:uppercase; color:var(--t2); display:flex; flex-direction:column; gap:4px;}
+  .badge-note{display:inline-block; padding:2px 7px; border-radius:4px; font-family:'Barlow Condensed',sans-serif; font-size:10.5px; font-weight:700; letter-spacing:.04em;}
+  .badge-note.hi{background:var(--green-soft); color:var(--green);}
+  .badge-note.lo{background:rgba(200,90,90,0.18); color:var(--red);}
+  .lookup-panel{padding:20px; display:flex; flex-direction:column; gap:14px;}
+  .lookup-row{display:flex; flex-wrap:wrap; gap:14px; align-items:flex-end;}
+  .lookup-row .field{display:flex; flex-direction:column; gap:5px;}
+  .lookup-row label{font-family:'Barlow Condensed',sans-serif; font-size:11px; letter-spacing:.1em; text-transform:uppercase; color:var(--t2);}
+  .lookup-row select{background:var(--panel-2); border:1px solid var(--line); color:var(--paper); font-family:'Barlow',sans-serif; font-size:13px; padding:9px 10px; border-radius:6px; min-width:160px;}
+  .lookup-row .checkbox-field{flex-direction:row; align-items:center; gap:8px;}
+  .lookup-row button{background:var(--gold); border:none; color:#1a1508; font-family:'Barlow Condensed',sans-serif; font-weight:700; letter-spacing:.06em; text-transform:uppercase; font-size:13px; padding:10px 22px; border-radius:6px; cursor:pointer;}
+  .lookup-summary{font-family:'Barlow',sans-serif; font-size:14.5px; color:var(--paper); padding:0 20px;}
+  .lookup-summary b{color:var(--gold);}
+  .chart-wrap{padding:16px 20px 20px; overflow-x:auto;}
+  .chart-legend{display:flex; flex-wrap:wrap; gap:10px 16px; padding:14px 20px 0; font-family:'Barlow Condensed',sans-serif; font-size:12px; color:var(--t2);}
+  .chart-legend .item{display:flex; align-items:center; gap:6px; cursor:pointer;}
+  .chart-legend .sw{width:12px; height:3px; border-radius:2px;}
+  .chart-legend .item.dim{opacity:0.28;}
+  .rrbar-wrap{padding:16px 20px 20px;}
+  .rrbar-row{display:flex; align-items:center; gap:10px; margin-bottom:8px;}
+  .rrbar-label{width:80px; font-family:'Barlow Condensed',sans-serif; font-size:12px; color:var(--t2); flex:none;}
+  .rrbar-track{flex:1; display:flex; height:18px; border-radius:4px; overflow:hidden; background:var(--panel-2);}
+  .rrbar-seg{height:100%;}
+  .rrbar-seg.r1{background:var(--green);}
+  .rrbar-seg.r2{background:#d4af37;}
+  .rrbar-seg.r3{background:rgba(200,90,90,0.55);}
+  .svg-tooltip{
+    position:absolute; pointer-events:none; background:#0e0c09; border:1px solid var(--gold-soft);
+    border-radius:6px; padding:8px 10px; font-family:'Barlow',sans-serif; font-size:12.5px; color:var(--paper);
+    opacity:0; transition:opacity .1s; z-index:20; white-space:nowrap;
+  }
+  .chart-container{position:relative;}
+  .rec-table-wrap{overflow-x:auto; padding:0 20px 20px;}
+  table.rec-table{border-collapse:collapse; width:100%; font-family:'Barlow',sans-serif; font-size:12.5px;}
+  table.rec-table th, table.rec-table td{padding:7px 9px; text-align:center; border-bottom:1px solid var(--line); white-space:nowrap;}
+  table.rec-table th{color:var(--t2); font-family:'Barlow Condensed',sans-serif; text-transform:uppercase; letter-spacing:.05em; font-size:11px;}
+  table.rec-table td.mgr-col{text-align:left; color:var(--paper); font-weight:600; position:sticky; left:0; background:var(--panel);}
+  .panel-sub{padding:14px 20px 0; font-family:'Barlow',sans-serif; font-size:13px; color:var(--t2);}
+
+/* ===================== SCHEDULE TICKER (ESPN-style bottom line) ===================== */
+.sch-ticker{
+  position:fixed; left:0; right:0; bottom:0; z-index:500;
+  height:40px;
+  background-color:#0a0a0c;
+  border-top:2px solid var(--bd-gold-bright);
+  box-shadow:0 -8px 20px rgba(0,0,0,0.6);
+  display:flex; align-items:stretch;
+  isolation:isolate;
+}
+.sch-ticker .ticker-badge{
+  flex:none; width:150px; height:100%;
+  display:flex; align-items:center; justify-content:center;
+  background-color:#0a0a0c;
+  border-right:2px solid var(--bd-gold-bright);
+  position:relative; z-index:2;
+  overflow:hidden;
+}
+.sch-ticker .ticker-badge span{
+  font-family:var(--font-cond); font-weight:800; font-size:13px;
+  letter-spacing:0.14em; text-transform:uppercase; color:#f2f2f2;
+  transition:opacity .25s ease;
+}
+.sch-ticker .ticker-viewport{
+  position:relative; flex:1; height:100%; overflow:hidden;
+  background-color:#0a0a0c;
+}
+.sch-ticker .ticker-viewport::before{
+  content:''; position:absolute; left:0; top:0; bottom:0; width:36px; z-index:3;
+  background:linear-gradient(to right, #0a0a0c 0%, rgba(10,10,12,0) 100%);
+  pointer-events:none;
+}
+.sch-ticker .ticker-viewport::after{
+  content:''; position:absolute; right:0; top:0; bottom:0; width:36px; z-index:3;
+  background:linear-gradient(to left, #0a0a0c 0%, rgba(10,10,12,0) 100%);
+  pointer-events:none;
+}
+.sch-ticker .ticker-track{
+  display:flex; align-items:center; height:100%; white-space:nowrap;
+  position:absolute; left:0; top:0;
+  animation:sch-ticker-scroll 55.0s linear infinite;
+  will-change:transform;
+}
+.sch-ticker:hover .ticker-track{ animation-play-state:paused; }
+.sch-ticker .ticker-item{
+  display:inline-flex; align-items:center; gap:8px;
+  padding:0 26px; font-family:var(--font-cond); font-size:13px;
+  letter-spacing:0.02em; color:#f2f2f2; white-space:nowrap;
+  border-right:1px solid rgba(255,255,255,0.14);
+  height:18px; line-height:18px;
+}
+.sch-ticker .ticker-item .tm{ color:#f2f2f2; font-weight:600; }
+.sch-ticker .ticker-item .ttag{
+  flex:none; font-family:var(--font-cond); font-weight:800; font-size:9.5px;
+  letter-spacing:0.08em; text-transform:uppercase; padding:2px 6px; border-radius:3px;
+  margin-right:2px;
+}
+.sch-ticker .ticker-item .ttag.wk1{ background:var(--bd-gold-bright); color:#1a1400; }
+.sch-ticker .ticker-item .ttag.seeds{ background:#3d6fa8; color:#fff; }
+@keyframes sch-ticker-scroll{
+  from{ transform:translateX(0); }
+  to{ transform:translateX(-50%); }
+}
+body{ padding-bottom:40px; }
+@media (max-width:860px){
+  .sch-ticker .ticker-badge{ width:110px; }
+  .sch-ticker .ticker-badge span{ font-size:11px; }
+  .sch-ticker .ticker-item{ padding:0 18px; font-size:12px; }
+}
+</style>
+<style>
+  /* ===================== SCHEDULE PAGE ===================== */
+  .week-block{
+    background:var(--panel-2);
+    border:1px solid var(--line);
+    border-radius:10px;
+    padding:14px 18px;
+    margin-bottom:12px;
+  }
+  .week-head{display:flex; align-items:center; gap:12px; margin-bottom:12px;}
+  .week-num{
+    font-family:'Archivo Black',sans-serif;
+    font-size:14px;
+    color:var(--paper);
+    letter-spacing:0.02em;
+  }
+  .week-badge{
+    font-family:'Barlow Condensed',sans-serif;
+    font-size:10px; letter-spacing:0.1em; text-transform:uppercase; font-weight:700;
+    color:var(--gold); background:var(--gold-soft); border:1px solid rgba(212,175,55,0.4);
+    border-radius:20px; padding:3px 10px;
+  }
+  .matchup-grid{display:grid; grid-template-columns:repeat(auto-fit,minmax(280px,1fr)); gap:10px;}
+  .matchup{
+    display:flex; align-items:center; gap:8px;
+    background:var(--panel); border:1px solid var(--line); border-radius:8px;
+    padding:9px 12px; font-family:'Barlow',sans-serif; font-size:13.5px;
+  }
+  .matchup.rematch{border-color:rgba(212,175,55,0.4); background:rgba(212,175,55,0.06);}
+  .mseed{
+    font-family:'Barlow Condensed',sans-serif; font-size:10.5px; font-weight:700;
+    color:var(--dim); min-width:24px;
+  }
+  .mname{color:var(--paper); font-weight:600; flex:1;}
+  .mrecord{color:var(--t1); font-weight:500; font-size:12px;}
+  .mvs{
+    font-family:'Barlow Condensed',sans-serif; font-size:10.5px; color:var(--t1);
+    text-transform:uppercase; letter-spacing:0.06em;
+  }
+
+  .mgr-grid{display:grid; grid-template-columns:repeat(auto-fit,minmax(250px,1fr)); gap:14px; padding:20px;}
+  .mgr-card{background:var(--panel-2); border:1px solid var(--line); border-radius:10px; padding:14px 16px;}
+  .mgr-card-head{
+    display:flex; align-items:baseline; gap:8px; margin-bottom:10px; padding-bottom:9px;
+    border-bottom:1px solid var(--line);
+  }
+  .mgr-seed{font-family:'Barlow Condensed',sans-serif; font-size:11px; color:var(--dim); font-weight:700;}
+  .mgr-name{font-family:'Archivo Black',sans-serif; font-size:14px; color:var(--paper); flex:1;}
+  .mgr-group{font-family:'Barlow Condensed',sans-serif; font-size:10px; letter-spacing:0.06em; text-transform:uppercase; color:var(--gold);}
+  table.mgr-table{width:100%; border-collapse:collapse; font-family:'Barlow',sans-serif;}
+  table.mgr-table th{
+    text-align:left; font-family:'Barlow Condensed',sans-serif; font-size:10px; color:var(--dim);
+    text-transform:uppercase; letter-spacing:0.04em; font-weight:700; padding:0 6px 7px; border-bottom:1px solid var(--line);
+  }
+  table.mgr-table td{padding:6px 6px; font-size:12.5px; color:var(--t2); border-bottom:1px solid rgba(255,255,255,0.04);}
+  table.mgr-table td:first-child{color:var(--paper); font-weight:700; width:26px;}
+  table.mgr-table tr.rematch-row{background:rgba(212,175,55,0.07);}
+  table.mgr-table tr.rematch-row td{color:var(--paper);}
+  .opp-seed{color:var(--t1); font-size:10.5px;}
+  .tag-rematch{
+    font-family:'Barlow Condensed',sans-serif; font-size:9.5px; letter-spacing:0.05em; text-transform:uppercase;
+    font-weight:700; color:var(--gold);
+  }
+
+  .rules-list{padding:20px; margin:0; list-style:none;}
+  .rules-list li{
+    margin-bottom:13px; padding-left:18px; position:relative;
+    line-height:1.55; color:var(--t2); font-family:'Barlow',sans-serif; font-size:14px;
+  }
+  .rules-list li::before{content:"—"; position:absolute; left:0; color:var(--gold);}
+  .rules-list li:last-child{margin-bottom:0;}
+  .rules-list b{color:var(--paper);}
+
+  table.group-table{width:100%; border-collapse:collapse; font-family:'Barlow',sans-serif;}
+  table.group-table th{
+    text-align:left; font-family:'Barlow Condensed',sans-serif; font-size:10.5px; color:var(--dim);
+    text-transform:uppercase; letter-spacing:0.04em; font-weight:700; padding:8px 10px; border-bottom:1px solid var(--line);
+  }
+  table.group-table td{padding:11px 10px; border-bottom:1px solid var(--line); font-size:13px; color:var(--t2);}
+  table.group-table td:first-child{color:var(--gold); font-weight:700; width:110px;}
+
+  .sidebar-brand img.brand-logo{display:block; width:100%; max-width:190px; height:auto; margin:0 auto;}
+
+  table.standings-table{width:100%; border-collapse:collapse; font-family:'Barlow',sans-serif;}
+  table.standings-table th{
+    text-align:left; font-family:'Barlow Condensed',sans-serif; font-size:11px; color:var(--dim);
+    text-transform:uppercase; letter-spacing:0.04em; font-weight:700; padding:0 10px 10px; border-bottom:1px solid var(--line);
+  }
+  table.standings-table th.num, table.standings-table td.num{text-align:right;}
+  table.standings-table td{padding:11px 10px; border-bottom:1px solid rgba(255,255,255,0.04); font-size:13.5px; color:var(--paper);}
+  table.standings-table td.mgr{font-weight:700; color:var(--gold);}
+  table.standings-table td.seed{color:var(--t1); font-size:12px;}
+  .standings-empty{
+    padding:30px 20px; text-align:center; font-family:'Barlow Condensed',sans-serif;
+    color:var(--dim); font-size:14px; line-height:1.6;
+  }
+</style>
+</head>
+
+<body>
+
+<div class="app">
+
+  <nav class="sidebar" id="sidebar">
+    <div class="sidebar-brand">
+      <img class="brand-logo" src="data:image/jpeg;base64,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" alt="Balls Deep Fantasy">
+      <div class="tag">Est. 2012</div>
+    </div>
+    <div class="sidebar-nav">
+      <a href="index.html">Dashboard</a>
+      <a href="our-story.html">Our Story</a>
+      <a href="current-season.html">Current Season</a>
+      <a href="constitution.html">Constitution</a>
+      <a href="managers.html">Managers</a>
+      <a href="schedule.html" class="active">Schedule</a>
+      <a href="draft.html">Draft</a>
+      <a href="season-recaps.html">Season Recaps</a>
+      <a href="regular-season.html">Regular Season</a>
+      <a href="postseason.html">Postseason</a>
+      <a href="hall-of-fame.html">Hall of Fame</a>
+      <a href="records.html">Records</a>
+      <a href="awards.html">Awards</a>
+      <a href="rosters.html">Rosters</a>
+      <a href="players.html">Players</a>
+    </div>
+  </nav>
+
+  <div class="main">
+    <header class="topbar">
+      <button class="topbar-menu-btn" onclick="document.getElementById('sidebar').classList.toggle('open')">&#9776;</button>
+      <div class="topbar-title">Schedule</div>
+      <div class="topbar-meta">Balls Deep FFL &middot; 2026 season</div>
+    </header>
+
+    <div class="content">
+      <div class="wrap">
+        <div class="recap-topbar">
+          <div class="tab-row" id="tab-row">
+            <button class="tab-btn active" data-tab="weeks">Week by Week</button>
+            <button class="tab-btn" data-tab="manager">By Manager</button>
+            <button class="tab-btn" data-tab="format">Format &amp; Rules</button>
+          </div>
+        </div>
+
+        <div class="recap-hero">
+          <p class="eyebrow">2026 Season</p>
+          <h1>The Full Slate</h1>
+        </div>
+
+        <!-- ===== STANDINGS TAB ===== -->
+        
+
+        <!-- ===== WEEK BY WEEK TAB ===== -->
+        <!-- ===== WEEK BY WEEK TAB ===== -->
+        <div class="tab-panel active" id="panel-weeks">
+          <div class="panel">
+            <div class="panel-head"><h2>Weeks 1&ndash;14</h2></div>
+            <div class="panel-sub">Week 1 is seeded straight off the 2025 standings (#1 vs #2, #3 vs #4, and so on). Weeks 12&ndash;14 are the rematch stretch, where each manager runs it back against the three others in their group of four. Records shown next to each name are through the prior week and update automatically as results are entered.</div>
+            <div class="panel-body" id="weeks-mount"></div>
+          </div>
+        </div>
+
+
+        <!-- ===== BY MANAGER TAB ===== -->
+        <div class="tab-panel" id="panel-manager">
+          <div class="panel">
+            <div class="panel-head"><h2>Every Manager's Slate</h2></div>
+            <div class="panel-sub">Highlighted rows mark the group-of-four rematches in weeks 12&ndash;14.</div>
+            <div class="mgr-grid">
+              
+        <div class="mgr-card">
+          <div class="mgr-card-head">
+            <span class="mgr-seed">#1</span>
+            <span class="mgr-name">Jacob</span>
+            <span class="mgr-group">1-4 Seed</span>
+          </div>
+          <table class="mgr-table"><thead><tr><th>Wk</th><th>Opponent</th><th></th></tr></thead>
+          <tbody><tr class=""><td>1</td><td>Cordel <span class="opp-seed">#2</span></td><td></td></tr>
+<tr class=""><td>2</td><td>Derrick T. <span class="opp-seed">#6</span></td><td></td></tr>
+<tr class=""><td>3</td><td>Brian <span class="opp-seed">#10</span></td><td></td></tr>
+<tr class=""><td>4</td><td>Corey <span class="opp-seed">#12</span></td><td></td></tr>
+<tr class=""><td>5</td><td>Ben F <span class="opp-seed">#8</span></td><td></td></tr>
+<tr class=""><td>6</td><td>Ben G. <span class="opp-seed">#4</span></td><td></td></tr>
+<tr class=""><td>7</td><td>JC <span class="opp-seed">#3</span></td><td></td></tr>
+<tr class=""><td>8</td><td>Luke <span class="opp-seed">#7</span></td><td></td></tr>
+<tr class=""><td>9</td><td>Bradley <span class="opp-seed">#11</span></td><td></td></tr>
+<tr class=""><td>10</td><td>Travis <span class="opp-seed">#9</span></td><td></td></tr>
+<tr class=""><td>11</td><td>Jason G. <span class="opp-seed">#5</span></td><td></td></tr>
+<tr class="rematch-row"><td>12</td><td>Cordel <span class="opp-seed">#2</span></td><td><span class="tag-rematch">Rematch</span></td></tr>
+<tr class="rematch-row"><td>13</td><td>JC <span class="opp-seed">#3</span></td><td><span class="tag-rematch">Rematch</span></td></tr>
+<tr class="rematch-row"><td>14</td><td>Ben G. <span class="opp-seed">#4</span></td><td><span class="tag-rematch">Rematch</span></td></tr>
+</tbody></table>
+        </div>
+
+        <div class="mgr-card">
+          <div class="mgr-card-head">
+            <span class="mgr-seed">#2</span>
+            <span class="mgr-name">Cordel</span>
+            <span class="mgr-group">1-4 Seed</span>
+          </div>
+          <table class="mgr-table"><thead><tr><th>Wk</th><th>Opponent</th><th></th></tr></thead>
+          <tbody><tr class=""><td>1</td><td>Jacob <span class="opp-seed">#1</span></td><td></td></tr>
+<tr class=""><td>2</td><td>Brian <span class="opp-seed">#10</span></td><td></td></tr>
+<tr class=""><td>3</td><td>Ben F <span class="opp-seed">#8</span></td><td></td></tr>
+<tr class=""><td>4</td><td>JC <span class="opp-seed">#3</span></td><td></td></tr>
+<tr class=""><td>5</td><td>Bradley <span class="opp-seed">#11</span></td><td></td></tr>
+<tr class=""><td>6</td><td>Jason G. <span class="opp-seed">#5</span></td><td></td></tr>
+<tr class=""><td>7</td><td>Derrick T. <span class="opp-seed">#6</span></td><td></td></tr>
+<tr class=""><td>8</td><td>Corey <span class="opp-seed">#12</span></td><td></td></tr>
+<tr class=""><td>9</td><td>Ben G. <span class="opp-seed">#4</span></td><td></td></tr>
+<tr class=""><td>10</td><td>Luke <span class="opp-seed">#7</span></td><td></td></tr>
+<tr class=""><td>11</td><td>Travis <span class="opp-seed">#9</span></td><td></td></tr>
+<tr class="rematch-row"><td>12</td><td>Jacob <span class="opp-seed">#1</span></td><td><span class="tag-rematch">Rematch</span></td></tr>
+<tr class="rematch-row"><td>13</td><td>Ben G. <span class="opp-seed">#4</span></td><td><span class="tag-rematch">Rematch</span></td></tr>
+<tr class="rematch-row"><td>14</td><td>JC <span class="opp-seed">#3</span></td><td><span class="tag-rematch">Rematch</span></td></tr>
+</tbody></table>
+        </div>
+
+        <div class="mgr-card">
+          <div class="mgr-card-head">
+            <span class="mgr-seed">#3</span>
+            <span class="mgr-name">JC</span>
+            <span class="mgr-group">1-4 Seed</span>
+          </div>
+          <table class="mgr-table"><thead><tr><th>Wk</th><th>Opponent</th><th></th></tr></thead>
+          <tbody><tr class=""><td>1</td><td>Ben G. <span class="opp-seed">#4</span></td><td></td></tr>
+<tr class=""><td>2</td><td>Luke <span class="opp-seed">#7</span></td><td></td></tr>
+<tr class=""><td>3</td><td>Travis <span class="opp-seed">#9</span></td><td></td></tr>
+<tr class=""><td>4</td><td>Cordel <span class="opp-seed">#2</span></td><td></td></tr>
+<tr class=""><td>5</td><td>Brian <span class="opp-seed">#10</span></td><td></td></tr>
+<tr class=""><td>6</td><td>Ben F <span class="opp-seed">#8</span></td><td></td></tr>
+<tr class=""><td>7</td><td>Jacob <span class="opp-seed">#1</span></td><td></td></tr>
+<tr class=""><td>8</td><td>Bradley <span class="opp-seed">#11</span></td><td></td></tr>
+<tr class=""><td>9</td><td>Jason G. <span class="opp-seed">#5</span></td><td></td></tr>
+<tr class=""><td>10</td><td>Derrick T. <span class="opp-seed">#6</span></td><td></td></tr>
+<tr class=""><td>11</td><td>Corey <span class="opp-seed">#12</span></td><td></td></tr>
+<tr class="rematch-row"><td>12</td><td>Ben G. <span class="opp-seed">#4</span></td><td><span class="tag-rematch">Rematch</span></td></tr>
+<tr class="rematch-row"><td>13</td><td>Jacob <span class="opp-seed">#1</span></td><td><span class="tag-rematch">Rematch</span></td></tr>
+<tr class="rematch-row"><td>14</td><td>Cordel <span class="opp-seed">#2</span></td><td><span class="tag-rematch">Rematch</span></td></tr>
+</tbody></table>
+        </div>
+
+        <div class="mgr-card">
+          <div class="mgr-card-head">
+            <span class="mgr-seed">#4</span>
+            <span class="mgr-name">Ben G.</span>
+            <span class="mgr-group">1-4 Seed</span>
+          </div>
+          <table class="mgr-table"><thead><tr><th>Wk</th><th>Opponent</th><th></th></tr></thead>
+          <tbody><tr class=""><td>1</td><td>JC <span class="opp-seed">#3</span></td><td></td></tr>
+<tr class=""><td>2</td><td>Bradley <span class="opp-seed">#11</span></td><td></td></tr>
+<tr class=""><td>3</td><td>Jason G. <span class="opp-seed">#5</span></td><td></td></tr>
+<tr class=""><td>4</td><td>Derrick T. <span class="opp-seed">#6</span></td><td></td></tr>
+<tr class=""><td>5</td><td>Corey <span class="opp-seed">#12</span></td><td></td></tr>
+<tr class=""><td>6</td><td>Jacob <span class="opp-seed">#1</span></td><td></td></tr>
+<tr class=""><td>7</td><td>Luke <span class="opp-seed">#7</span></td><td></td></tr>
+<tr class=""><td>8</td><td>Travis <span class="opp-seed">#9</span></td><td></td></tr>
+<tr class=""><td>9</td><td>Cordel <span class="opp-seed">#2</span></td><td></td></tr>
+<tr class=""><td>10</td><td>Brian <span class="opp-seed">#10</span></td><td></td></tr>
+<tr class=""><td>11</td><td>Ben F <span class="opp-seed">#8</span></td><td></td></tr>
+<tr class="rematch-row"><td>12</td><td>JC <span class="opp-seed">#3</span></td><td><span class="tag-rematch">Rematch</span></td></tr>
+<tr class="rematch-row"><td>13</td><td>Cordel <span class="opp-seed">#2</span></td><td><span class="tag-rematch">Rematch</span></td></tr>
+<tr class="rematch-row"><td>14</td><td>Jacob <span class="opp-seed">#1</span></td><td><span class="tag-rematch">Rematch</span></td></tr>
+</tbody></table>
+        </div>
+
+        <div class="mgr-card">
+          <div class="mgr-card-head">
+            <span class="mgr-seed">#5</span>
+            <span class="mgr-name">Jason G.</span>
+            <span class="mgr-group">5-8 Seed</span>
+          </div>
+          <table class="mgr-table"><thead><tr><th>Wk</th><th>Opponent</th><th></th></tr></thead>
+          <tbody><tr class=""><td>1</td><td>Derrick T. <span class="opp-seed">#6</span></td><td></td></tr>
+<tr class=""><td>2</td><td>Corey <span class="opp-seed">#12</span></td><td></td></tr>
+<tr class=""><td>3</td><td>Ben G. <span class="opp-seed">#4</span></td><td></td></tr>
+<tr class=""><td>4</td><td>Luke <span class="opp-seed">#7</span></td><td></td></tr>
+<tr class=""><td>5</td><td>Travis <span class="opp-seed">#9</span></td><td></td></tr>
+<tr class=""><td>6</td><td>Cordel <span class="opp-seed">#2</span></td><td></td></tr>
+<tr class=""><td>7</td><td>Brian <span class="opp-seed">#10</span></td><td></td></tr>
+<tr class=""><td>8</td><td>Ben F <span class="opp-seed">#8</span></td><td></td></tr>
+<tr class=""><td>9</td><td>JC <span class="opp-seed">#3</span></td><td></td></tr>
+<tr class=""><td>10</td><td>Bradley <span class="opp-seed">#11</span></td><td></td></tr>
+<tr class=""><td>11</td><td>Jacob <span class="opp-seed">#1</span></td><td></td></tr>
+<tr class="rematch-row"><td>12</td><td>Derrick T. <span class="opp-seed">#6</span></td><td><span class="tag-rematch">Rematch</span></td></tr>
+<tr class="rematch-row"><td>13</td><td>Luke <span class="opp-seed">#7</span></td><td><span class="tag-rematch">Rematch</span></td></tr>
+<tr class="rematch-row"><td>14</td><td>Ben F <span class="opp-seed">#8</span></td><td><span class="tag-rematch">Rematch</span></td></tr>
+</tbody></table>
+        </div>
+
+        <div class="mgr-card">
+          <div class="mgr-card-head">
+            <span class="mgr-seed">#6</span>
+            <span class="mgr-name">Derrick T.</span>
+            <span class="mgr-group">5-8 Seed</span>
+          </div>
+          <table class="mgr-table"><thead><tr><th>Wk</th><th>Opponent</th><th></th></tr></thead>
+          <tbody><tr class=""><td>1</td><td>Jason G. <span class="opp-seed">#5</span></td><td></td></tr>
+<tr class=""><td>2</td><td>Jacob <span class="opp-seed">#1</span></td><td></td></tr>
+<tr class=""><td>3</td><td>Corey <span class="opp-seed">#12</span></td><td></td></tr>
+<tr class=""><td>4</td><td>Ben G. <span class="opp-seed">#4</span></td><td></td></tr>
+<tr class=""><td>5</td><td>Luke <span class="opp-seed">#7</span></td><td></td></tr>
+<tr class=""><td>6</td><td>Travis <span class="opp-seed">#9</span></td><td></td></tr>
+<tr class=""><td>7</td><td>Cordel <span class="opp-seed">#2</span></td><td></td></tr>
+<tr class=""><td>8</td><td>Brian <span class="opp-seed">#10</span></td><td></td></tr>
+<tr class=""><td>9</td><td>Ben F <span class="opp-seed">#8</span></td><td></td></tr>
+<tr class=""><td>10</td><td>JC <span class="opp-seed">#3</span></td><td></td></tr>
+<tr class=""><td>11</td><td>Bradley <span class="opp-seed">#11</span></td><td></td></tr>
+<tr class="rematch-row"><td>12</td><td>Jason G. <span class="opp-seed">#5</span></td><td><span class="tag-rematch">Rematch</span></td></tr>
+<tr class="rematch-row"><td>13</td><td>Ben F <span class="opp-seed">#8</span></td><td><span class="tag-rematch">Rematch</span></td></tr>
+<tr class="rematch-row"><td>14</td><td>Luke <span class="opp-seed">#7</span></td><td><span class="tag-rematch">Rematch</span></td></tr>
+</tbody></table>
+        </div>
+
+        <div class="mgr-card">
+          <div class="mgr-card-head">
+            <span class="mgr-seed">#7</span>
+            <span class="mgr-name">Luke</span>
+            <span class="mgr-group">5-8 Seed</span>
+          </div>
+          <table class="mgr-table"><thead><tr><th>Wk</th><th>Opponent</th><th></th></tr></thead>
+          <tbody><tr class=""><td>1</td><td>Ben F <span class="opp-seed">#8</span></td><td></td></tr>
+<tr class=""><td>2</td><td>JC <span class="opp-seed">#3</span></td><td></td></tr>
+<tr class=""><td>3</td><td>Bradley <span class="opp-seed">#11</span></td><td></td></tr>
+<tr class=""><td>4</td><td>Jason G. <span class="opp-seed">#5</span></td><td></td></tr>
+<tr class=""><td>5</td><td>Derrick T. <span class="opp-seed">#6</span></td><td></td></tr>
+<tr class=""><td>6</td><td>Corey <span class="opp-seed">#12</span></td><td></td></tr>
+<tr class=""><td>7</td><td>Ben G. <span class="opp-seed">#4</span></td><td></td></tr>
+<tr class=""><td>8</td><td>Jacob <span class="opp-seed">#1</span></td><td></td></tr>
+<tr class=""><td>9</td><td>Travis <span class="opp-seed">#9</span></td><td></td></tr>
+<tr class=""><td>10</td><td>Cordel <span class="opp-seed">#2</span></td><td></td></tr>
+<tr class=""><td>11</td><td>Brian <span class="opp-seed">#10</span></td><td></td></tr>
+<tr class="rematch-row"><td>12</td><td>Ben F <span class="opp-seed">#8</span></td><td><span class="tag-rematch">Rematch</span></td></tr>
+<tr class="rematch-row"><td>13</td><td>Jason G. <span class="opp-seed">#5</span></td><td><span class="tag-rematch">Rematch</span></td></tr>
+<tr class="rematch-row"><td>14</td><td>Derrick T. <span class="opp-seed">#6</span></td><td><span class="tag-rematch">Rematch</span></td></tr>
+</tbody></table>
+        </div>
+
+        <div class="mgr-card">
+          <div class="mgr-card-head">
+            <span class="mgr-seed">#8</span>
+            <span class="mgr-name">Ben F</span>
+            <span class="mgr-group">5-8 Seed</span>
+          </div>
+          <table class="mgr-table"><thead><tr><th>Wk</th><th>Opponent</th><th></th></tr></thead>
+          <tbody><tr class=""><td>1</td><td>Luke <span class="opp-seed">#7</span></td><td></td></tr>
+<tr class=""><td>2</td><td>Travis <span class="opp-seed">#9</span></td><td></td></tr>
+<tr class=""><td>3</td><td>Cordel <span class="opp-seed">#2</span></td><td></td></tr>
+<tr class=""><td>4</td><td>Brian <span class="opp-seed">#10</span></td><td></td></tr>
+<tr class=""><td>5</td><td>Jacob <span class="opp-seed">#1</span></td><td></td></tr>
+<tr class=""><td>6</td><td>JC <span class="opp-seed">#3</span></td><td></td></tr>
+<tr class=""><td>7</td><td>Bradley <span class="opp-seed">#11</span></td><td></td></tr>
+<tr class=""><td>8</td><td>Jason G. <span class="opp-seed">#5</span></td><td></td></tr>
+<tr class=""><td>9</td><td>Derrick T. <span class="opp-seed">#6</span></td><td></td></tr>
+<tr class=""><td>10</td><td>Corey <span class="opp-seed">#12</span></td><td></td></tr>
+<tr class=""><td>11</td><td>Ben G. <span class="opp-seed">#4</span></td><td></td></tr>
+<tr class="rematch-row"><td>12</td><td>Luke <span class="opp-seed">#7</span></td><td><span class="tag-rematch">Rematch</span></td></tr>
+<tr class="rematch-row"><td>13</td><td>Derrick T. <span class="opp-seed">#6</span></td><td><span class="tag-rematch">Rematch</span></td></tr>
+<tr class="rematch-row"><td>14</td><td>Jason G. <span class="opp-seed">#5</span></td><td><span class="tag-rematch">Rematch</span></td></tr>
+</tbody></table>
+        </div>
+
+        <div class="mgr-card">
+          <div class="mgr-card-head">
+            <span class="mgr-seed">#9</span>
+            <span class="mgr-name">Travis</span>
+            <span class="mgr-group">9-12 Seed</span>
+          </div>
+          <table class="mgr-table"><thead><tr><th>Wk</th><th>Opponent</th><th></th></tr></thead>
+          <tbody><tr class=""><td>1</td><td>Brian <span class="opp-seed">#10</span></td><td></td></tr>
+<tr class=""><td>2</td><td>Ben F <span class="opp-seed">#8</span></td><td></td></tr>
+<tr class=""><td>3</td><td>JC <span class="opp-seed">#3</span></td><td></td></tr>
+<tr class=""><td>4</td><td>Bradley <span class="opp-seed">#11</span></td><td></td></tr>
+<tr class=""><td>5</td><td>Jason G. <span class="opp-seed">#5</span></td><td></td></tr>
+<tr class=""><td>6</td><td>Derrick T. <span class="opp-seed">#6</span></td><td></td></tr>
+<tr class=""><td>7</td><td>Corey <span class="opp-seed">#12</span></td><td></td></tr>
+<tr class=""><td>8</td><td>Ben G. <span class="opp-seed">#4</span></td><td></td></tr>
+<tr class=""><td>9</td><td>Luke <span class="opp-seed">#7</span></td><td></td></tr>
+<tr class=""><td>10</td><td>Jacob <span class="opp-seed">#1</span></td><td></td></tr>
+<tr class=""><td>11</td><td>Cordel <span class="opp-seed">#2</span></td><td></td></tr>
+<tr class="rematch-row"><td>12</td><td>Brian <span class="opp-seed">#10</span></td><td><span class="tag-rematch">Rematch</span></td></tr>
+<tr class="rematch-row"><td>13</td><td>Bradley <span class="opp-seed">#11</span></td><td><span class="tag-rematch">Rematch</span></td></tr>
+<tr class="rematch-row"><td>14</td><td>Corey <span class="opp-seed">#12</span></td><td><span class="tag-rematch">Rematch</span></td></tr>
+</tbody></table>
+        </div>
+
+        <div class="mgr-card">
+          <div class="mgr-card-head">
+            <span class="mgr-seed">#10</span>
+            <span class="mgr-name">Brian</span>
+            <span class="mgr-group">9-12 Seed</span>
+          </div>
+          <table class="mgr-table"><thead><tr><th>Wk</th><th>Opponent</th><th></th></tr></thead>
+          <tbody><tr class=""><td>1</td><td>Travis <span class="opp-seed">#9</span></td><td></td></tr>
+<tr class=""><td>2</td><td>Cordel <span class="opp-seed">#2</span></td><td></td></tr>
+<tr class=""><td>3</td><td>Jacob <span class="opp-seed">#1</span></td><td></td></tr>
+<tr class=""><td>4</td><td>Ben F <span class="opp-seed">#8</span></td><td></td></tr>
+<tr class=""><td>5</td><td>JC <span class="opp-seed">#3</span></td><td></td></tr>
+<tr class=""><td>6</td><td>Bradley <span class="opp-seed">#11</span></td><td></td></tr>
+<tr class=""><td>7</td><td>Jason G. <span class="opp-seed">#5</span></td><td></td></tr>
+<tr class=""><td>8</td><td>Derrick T. <span class="opp-seed">#6</span></td><td></td></tr>
+<tr class=""><td>9</td><td>Corey <span class="opp-seed">#12</span></td><td></td></tr>
+<tr class=""><td>10</td><td>Ben G. <span class="opp-seed">#4</span></td><td></td></tr>
+<tr class=""><td>11</td><td>Luke <span class="opp-seed">#7</span></td><td></td></tr>
+<tr class="rematch-row"><td>12</td><td>Travis <span class="opp-seed">#9</span></td><td><span class="tag-rematch">Rematch</span></td></tr>
+<tr class="rematch-row"><td>13</td><td>Corey <span class="opp-seed">#12</span></td><td><span class="tag-rematch">Rematch</span></td></tr>
+<tr class="rematch-row"><td>14</td><td>Bradley <span class="opp-seed">#11</span></td><td><span class="tag-rematch">Rematch</span></td></tr>
+</tbody></table>
+        </div>
+
+        <div class="mgr-card">
+          <div class="mgr-card-head">
+            <span class="mgr-seed">#11</span>
+            <span class="mgr-name">Bradley</span>
+            <span class="mgr-group">9-12 Seed</span>
+          </div>
+          <table class="mgr-table"><thead><tr><th>Wk</th><th>Opponent</th><th></th></tr></thead>
+          <tbody><tr class=""><td>1</td><td>Corey <span class="opp-seed">#12</span></td><td></td></tr>
+<tr class=""><td>2</td><td>Ben G. <span class="opp-seed">#4</span></td><td></td></tr>
+<tr class=""><td>3</td><td>Luke <span class="opp-seed">#7</span></td><td></td></tr>
+<tr class=""><td>4</td><td>Travis <span class="opp-seed">#9</span></td><td></td></tr>
+<tr class=""><td>5</td><td>Cordel <span class="opp-seed">#2</span></td><td></td></tr>
+<tr class=""><td>6</td><td>Brian <span class="opp-seed">#10</span></td><td></td></tr>
+<tr class=""><td>7</td><td>Ben F <span class="opp-seed">#8</span></td><td></td></tr>
+<tr class=""><td>8</td><td>JC <span class="opp-seed">#3</span></td><td></td></tr>
+<tr class=""><td>9</td><td>Jacob <span class="opp-seed">#1</span></td><td></td></tr>
+<tr class=""><td>10</td><td>Jason G. <span class="opp-seed">#5</span></td><td></td></tr>
+<tr class=""><td>11</td><td>Derrick T. <span class="opp-seed">#6</span></td><td></td></tr>
+<tr class="rematch-row"><td>12</td><td>Corey <span class="opp-seed">#12</span></td><td><span class="tag-rematch">Rematch</span></td></tr>
+<tr class="rematch-row"><td>13</td><td>Travis <span class="opp-seed">#9</span></td><td><span class="tag-rematch">Rematch</span></td></tr>
+<tr class="rematch-row"><td>14</td><td>Brian <span class="opp-seed">#10</span></td><td><span class="tag-rematch">Rematch</span></td></tr>
+</tbody></table>
+        </div>
+
+        <div class="mgr-card">
+          <div class="mgr-card-head">
+            <span class="mgr-seed">#12</span>
+            <span class="mgr-name">Corey</span>
+            <span class="mgr-group">9-12 Seed</span>
+          </div>
+          <table class="mgr-table"><thead><tr><th>Wk</th><th>Opponent</th><th></th></tr></thead>
+          <tbody><tr class=""><td>1</td><td>Bradley <span class="opp-seed">#11</span></td><td></td></tr>
+<tr class=""><td>2</td><td>Jason G. <span class="opp-seed">#5</span></td><td></td></tr>
+<tr class=""><td>3</td><td>Derrick T. <span class="opp-seed">#6</span></td><td></td></tr>
+<tr class=""><td>4</td><td>Jacob <span class="opp-seed">#1</span></td><td></td></tr>
+<tr class=""><td>5</td><td>Ben G. <span class="opp-seed">#4</span></td><td></td></tr>
+<tr class=""><td>6</td><td>Luke <span class="opp-seed">#7</span></td><td></td></tr>
+<tr class=""><td>7</td><td>Travis <span class="opp-seed">#9</span></td><td></td></tr>
+<tr class=""><td>8</td><td>Cordel <span class="opp-seed">#2</span></td><td></td></tr>
+<tr class=""><td>9</td><td>Brian <span class="opp-seed">#10</span></td><td></td></tr>
+<tr class=""><td>10</td><td>Ben F <span class="opp-seed">#8</span></td><td></td></tr>
+<tr class=""><td>11</td><td>JC <span class="opp-seed">#3</span></td><td></td></tr>
+<tr class="rematch-row"><td>12</td><td>Bradley <span class="opp-seed">#11</span></td><td><span class="tag-rematch">Rematch</span></td></tr>
+<tr class="rematch-row"><td>13</td><td>Brian <span class="opp-seed">#10</span></td><td><span class="tag-rematch">Rematch</span></td></tr>
+<tr class="rematch-row"><td>14</td><td>Travis <span class="opp-seed">#9</span></td><td><span class="tag-rematch">Rematch</span></td></tr>
+</tbody></table>
+        </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- ===== FORMAT & RULES TAB ===== -->
+        <div class="tab-panel" id="panel-format">
+          <div class="panel" style="margin-bottom:20px;">
+            <div class="panel-head"><h2>How It's Built</h2></div>
+            <ul class="rules-list">
+              <li><b>14-week regular season.</b> Every manager plays all 11 other managers exactly once across weeks 1&ndash;11, then plays the other three managers in their seed group a second time across weeks 12&ndash;14.</li>
+              <li><b>Seed groups come from the 2025 final standings:</b> 1&ndash;4, 5&ndash;8, and 9&ndash;12.</li>
+              <li><b>Week 1 is set by seed:</b> #1 vs #2, #3 vs #4, #5 vs #6, #7 vs #8, #9 vs #10, #11 vs #12.</li>
+              <li><b>Week 14, the final week,</b> is always a rematch against one of the three managers in your group of four.</li>
+              <li><b>No rematch happens within 4 weeks</b> of the first meeting &mdash; every group-of-four second matchup is scheduled at least four weeks after the first.</li>
+            </ul>
+          </div>
+
+          <div class="panel" style="margin-bottom:20px;">
+            <div class="panel-head"><h2>2026 Seed Groups</h2></div>
+            <div class="panel-sub">Based on 2025 final standings.</div>
+            <div style="padding:0 20px 20px;">
+              <table class="group-table"><thead><tr><th>Group</th><th>Managers</th></tr></thead><tbody>
+                <tr><td>1-4 Seed</td><td>Jacob (#1), Cordel (#2), JC (#3), Ben G. (#4)</td></tr>
+<tr><td>5-8 Seed</td><td>Jason G. (#5), Derrick T. (#6), Luke (#7), Ben F (#8)</td></tr>
+<tr><td>9-12 Seed</td><td>Travis (#9), Brian (#10), Bradley (#11), Corey (#12)</td></tr>
+
+              </tbody></table>
+            </div>
+          </div>
+
+          <div class="panel">
+            <div class="panel-head"><h2>Note</h2></div>
+            <div class="panel-sub" style="padding-bottom:20px;"><b style="color:var(--gold);">Matchups are locked; dates aren't games yet.</b> This schedule sets who plays whom and in which week. Actual scores populate on the Current Season page as the 2026 season is played out.</div>
+          </div>
+        </div>
+
+      </div>
+      <footer class="site-foot">Balls Deep FFL &middot; Est. 2012 &middot; 2026 Season Schedule</footer>
+    </div>
+  </div>
+</div>
+
+<script>
+  // ============================================================
+  // WEEKLY RESULTS — updated by Claude after each week's workbook is sent
+  // ============================================================
+  // Format: one entry per completed game.
+  //   { week: <number>, winner: "<manager name>", loser: "<manager name>" }
+  // Manager names must exactly match the names used elsewhere on this page
+  // (e.g. "Jason G.", "Ben F", "JC" — see the seed list below).
+  // Leave this array empty until the first week's results come in.
+  const RESULTS = [
+    // { week: 1, winner: "Jacob", loser: "Cordel" },
+  ];
+
+  const SEED_ORDER = [
+    "Jacob","Cordel","JC","Ben G.",
+    "Jason G.","Derrick T.","Luke","Ben F",
+    "Travis","Brian","Bradley","Corey"
+  ];
+  const GROUP_OF = {};
+  SEED_ORDER.forEach((name, i) => {
+    GROUP_OF[name] = i < 4 ? "1-4 Seed" : i < 8 ? "5-8 Seed" : "9-12 Seed";
+  });
+
+  const SCHEDULE = {
+    1: [["Jacob","Cordel"], ["Jason G.","Derrick T."], ["Travis","Brian"], ["Bradley","Corey"], ["Luke","Ben F"], ["JC","Ben G."]],
+    2: [["Jacob","Derrick T."], ["Cordel","Brian"], ["Jason G.","Corey"], ["Travis","Ben F"], ["Bradley","Ben G."], ["Luke","JC"]],
+    3: [["Jacob","Brian"], ["Derrick T.","Corey"], ["Cordel","Ben F"], ["Jason G.","Ben G."], ["Travis","JC"], ["Bradley","Luke"]],
+    4: [["Jacob","Corey"], ["Brian","Ben F"], ["Derrick T.","Ben G."], ["Cordel","JC"], ["Jason G.","Luke"], ["Travis","Bradley"]],
+    5: [["Jacob","Ben F"], ["Corey","Ben G."], ["Brian","JC"], ["Derrick T.","Luke"], ["Cordel","Bradley"], ["Jason G.","Travis"]],
+    6: [["Jacob","Ben G."], ["Ben F","JC"], ["Corey","Luke"], ["Brian","Bradley"], ["Derrick T.","Travis"], ["Cordel","Jason G."]],
+    7: [["Jacob","JC"], ["Ben G.","Luke"], ["Ben F","Bradley"], ["Corey","Travis"], ["Brian","Jason G."], ["Derrick T.","Cordel"]],
+    8: [["Jacob","Luke"], ["JC","Bradley"], ["Ben G.","Travis"], ["Ben F","Jason G."], ["Corey","Cordel"], ["Brian","Derrick T."]],
+    9: [["Jacob","Bradley"], ["Luke","Travis"], ["JC","Jason G."], ["Ben G.","Cordel"], ["Ben F","Derrick T."], ["Corey","Brian"]],
+    10: [["Jacob","Travis"], ["Bradley","Jason G."], ["Luke","Cordel"], ["JC","Derrick T."], ["Ben G.","Brian"], ["Ben F","Corey"]],
+    11: [["Jacob","Jason G."], ["Travis","Cordel"], ["Bradley","Derrick T."], ["Luke","Brian"], ["JC","Corey"], ["Ben G.","Ben F"]],
+    12: [["JC","Ben G."], ["Jacob","Cordel"], ["Jason G.","Derrick T."], ["Ben F","Luke"], ["Bradley","Corey"], ["Travis","Brian"]],
+    13: [["Cordel","Ben G."], ["Jacob","JC"], ["Ben F","Derrick T."], ["Jason G.","Luke"], ["Travis","Bradley"], ["Brian","Corey"]],
+    14: [["Jacob","Ben G."], ["Cordel","JC"], ["Ben F","Jason G."], ["Derrick T.","Luke"], ["Travis","Corey"], ["Brian","Bradley"]],
+  };
+
+  function computeStandings(){
+    const rec = {};
+    SEED_ORDER.forEach(name => { rec[name] = { w: 0, l: 0 }; });
+    RESULTS.forEach(g => {
+      if (rec[g.winner]) rec[g.winner].w++;
+      if (rec[g.loser]) rec[g.loser].l++;
+    });
+    return SEED_ORDER.map(name => {
+      const r = rec[name];
+      const gp = r.w + r.l;
+      const pct = gp ? r.w / gp : 0;
+      return { name, seed: SEED_ORDER.indexOf(name) + 1, group: GROUP_OF[name], w: r.w, l: r.l, pct };
+    }).sort((a, b) => (b.pct - a.pct) || (b.w - a.w) || (a.seed - b.seed));
+  }
+
+  function maxWeekPlayed(){
+    return RESULTS.reduce((m, g) => Math.max(m, g.week), 0);
+  }
+
+  function recordThroughWeek(name, week){
+    // Record for `name` using only games from weeks strictly before `week`.
+    let w = 0, l = 0;
+    RESULTS.forEach(g => {
+      if (g.week >= week) return;
+      if (g.winner === name) w++;
+      else if (g.loser === name) l++;
+    });
+    return `${w}-${l}`;
+  }
+
+  function renderWeeks(){
+    const mount = document.getElementById('weeks-mount');
+    let html = '';
+    for (let wk = 1; wk <= 14; wk++){
+      const games = SCHEDULE[wk];
+      const isRematchWeek = wk >= 12;
+      const badge = isRematchWeek ? ' <span class="week-badge">Group Rematch Week</span>' : '';
+      const rows = games.map(([a, b]) => {
+        const rematch = (isRematchWeek && GROUP_OF[a] === GROUP_OF[b]) ? 'rematch' : '';
+        const seedA = SEED_ORDER.indexOf(a) + 1;
+        const seedB = SEED_ORDER.indexOf(b) + 1;
+        const recA = recordThroughWeek(a, wk);
+        const recB = recordThroughWeek(b, wk);
+        return `<div class="matchup ${rematch}">
+          <span class="mseed">#${seedA}</span>
+          <span class="mname">${a} <span class="mrecord">(${recA})</span></span>
+          <span class="mvs">vs</span>
+          <span class="mname">${b} <span class="mrecord">(${recB})</span></span>
+          <span class="mseed">#${seedB}</span>
+        </div>`;
+      }).join('\n');
+      html += `<div class="week-block">
+        <div class="week-head"><span class="week-num">Week ${wk}</span>${badge}</div>
+        <div class="matchup-grid">${rows}</div>
+      </div>`;
+    }
+    mount.innerHTML = html;
+  }
+  renderWeeks();
+
+    document.querySelectorAll('.tab-btn').forEach(function(btn){
+    btn.addEventListener('click', function(){
+      document.querySelectorAll('.tab-btn').forEach(function(b){ b.classList.remove('active'); });
+      btn.classList.add('active');
+      document.querySelectorAll('.tab-panel').forEach(function(p){ p.classList.remove('active'); });
+      document.getElementById('panel-' + btn.dataset.tab).classList.add('active');
+      window.scrollTo({top:0, behavior:'smooth'});
+    });
+  });
+</script>
+
+
+<!-- ===================== SCH TICKER (ESPN-style bottom line) ===================== -->
+<div class="sch-ticker" id="sch-ticker">
+  <div class="ticker-badge" id="sch-ticker-badge"><span id="sch-ticker-badge-text">Week 1 Matchups</span></div>
+  <div class="ticker-viewport">
+    <div class="ticker-track" id="sch-ticker-track"></div>
+  </div>
+</div>
+<script>
+(function(){
+  var items = [];
+  items.push('<span class="ticker-item"><span class="ttag wk1">Week 1</span><span class="tm">' + 'Week 1: Jacob vs. Cordel Gray' + '</span></span>');
+  items.push('<span class="ticker-item"><span class="ttag wk1">Week 1</span><span class="tm">' + 'Week 1: Jason Glidden vs. Derrick T.' + '</span></span>');
+  items.push('<span class="ticker-item"><span class="ttag wk1">Week 1</span><span class="tm">' + 'Week 1: Travis Jaminet vs. Brian Osborn' + '</span></span>');
+  items.push('<span class="ticker-item"><span class="ttag wk1">Week 1</span><span class="tm">' + 'Week 1: Bradley Franks vs. Corey Ramsinator' + '</span></span>');
+  items.push('<span class="ticker-item"><span class="ttag wk1">Week 1</span><span class="tm">' + 'Week 1: Luke Schreck vs. Ben Franks' + '</span></span>');
+  items.push('<span class="ticker-item"><span class="ttag wk1">Week 1</span><span class="tm">' + 'Week 1: JC Porter vs. Ben Geisinger' + '</span></span>');
+  items.push('<span class="ticker-item"><span class="ttag seeds">Seeding</span><span class="tm">' + '1-4 Seed group: Jacob C., Cordel G., JC P., Ben G. — based on 2025 final standings' + '</span></span>');
+  items.push('<span class="ticker-item"><span class="ttag seeds">Seeding</span><span class="tm">' + '5-8 Seed group: Jason G., Derrick T., Luke S., Ben F.' + '</span></span>');
+  items.push('<span class="ticker-item"><span class="ttag seeds">Seeding</span><span class="tm">' + '9-12 Seed group: Travis J., Brian O., Bradley F., Corey R.' + '</span></span>');
+
+  var html = items.join('');
+  document.getElementById('sch-ticker-track').innerHTML = html + html;
+
+  var BADGES = [{text:'Week 1 Matchups'}, {text:'Seeding'}];
+  var badgeText = document.getElementById('sch-ticker-badge-text');
+  var bi = 0;
+  function showBadge(i){
+    badgeText.style.opacity = 0;
+    setTimeout(function(){
+      badgeText.textContent = BADGES[i].text;
+      badgeText.style.opacity = 1;
+    }, 250);
+  }
+  showBadge(0);
+  setInterval(function(){
+    bi = (bi + 1) % BADGES.length;
+    showBadge(bi);
+  }, 7000);
+})();
+
+</script>
+</body>
+</html>
