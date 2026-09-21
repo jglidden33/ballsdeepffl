@@ -1,0 +1,47 @@
+name: Rebuild Hall of Fame page
+
+# Runs automatically every hour, and can also be triggered manually from the
+# Actions tab in GitHub (useful right after you update the workbook and
+# don't want to wait for the next scheduled run).
+on:
+  schedule:
+    - cron: '0 * * * *'
+  workflow_dispatch: {}
+
+permissions:
+  contents: write
+
+jobs:
+  rebuild:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repo
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Install dependencies
+        run: pip install -r pipeline/requirements.txt
+
+      - name: Rebuild Hall of Fame page from Google Sheets
+        env:
+          GOOGLE_SHEET_ID: ${{ secrets.GOOGLE_SHEET_ID }}
+          GCP_SERVICE_ACCOUNT_KEY: ${{ secrets.GCP_SERVICE_ACCOUNT_KEY }}
+          HOF_HTML_PATH: hall-of-fame.html
+        run: python pipeline/rebuild_hall_of_fame.py
+
+      - name: Commit and push if anything changed
+        run: |
+          git config user.name "bdfl-pipeline-bot"
+          git config user.email "actions@github.com"
+          git add hall-of-fame.html induction_log.json
+          if git diff --cached --quiet; then
+            echo "No changes - Hall of Fame page already up to date."
+          else
+            SUMMARY=$(cat rebuild_summary.txt 2>/dev/null || echo "Data refresh")
+            git commit -m "Auto-rebuild: Hall of Fame data refresh" -m "$SUMMARY"
+            git push
+          fi
